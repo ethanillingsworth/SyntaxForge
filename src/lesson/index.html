@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SyntaxForge - Lesson</title>
+</head>
+
+<body>
+    <header class="relative">
+        <a class="gradient-text" href="/">SyntaxForge</a>
+        <a href="/courses">Courses</a>
+    </header>
+
+    <main class="place-content-start place-items-start p-0 row gap-0 flex w-full h-screen overflow-hidden">
+        <div class="col w-1/2 p-8 min-w-1/5 h-full place-content-start place-items-start overflow-auto" id="content">
+
+            <h2 class="text-3xl mb-6" id="title">test</h2>
+            <div class="col place-items-start place-content-start" id="rendered"></div>
+            <textarea class="hidden w-full h-full" id="raw"></textarea>
+
+            <h2 class="mt-6">Tasks</h2>
+
+            <div id="tasks" class="col w-full"></div>
+        </div>
+        <div id="resizer" class="w-0.5 h-full cursor-col-resize bg-forge-accent"></div>
+
+        <div class="col w-1/2 h-full gap-0 min-w-1/5" id="editor">
+
+            <div id="edit" class="h-full w-full overflow-auto"></div>
+
+            <div id="controls" class="p-4 row text-md w-full h-auto border-t-2 border-forge-accent bg-forge-surface">
+                <select class="muted" id="fontsize">
+                    <option>12px</option>
+                    <option>14px</option>
+                    <option selected>16px</option>
+                    <option>18px</option>
+                    <option>20px</option>
+
+                </select>
+                <button class="ml-auto" id="run">Run</button>
+                <button class="hidden" id="next">Next</button>
+            </div>
+
+        </div>
+    </main>
+</body>
+
+</html>

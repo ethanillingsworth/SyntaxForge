@@ -1,0 +1,151 @@
+@import "tailwindcss";
+
+@theme {
+    --color-forge-background: #0e0e11;
+    --color-forge-surface: #1a1a1f;
+    --color-forge-muted: #2a2a30;
+    --color-forge-text: #e6e6e9;
+    --color-forge-subtext: #a0a0a8;
+
+    /* Keep one strong accent and one optional secondary */
+    --color-forge-accent: #ff7b72;
+    /* primary accent (warm, stands out) */
+    --color-forge-accent-hover: #e96b65;
+    --color-forge-gold: #f4c06d
+}
+
+
+@utility row {
+    @apply gap-3 flex flex-row place-items-center
+}
+
+@utility col {
+    @apply gap-3 flex flex-col place-content-center place-items-center
+}
+
+@utility gradient-bg {
+    @apply bg-gradient-to-r from-forge-accent to-forge-gold
+}
+
+@utility gradient-text {
+    @apply leading-tight bg-gradient-to-r from-forge-accent to-forge-gold bg-clip-text text-transparent
+}
+
+@utility card {
+    @apply px-4 py-2 bg-forge-surface border-transparent rounded-2xl border-0 hover:scale-105 hover:cursor-pointer
+}
+
+@utility nohover {
+    @apply hover:scale-100 hover:border-transparent hover:cursor-default
+}
+
+@layer base {
+    body {
+        @apply m-0 h-dvh flex flex-col bg-forge-background text-forge-text
+    }
+
+    #resizer {
+        width: 5px;
+        cursor: col-resize;
+    }
+
+
+
+    .cm-editor {
+        @apply w-full h-full;
+        box-shadow: none !important;
+    }
+
+    .cm-scroller {
+        @apply overflow-auto
+    }
+
+    .cm-content {
+        @apply hover:cursor-text;
+    }
+
+    body * {
+        @apply transition
+    }
+
+    header {
+        @apply bg-forge-surface border-b-2 border-forge-muted p-4 text-2xl font-bold row gap-9 sticky top-0 h-16
+    }
+
+    header a {
+        @apply text-white transition-colors
+    }
+
+    progress {
+        @apply rounded-xl h-2 w-full bg-forge-muted;
+        @apply [&::-webkit-progress-bar]:rounded-xl [&::-webkit-progress-value]:rounded-xl [&::-webkit-progress-value]:gradient-bg [&::-webkit-progress-bar]:bg-forge-muted;
+        @apply [&::-moz-progress-bar]:gradient-bg;
+    }
+
+    h2 {
+        @apply text-2xl font-semibold
+    }
+
+    h3 {
+        @apply font-semibold
+    }
+
+    p {
+        @apply text-forge-subtext
+    }
+
+    main {
+
+        @apply h-full col overflow-auto p-12
+    }
+
+    .card p {
+        @apply line-clamp-2
+    }
+
+    .card h3 {
+        @apply text-white
+    }
+
+    main>* {
+        @apply w-full
+    }
+
+    main .row {
+        @apply place-content-center
+    }
+
+    input, textarea {
+        @apply bg-forge-muted p-1 placeholder:text-forge-subtext pt-1 pb-1 pl-2 pr-2 rounded-2xl
+    }
+
+    textarea {
+        @apply bg-forge-surface
+    }
+
+    #content p {
+        @apply text-lg
+    }
+
+    pre {
+        @apply bg-forge-surface w-full rounded-2xl px-4 py-2
+    }
+
+    input[type=checkbox] {
+        @apply min-w-5 min-h-5 rounded-2xl
+    }
+
+    button,
+    select {
+        @apply bg-forge-accent px-4 py-2 text-nowrap hover:bg-forge-accent-hover font-semibold rounded-2xl hover:cursor-pointer
+    }
+
+    button.muted, select.muted {
+        @apply bg-forge-muted
+    }
+
+    a {
+        @apply text-forge-accent hover:text-forge-accent-hover
+    }
+
+}

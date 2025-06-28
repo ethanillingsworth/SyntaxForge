@@ -1,0 +1,33 @@
+{
+  "name": "syntaxforge",
+  "version": "1.0.0",
+  "description": "",
+  "license": "MIT",
+  "author": "",
+  "type": "module",
+  "main": "main.js",
+  "scripts": {
+    "serve": "webpack serve",
+    "build": "webpack"
+  },
+  "dependencies": {
+    "@codemirror/lang-javascript": "^6.2.4",
+    "@fsegurai/codemirror-theme-bundle": "^6.2.0",
+    "@tailwindcss/postcss": "^4.1.10",
+    "codemirror": "^6.0.2",
+    "css-loader": "^7.1.2",
+    "firebase": "^11.9.1",
+    "html-webpack-plugin": "^5.6.3",
+    "jquery": "^3.7.1",
+    "postcss": "^8.5.6",
+    "postcss-loader": "^8.1.1",
+    "style-loader": "^4.0.0",
+    "tailwindcss": "^4.1.10"
+  },
+  "devDependencies": {
+    "mini-css-extract-plugin": "^2.9.2",
+    "webpack": "^5.99.9",
+    "webpack-cli": "^6.0.1",
+    "webpack-dev-server": "^5.2.2"
+  }
+}
