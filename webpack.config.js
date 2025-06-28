@@ -66,6 +66,10 @@ export default {
                 {
                     from: 'src/_redirects', // where you put the _redirects file
                     to: '',                 // output it at the root of /public
+                },
+                {
+                    from: "src/ads.txt",
+                    to: ''
                 }
             ]
         }),
