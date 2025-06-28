@@ -2,7 +2,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
-
+import CopyWebpackPlugin from 'copy-webpack-plugin';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -60,6 +60,14 @@ export default {
     plugins: [
         new MiniCssExtractPlugin({
             filename: "css/tailwind.css",
+        }),
+        new CopyWebpackPlugin({
+            patterns: [
+                {
+                    from: 'src/_redirects', // where you put the _redirects file
+                    to: '',                 // output it at the root of /public
+                }
+            ]
         }),
         new HtmlWebpackPlugin({
             template: "./src/index.html",
