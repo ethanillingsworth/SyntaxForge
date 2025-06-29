@@ -32,46 +32,49 @@ for (const lesson of lessons) {
 }
 
 onAuthStateChanged(auth, async () => {
-    const user = new User(auth.currentUser.uid)
+    const cu = auth.currentUser
+    let id;
+
+    if (cu) {
+        id = cu.uid
+    }
+    else {
+        id = "nouser"
+    }
+
+    const user = new User(id)
 
     const dat = await user.get()
 
     let num = 0;
+    if (Object.keys(dat).length > 0) {
+        const total = Object.keys(dat.lessons).length
 
-    const total = Object.keys(dat.lessons).length
+        for (const key of Object.keys(dat.lessons)) {
+            if (dat.lessons[key].finished) {
+                $(`#${key}`).addClass("gradient-bg")
+                num++
+            }
+        }
 
-    for (const key of Object.keys(dat.lessons)) {
-        if (dat.lessons[key].finished) {
-            $(`#${key}`).addClass("gradient-bg")
-            num++
+
+        let percent = Math.round((num / total) * 100)
+        $("#pbar").val(percent)
+
+        if (percent == 0) {
+            $("#per").text("Not started")
+        }
+        else if (percent == 100) {
+            $("#per").text("DONE!")
+        }
+        else {
+            $("#per").text(`${percent}% Done`)
         }
     }
-
-    let percent = Math.round((num / total) * 100)
-    $("#pbar").val(percent)
-
-    if (percent == 0) {
-        $("#per").text("Not started")
-    }
-    else if (percent == 100) {
-        $("#per").text("DONE!")
-    }
     else {
-        $("#per").text(`${percent}% Done`)
+        $("#per").text("Not started")
     }
 
 
 })
-
-// $("#pbar").val(data.value)
-
-// if (data.value == 0) {
-//     $("#per").text("Not started")
-// }
-// else if (data.value == 100) {
-//     $("#per").text("DONE!")
-// }
-// else {
-//     $("#per").text(`${data.value}% Done`)
-// }
 

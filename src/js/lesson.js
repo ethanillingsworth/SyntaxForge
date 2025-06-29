@@ -25,7 +25,22 @@ let admin = false
 let raw;
 
 onAuthStateChanged(auth, async () => {
-    currentUser = new User(auth.currentUser.uid)
+    const cu = auth.currentUser
+    let id;
+
+    if (cu) {
+        id = cu.uid
+    }
+    else {
+        id = "nouser"
+        const returnToLogin = !confirm("Progress will not be saved unless you are logged in\nOK - Contiune without saving\nCANCEL - Take me to the login page")
+
+        if (returnToLogin) {
+            window.location.href = "/login"
+        }
+    }
+
+    currentUser = new User(id)
     admin = await currentUser.admin()
 
     const dat = await currentUser.get()
@@ -119,6 +134,7 @@ onAuthStateChanged(auth, async () => {
                 }
             }
         })
+
     }
 })
 

@@ -10,6 +10,9 @@ export class User {
     }
 
     async get() {
+        if (this.uid == "nouser") {
+            return {}
+        }
         const r = await getDoc(doc(db, `public/${this.uid}`))
 
         if (r.exists()) {
@@ -22,6 +25,10 @@ export class User {
 
     async admin() {
 
+        if (this.uid == "nouser") {
+            return false
+        }
+
         const r = await getDoc(doc(db, `adminOnly/${this.uid}`))
 
         if (r.exists()) {
@@ -33,6 +40,9 @@ export class User {
     }
 
     async update(data) {
+        if (this.uid == "nouser") {
+            return
+        }
         await setDoc(doc(db, `public/${this.uid}`), data, { merge: true })
     }
 
@@ -135,34 +145,25 @@ export class Course {
         const link = $("<a/>").addClass("card").attr("href", `/course/${this.id}`)
         const name = $("<h3/>").text(data.name)
         const desc = $("<p/>").text(data.desc)
-        const progress = $("<progress/>").attr("max", 100)
+        const progress = $("<progress/>").attr("max", 100).val(0)
 
 
         let num = 0;
+        if (Object.keys(userData).length > 0) {
 
-        const total = Object.keys(userData.lessons).length
+            const total = Object.keys(userData.lessons).length
 
-        for (const key of Object.keys(userData.lessons)) {
-            if (userData.lessons[key].finished) {
-                $(`#${key}`).addClass("gradient-bg")
-                num++
+            for (const key of Object.keys(userData.lessons)) {
+                if (userData.lessons[key].finished) {
+                    $(`#${key}`).addClass("gradient-bg")
+                    num++
+                }
             }
-        }
 
-        let percent = Math.round((num / total) * 100)
-        $("#pbar").val(percent)
+            let percent = Math.round((num / total) * 100)
+            progress.val(percent)
 
-        if (percent == 0) {
-            $("#per").text("Not started")
         }
-        else if (percent == 100) {
-            $("#per").text("DONE!")
-        }
-        else {
-            $("#per").text(`${percent}% Done`)
-        }
-
-
         link.append(name, desc, progress)
 
         $(on).append(link)
