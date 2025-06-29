@@ -1,4 +1,4 @@
-import { Course, Lesson, User } from "./main.js";
+import { Course, Lesson, safeEval, User } from "./main.js";
 import $ from "jquery"
 import { EditorView, basicSetup } from "codemirror"
 import { javascript } from "@codemirror/lang-javascript"
@@ -77,21 +77,6 @@ onAuthStateChanged(auth, async () => {
 
     })
 
-    function safeEval(input, test) {
-
-
-        var console = function () { }
-        var window = function () { }
-        var document = function () { }
-        var editor = function () { }
-
-        const a = function () { return eval(input + test) }
-
-
-        // Return the eval'd result
-        return a();
-
-    }
 
     function runUserCode() {
         const content = view.state.doc.toString()
@@ -101,7 +86,7 @@ onAuthStateChanged(auth, async () => {
         for (let index = 0; index < data.tasks.length; index++) {
             const test = data.tasks[index]
             try {
-                const res = safeEval(content, ';' + test.check)
+                const res = safeEval(content, ';' + test.check).res
                 if (res == true) {
                     $(`#task-${index}`).attr("checked", true)
                     count++

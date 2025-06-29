@@ -171,3 +171,24 @@ export class Course {
 
     }
 }
+
+export function safeEval(input, test) {
+
+    let logs = []
+
+    var console = {
+        log: function (text) {
+            logs.push(text)
+        }
+    }
+    var window = function () { }
+    var document = function () { }
+    var editor = function () { }
+
+    const a = function () { return eval(input + (test || "")) }
+
+
+    // Return the eval'd result
+    return { res: a(), logs: logs };
+
+}

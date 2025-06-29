@@ -13,8 +13,8 @@
         <a href="/courses">Courses</a>
     </header>
 
-    <main>
-        <section class="min-h-screen flex items-center justify-center px-4 mt-16">
+    <main class="pt-0">
+        <section class="min-h-screen flex items-center justify-center">
             <div class="col text-center">
                 <h1 class="text-5xl font-extrabold text-forge-text">
                     Welcome to <span class="gradient-text">SyntaxForge</span>
@@ -28,11 +28,11 @@
                             Learning</button>
 
                     </a>
-                    <a href="/editor">
+                    <!-- <a href="/editor">
                         <button
                             class="muted px-6 py-2 bg-forge-muted hover:scale-105 transition-transform text-white">Launch
                             Playground</button>
-                    </a>
+                    </a> -->
                 </div>
             </div>
         </section>
@@ -40,15 +40,35 @@
         <section class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl text-center pt-10">
             <div class="card">
                 <h2 class="text-xl font-semibold mb-2">Interactive Lessons</h2>
-                <p class="text-forge-subtext">Learn programming concepts through bite-sized, guided courses.</p>
+                <p class="text-forge-subtext">Master programming topics through structured,
+                    step-by-step lessons.
+                </p>
             </div>
             <div class="card">
-                <h2 class="text-xl font-semibold mb-2">Built-in Code Editor</h2>
-                <p class="text-forge-subtext">Write and test code without switching tabs—powered by Monaco.</p>
+                <h2 class="text-xl font-semibold mb-2 ">Coding Challenges</h2>
+                <p class="text-forge-subtext">Test your skills with challenges made to reinforce each topic.
+                </p>
             </div>
             <div class="card">
                 <h2 class="text-xl font-semibold mb-2">Progress Tracking</h2>
-                <p class="text-forge-subtext">Log in to save your progress and continue where you left off.</p>
+                <p class="text-forge-subtext">Track your learning journey and stay motivated.</p>
+            </div>
+        </section>
+
+        <section class="col mt-16">
+            <h2 class="text-3xl">Editor Preview</h2>
+            <div class="row h-80 w-3/4 mt-4 gap-0">
+                <div class="col w-3/4 h-full gap-0">
+                    <div id="editor" class="w-full h-full"></div>
+                    <div
+                        class="row w-full bg-forge-surface p-2 place-content-end border-t-2 border-t-forge-accent text-sm">
+                        <button id="run">Run Code</button>
+                    </div>
+                </div>
+                <div id="output"
+                    class="w-1/4 h-full col bg-black place-content-start place-items-start font-mono p-4 gap-0.5">
+                    <span>Code Sample Terminal v1.0.0</span>
+                </div>
             </div>
         </section>
 
