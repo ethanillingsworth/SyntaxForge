@@ -11,7 +11,10 @@
     "build": "webpack"
   },
   "dependencies": {
+    "@codemirror/commands": "^6.8.1",
     "@codemirror/lang-javascript": "^6.2.4",
+    "@codemirror/next": "^0.16.0",
+    "@codemirror/view": "^6.38.0",
     "@fsegurai/codemirror-theme-bundle": "^6.2.0",
     "@tailwindcss/postcss": "^4.1.10",
     "codemirror": "^6.0.2",

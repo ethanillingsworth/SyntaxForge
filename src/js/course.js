@@ -48,11 +48,12 @@ onAuthStateChanged(auth, async () => {
 
     let num = 0;
     if (Object.keys(dat).length > 0) {
-        const total = Object.keys(dat.lessons).length
+        const lessons = await course.getLessons()
+        const total = lessons.length
 
-        for (const key of Object.keys(dat.lessons)) {
-            if (dat.lessons[key].finished) {
-                $(`#${key}`).addClass("gradient-bg")
+        for (const lesson of lessons) {
+            if (dat.lessons[lesson.id] && dat.lessons[lesson.id].finished) {
+                $(`#${lesson.id}`).addClass("gradient-bg")
                 num++
             }
         }

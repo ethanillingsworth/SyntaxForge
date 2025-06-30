@@ -46,7 +46,7 @@ export class User {
         await setDoc(doc(db, `public/${this.uid}`), data, { merge: true })
     }
 
-    static async create(email, password, username) {
+    static async create(email, password) {
         createUserWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                 // Signed up 
@@ -54,7 +54,7 @@ export class User {
                 if (user) {
                     setDoc(doc(db, `public/${user.uid}`), {
                         uid: user.uid,
-                        username: username
+                        // username: username
                     })
                     setDoc(doc(db, `private/${user.uid}`), {
                         email: email
@@ -124,7 +124,7 @@ export class Course {
         const q = query(collection(db, "lessons"), where("parent", "==", this.id), where("id", "==", num))
         const d = await getDocs(q)
 
-        return d.docs[0] || null
+        return d.docs[0].id || null
     }
 
     async get() {
@@ -149,13 +149,13 @@ export class Course {
 
 
         let num = 0;
-        if (Object.keys(userData).length > 0) {
+        if (Object.keys(data).length > 0) {
+            const lessons = await this.getLessons()
+            const total = lessons.length
 
-            const total = Object.keys(userData.lessons).length
-
-            for (const key of Object.keys(userData.lessons)) {
-                if (userData.lessons[key].finished) {
-                    $(`#${key}`).addClass("gradient-bg")
+            for (const lesson of lessons) {
+                if (userData.lessons[lesson.id] && userData.lessons[lesson.id].finished) {
+                    $(`#${lesson.id}`).addClass("gradient-bg")
                     num++
                 }
             }

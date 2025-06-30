@@ -5,12 +5,12 @@ import { auth } from "./firebase.js"
 
 const email = $("#email")
 const password = $("#password")
-const username = $("#username")
+// const username = $("#username")
 
 
 
 $("#signup").on("click", async () => {
-    User.create(email.val(), password.val(), username.val())
+    User.create(email.val(), password.val())
     window.location.href = "/"
 })
 

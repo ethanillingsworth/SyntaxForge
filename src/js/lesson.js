@@ -1,16 +1,20 @@
 import { Course, Lesson, safeEval, User } from "./main.js";
 import $ from "jquery"
-import { EditorView, basicSetup } from "codemirror"
+import { basicSetup } from "codemirror"
 import { javascript } from "@codemirror/lang-javascript"
 import { basicDark } from "@fsegurai/codemirror-theme-bundle";
 import { auth } from "./firebase.js";
 import { onAuthStateChanged } from "firebase/auth";
+import { indentWithTab } from "@codemirror/commands";
+import { keymap, EditorView } from "@codemirror/view";
 
 
 
 let view = new EditorView({
-    extensions: [basicSetup, javascript(), basicDark],
+    extensions: [basicSetup, keymap.of(indentWithTab), javascript(), basicDark],
+
     parent: $("#edit")[0]
+
 })
 
 
@@ -164,10 +168,20 @@ $("#raw").val(data.content)
 
 $("#title").text(data.title)
 
+if (data.default) {
+    view.dispatch({
+        changes: { from: 0, to: view.state.doc.length, insert: data.default }
+    });
+
+}
+
 raw = data.content
 const parent = new Course(data.parent)
 
-document.title = `SyntaxForge - ${data.title}`
+const parentData = await parent.get()
+
+$("#parent").text(parentData.name).attr("href", "/course/" + parent.id)
+document.title = `SyntaxForge - ${parentData.name}/${data.title}`
 
 $("#next").on("click", async () => {
     const nextLesson = await parent.getLessonID(data.id + 1)
@@ -180,18 +194,22 @@ $("#next").on("click", async () => {
     }
 })
 
-for (let index = 0; index < data.tasks.length; index++) {
-    const test = data.tasks[index]
+if (data.tasks) {
+    for (let index = 0; index < data.tasks.length; index++) {
+        const test = data.tasks[index]
 
-    const task = $("<div/>").addClass("card row place-content-start").addClass("w-full nohover")
-    const checkbox = $("<input/>").attr("type", "checkbox").attr("id", `task-${index}`).attr("disabled", true)
-    const text = $("<h3/>").text(test.text)
+        const task = $("<div/>").addClass("card row place-content-start").addClass("w-full nohover")
+        const checkbox = $("<input/>").attr("type", "checkbox").attr("id", `task-${index}`).attr("disabled", true)
+        const text = $("<h3/>").text(test.text)
 
-    task.append(checkbox, text)
+        task.append(checkbox, text)
 
-    $("#tasks").append(task)
+        $("#tasks").append(task)
 
+    }
 }
+
+// window.Lesson = lesson
 
 
 

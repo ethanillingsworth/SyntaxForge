@@ -1,13 +1,15 @@
 import '../css/tailwind.css';
 
-import { EditorView, basicSetup } from "codemirror"
+import { basicSetup } from "codemirror"
 import { javascript } from "@codemirror/lang-javascript"
 import { basicDark } from "@fsegurai/codemirror-theme-bundle";
 import { safeEval } from './main.js';
 import $ from "jquery"
+import { indentWithTab } from "@codemirror/commands";
+import { keymap, EditorView } from "@codemirror/view";
 
 let view = new EditorView({
-    extensions: [basicSetup, javascript(), basicDark],
+    extensions: [basicSetup, keymap.of(indentWithTab), javascript(), basicDark],
     parent: $("#editor")[0]
 })
 const code = `// Code Example
