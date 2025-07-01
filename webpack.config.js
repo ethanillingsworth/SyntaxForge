@@ -70,6 +70,14 @@ export default {
                 {
                     from: "src/ads.txt",
                     to: ''
+                },
+                {
+                    from: "src/robots.txt",
+                    to: ""
+                },
+                {
+                    from: "src/sitemap.xml",
+                    to: ""
                 }
             ]
         }),
