@@ -181,7 +181,7 @@ const parent = new Course(data.parent)
 const parentData = await parent.get()
 
 $("#parent").text(parentData.name).attr("href", "/course/" + parent.id)
-document.title = `SyntaxForge - ${parentData.name}/${data.title}`
+document.title = `SyntaxForge | ${parentData.name}/${data.title}`
 
 $("#next").on("click", async () => {
     const nextLesson = await parent.getLessonID(data.id + 1)

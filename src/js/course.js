@@ -10,7 +10,7 @@ const course = new Course(courseId)
 
 const data = await course.get()
 
-document.title = `SyntaxForge - ${data.name}`
+document.title = `SyntaxForge | ${data.name}`
 
 $("#name").text(data.name)
 $("#desc").text(data.desc)
