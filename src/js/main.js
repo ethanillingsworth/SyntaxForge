@@ -139,7 +139,7 @@ export class Course {
             const total = l.length
 
             for (const lesson of l) {
-                if (userData.lessons[lesson.id] && userData.lessons[lesson.id].finished) {
+                if (userData && userData.lessons[lesson.id] && userData.lessons[lesson.id].finished) {
                     $(`#${lesson.id}`).addClass("gradient-bg")
                     num++
                 }
