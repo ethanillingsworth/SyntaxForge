@@ -216,5 +216,124 @@
                 "text": "Add a method greet to Person that returns 'Hi, my name is ' plus the name"
             }
         ]
+    },
+    "0708d3ec-b8b3-4018-ba9c-bed782c751f0": {
+        "id": 1,
+        "parent": "js-challenges-1",
+        "title": "Reverse a String",
+        "default": "function reverseString(str) {\n\n}",
+        "content": "<p>Write a function that takes a string and returns the reverse of that string.</p>\n<pre><code>reverseString(\"hello\") // \"olleh\"</code></pre>",
+        "tasks": [
+            {
+                "text": "Create a function called reverseString that returns the reverse of a string",
+                "check": "reverseString('hello') === 'olleh'"
+            },
+            {
+                "text": "Check that reverseString returns an empty string for an empty input",
+                "check": "reverseString('') === ''"
+            }
+        ]
+    },
+    "beaafe4f-a67d-498a-a316-9a32d078cede": {
+        "id": 2,
+        "parent": "js-challenges-1",
+        "title": "Count Vowels",
+        "default": "function countVowels(str) {\n\n}",
+        "content": "<p>Write a function that counts the number of vowels in a given string (a, e, i, o, u).</p>\n<pre><code>countVowels(\"banana\") // 3</code></pre>",
+        "tasks": [
+            {
+                "text": "Write a function countVowels that returns the number of vowels in a string",
+                "check": "countVowels('banana') === 3"
+            },
+            {
+                "text": "Make sure it works with uppercase vowels too",
+                "check": "countVowels('AEIOU') === 5"
+            }
+        ]
+    },
+    "c63f6706-e332-432f-8acc-4c21ba49d2d0": {
+        "id": 3,
+        "parent": "js-challenges-1",
+        "title": "Remove Duplicates",
+        "default": "function removeDuplicates(arr) {\n\n}",
+        "content": "<p>Write a function that removes duplicate values from an array.</p>\n<pre><code>removeDuplicates([1,1,2,2,3]) // [1, 2, 3]</code></pre>",
+        "tasks": [
+            {
+                "text": "Make a function removeDuplicates that removes duplicate values from an array",
+                "check": "JSON.stringify(removeDuplicates([1,1,2,2,3])) === '[1,2,3]'"
+            },
+            {
+                "text": "It should work with strings too",
+                "check": "JSON.stringify(removeDuplicates(['a','a','b'])) === '[\"a\",\"b\"]'"
+            }
+        ]
+    },
+    "54267e7a-f9ff-4832-963c-01e240eba2d1": {
+        "id": 4,
+        "parent": "js-challenges-1",
+        "title": "FizzBuzz",
+        "default": "function fizzBuzz(n) {\n\n}",
+        "content": "<p>Write a function that returns 'Fizz' if a number is divisible by 3, 'Buzz' if by 5, 'FizzBuzz' if by both, or the number itself otherwise.</p>\n<pre><code>fizzBuzz(15) // \"FizzBuzz\"\nfizzBuzz(7)  // \"7\"</code></pre>",
+        "tasks": [
+            {
+                "text": "Return 'FizzBuzz' for numbers divisible by both 3 and 5",
+                "check": "fizzBuzz(15) === 'FizzBuzz'"
+            },
+            {
+                "text": "Return the number as a string if not divisible by 3 or 5",
+                "check": "fizzBuzz(7) === '7'"
+            }
+        ]
+    },
+    "4d1c8a5a-9acf-413b-8570-84b00eaf4452": {
+        "id": 5,
+        "parent": "js-challenges-1",
+        "title": "Sum of Array",
+        "default": "function sumArray(arr) {\n\n}",
+        "content": "<p>Write a function that returns the sum of all numbers in an array.</p><pre><code>sumArray([1, 2, 3]) // 6</code></pre>",
+        "tasks": [
+            {
+                "text": "Return 6 from [1, 2, 3]",
+                "check": "sumArray([1, 2, 3]) === 6"
+            },
+            {
+                "text": "Return 0 from an empty array",
+                "check": "sumArray([]) === 0"
+            }
+        ]
+    },
+    "7e5d89f8-a6ab-4c9d-a77e-f002e6164919": {
+        "id": 6,
+        "parent": "js-challenges-1",
+        "title": "Find the Max",
+        "default": "function findMax(arr) {\n\n}",
+        "content": "<p>Write a function that returns the maximum number in an array.</p><pre><code>findMax([2, 9, 1]) // 9</code></pre>",
+        "tasks": [
+            {
+                "text": "findMax should return 9 from [2, 9, 1]",
+                "check": "findMax([2, 9, 1]) === 9"
+            },
+            {
+                "text": "findMax should return -1 from [-10, -5, -1]",
+                "check": "findMax([-10, -5, -1]) === -1"
+            }
+        ]
+    },
+    "cf6fefc1-c2c3-4c7a-9ac2-f1f445c6fc99": {
+        "id": 7,
+        "parent": "js-challenges-1",
+        "title": "Title Case a Sentence",
+        "default": "function titleCase(str) {\n\n}",
+        "content": "<p>Capitalize the first letter of every word in a sentence.</p><pre><code>titleCase(\"hello world\") // \"Hello World\"</code></pre>",
+        "tasks": [
+            {
+                "text": "Convert 'hello world' into 'Hello World'",
+                "check": "titleCase('hello world') === 'Hello World'"
+            },
+            {
+                "text": "It should also lowercase the rest of each word",
+                "check": "titleCase('jAVaSCRipt rOCks') === 'Javascript Rocks'"
+            }
+        ]
     }
 }

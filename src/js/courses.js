@@ -18,7 +18,7 @@ onAuthStateChanged(auth, async () => {
     for (const course of courses) {
         let on = $("#avail")
 
-        if (userData.lessons) {
+        if (userData && userData.lessons) {
             on = $("#yours")
         }
 

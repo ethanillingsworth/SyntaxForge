@@ -145,7 +145,7 @@ export class Course {
                 }
             }
 
-            let percent = Math.round((num / total) * 100)
+            let percent = Math.round((num / total) * 100) || 0
             progress.val(percent)
 
         }

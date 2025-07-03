@@ -59,7 +59,7 @@ onAuthStateChanged(auth, async () => {
         }
 
 
-        let percent = Math.round((num / total) * 100)
+        let percent = Math.round((num / total) * 100) || 0
         $("#pbar").val(percent)
 
         if (percent == 0) {
