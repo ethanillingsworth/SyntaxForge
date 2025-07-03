@@ -39,8 +39,71 @@
             }
         ]
     },
-    "D2yjhqRhs4bZ2ZLIZk32": {
+    "b9c2e83c-43fb-4cb4-92a2-846b9c13fcc7": {
         "id": 3,
+        "parent": "js101",
+        "title": "Boolean Logic",
+        "default": "let isAdmin = true\nlet isLoggedIn = false",
+        "content": "<p>Boolean logic helps you build more powerful conditions using true/false values and logical operators.</p>\n\n<h2>AND ( <code>&&</code> )</h2>\n<p>Returns true if both sides are true.</p>\n<pre>\ntrue && true   // true\ntrue && false  // false\n</pre>\n\n<h2>OR ( <code>||</code> )</h2>\n<p>Returns true if at least one side is true.</p>\n<pre>\nfalse || true  // true\nfalse || false // false\n</pre>\n\n<h2>NOT ( <code>!</code> )</h2>\n<p>Reverses the value of a boolean.</p>\n<pre>\n!true  // false\n!false // true\n</pre>\n\n<h2>Combining Expressions</h2>\n<pre>\nlet access = isAdmin && isLoggedIn;\n</pre>",
+        "tasks": [
+            {
+                "check": "canAccess === false",
+                "text": "Use AND (&&) to set canAccess to true only if both isAdmin and isLoggedIn are true"
+            },
+            {
+                "check": "either === true",
+                "text": "Use OR (||) to set either to true if either isAdmin or isLoggedIn is true"
+            },
+            {
+                "check": "notLoggedIn === true",
+                "text": "Create a variable notLoggedIn that is the opposite of isLoggedIn"
+            }
+        ]
+    },
+    "fb62d4b4-3847-454e-8962-d91b8e5ac00f": {
+        "id": 4,
+        "parent": "js101",
+        "title": "String Methods",
+        "default": "let greeting = \"Hello, world!\"",
+        "content": "<p>JavaScript strings have many built-in methods to work with text.</p>\n\n<h2>Useful String Methods</h2>\n<ul>\n  <li><code>length</code> \u2013 returns number of characters</li>\n  <li><code>toUpperCase()</code> \u2013 converts to uppercase</li>\n  <li><code>toLowerCase()</code> \u2013 converts to lowercase</li>\n  <li><code>includes()</code> \u2013 checks if string contains another</li>\n  <li><code>indexOf()</code> \u2013 returns the index of a substring</li>\n  <li><code>slice(start, end)</code> \u2013 extracts a portion of a string</li>\n</ul>\n\n<h2>Examples</h2>\n<pre>\nlet message = \"JavaScript is fun!\";\nconsole.log(message.length);         // 18\nconsole.log(message.toUpperCase());  // \"JAVASCRIPT IS FUN!\"\nconsole.log(message.includes(\"fun\")); // true\nconsole.log(message.slice(0, 10));    // \"JavaScript\"\n</pre>\n\n<h2>Combining Strings</h2>\n<pre>\nlet first = \"Hello\";\nlet second = \"World\";\nlet combined = first + \", \" + second + \"!\"; // \"Hello, World!\"\n</pre>",
+        "tasks": [
+            {
+                "check": "upper === 'HELLO'",
+                "text": "Create a variable upper that stores the uppercase version of the string 'hello'"
+            },
+            {
+                "check": "hasWorld === true",
+                "text": "Create a variable hasWorld that checks if the string 'Hello, world!' includes 'world'"
+            },
+            {
+                "check": "start === 'Java'",
+                "text": "Create a variable start that stores the first 4 characters of 'JavaScript'"
+            }
+        ]
+    },
+    "d6c4cd8d-ab59-4ad1-adb5-295834868367": {
+        "id": 5,
+        "parent": "js101",
+        "title": "Template Literals",
+        "default": "let name = \"Alex\"",
+        "content": "<p>Template literals are a way to create strings that can include variables and expressions easily using backticks (<code>`</code>).</p>\n\n<h2>Basic Usage</h2>\n<pre>\nlet name = \"Alex\";\nlet greeting = `Hello, ${name}!`;\nconsole.log(greeting); // \"Hello, Alex!\"\n</pre>\n\n<h2>Multiline Strings</h2>\n<pre>\nlet multiline = `Line 1\nLine 2\nLine 3`;\n</pre>\n\n<h2>Why Use Them?</h2>\n<ul>\n  <li>No need for messy + signs</li>\n  <li>Great for dynamic strings</li>\n  <li>Supports multiline formatting</li>\n</ul>",
+        "tasks": [
+            {
+                "check": "message === `Hi, Alex!`",
+                "text": "Use a template literal to create a variable message that says 'Hi, Alex!' using the variable name"
+            },
+            {
+                "check": "multiline.includes('\\n')",
+                "text": "Create a multiline string using backticks and store it in a variable called multiline"
+            },
+            {
+                "check": "result === `The sum is 7`",
+                "text": "Create a variable result using a template literal to show 'The sum is 7' using 3 + 4"
+            }
+        ]
+    },
+    "D2yjhqRhs4bZ2ZLIZk32": {
+        "id": 6,
         "parent": "js101",
         "title": "Conditional Statements",
         "content": "<p>Conditional statements are used to perform different actions based on different conditions.</p>\n\n  <h2>if Statement</h2>\n  <p>The <code>if</code> statement runs a block of code if a condition is true.</p>\n  <pre>\nlet age = 18;\n\nif (age >= 18) {\n  console.log(\"You are an adult.\");\n}\n  </pre>\n\n  <h2>if...else Statement</h2>\n  <p>The <code>if...else</code> statement runs one block if the condition is true, and another if it is false.</p>\n  <pre>\nlet isRaining = true;\n\nif (isRaining) {\n  console.log(\"Take an umbrella.\");\n} else {\n  console.log(\"Enjoy the sunshine!\");\n}\n  </pre>\n\n  <h2>else if Statement</h2>\n  <p>Use <code>else if</code> to test multiple conditions.</p>\n  <pre>\nlet score = 85;\n\nif (score >= 90) {\n  console.log(\"Grade: A\");\n} else if (score >= 80) {\n  console.log(\"Grade: B\");\n} else {\n  console.log(\"Keep studying!\");\n}\n  </pre>\n\n  <h2>switch Statement</h2>\n  <p>The <code>switch</code> statement is used to perform different actions based on different values.</p>\n  <pre>\nlet day = \"Monday\";\n\nswitch (day) {\n  case \"Monday\":\n    console.log(\"Start of the week!\");\n    break;\n  case \"Friday\":\n    console.log(\"Almost weekend!\");\n    break;\n  default:\n    console.log(\"Just another day.\");\n}\n  </pre>",
@@ -56,7 +119,7 @@
         ]
     },
     "Hxq9RwJHlpievmU3r3R4": {
-        "id": 4,
+        "id": 7,
         "parent": "js101",
         "title": "Loops",
         "content": "<p>Loops let you run the same block of code multiple times. JavaScript provides several types of loops.</p>\n\n  <h2>for Loop</h2>\n  <p>Use a <code>for</code> loop when you know how many times you want to run the code.</p>\n  <pre>\nfor (let i = 0; i < 5; i++) {\n  console.log(\"Number: \" + i);\n}\n  </pre>\n\n  <h2>while Loop</h2>\n  <p>The <code>while</code> loop runs as long as a condition is true.</p>\n  <pre>\nlet count = 0;\n\nwhile (count < 3) {\n  console.log(\"Count: \" + count);\n  count++;\n}\n  </pre>\n\n  <h2>do...while Loop</h2>\n  <p>The <code>do...while</code> loop runs the code block at least once before checking the condition.</p>\n  <pre>\nlet num = 1;\n\ndo {\n  console.log(\"Number is: \" + num);\n  num++;\n} while (num <= 3);\n  </pre>\n\n  <h2>for...of Loop</h2>\n  <p>The <code>for...of</code> loop is useful for iterating over arrays or strings.</p>\n  <pre>\nlet fruits = [\"apple\", \"banana\", \"cherry\"];\n\nfor (let fruit of fruits) {\n  console.log(fruit);\n}\n  </pre>\n\n  <h2>break and continue</h2>\n  <p><code>break</code> exits the loop early, and <code>continue</code> skips to the next iteration.</p>\n  <pre>\nfor (let i = 1; i <= 5; i++) {\n  if (i === 3) continue;\n  if (i === 5) break;\n  console.log(i);\n}\n// Output: 1, 2, 4\n  </pre>",
@@ -76,7 +139,7 @@
         ]
     },
     "yjY25mTzuIGbnYLD2C3M": {
-        "id": 5,
+        "id": 8,
         "parent": "js101",
         "title": "Functions",
         "default": "let greeted = \"\"\n",
@@ -99,7 +162,7 @@
     "aYs6sAmJmXwjXjab4otR": {
         "parent": "js101",
         "title": "Arrays",
-        "id": 6,
+        "id": 9,
         "content": "<p>An array is a special variable that can hold multiple values at once.</p>\n\n<h2>Creating an Array</h2>\n<pre>let fruits = [\"apple\", \"banana\", \"cherry\"];\nconsole.log(fruits);</pre>\n\n<h2>Accessing Array Elements</h2>\n<p>You access array elements by their index (starting at 0).</p>\n<pre>console.log(fruits[0]); // \"apple\"\nconsole.log(fruits[2]); // \"cherry\"</pre>\n\n<h2>Changing Values</h2>\n<pre>fruits[1] = \"blueberry\";\nconsole.log(fruits); // [\"apple\", \"blueberry\", \"cherry\"]</pre>\n\n<h2>Array Length</h2>\n<p>Use the <code>length</code> property to find the number of items in an array.</p>\n<pre>console.log(fruits.length); // 3</pre>\n\n<h2>Common Array Methods</h2>\n<ul>\n<li><code>push()</code> \u2013 Add to the end</li>\n<li><code>pop()</code> \u2013 Remove from the end</li>\n<li><code>shift()</code> \u2013 Remove from the beginning</li>\n<li><code>unshift()</code> \u2013 Add to the beginning</li>\n<li><code>indexOf()</code> \u2013 Find the index of an item</li>\n</ul>\n<pre>fruits.push(\"date\");\nconsole.log(fruits); // [\"apple\", \"blueberry\", \"cherry\", \"date\"]\n\nfruits.pop();\nconsole.log(fruits); // [\"apple\", \"blueberry\", \"cherry\"]</pre>\n\n<h2>Looping Through Arrays</h2>\n<pre>for (let i = 0; i &lt; fruits.length; i++) {\n  console.log(fruits[i]);\n}\n\nfor (let fruit of fruits) {\n  console.log(fruit);\n}</pre>\n\n<h2>Why Use Arrays?</h2>\n<ul>\n<li>Store multiple values in a single variable</li>\n<li>Easily organize and loop through data</li>\n<li>Use powerful built-in methods to manipulate data</li>\n</ul>",
         "tasks": [
             {
@@ -117,7 +180,7 @@
         ]
     },
     "hBFHgiZuAlymlPzQq7AS": {
-        "id": 7,
+        "id": 10,
         "title": "Objects",
         "parent": "js101",
         "content": "<p>Objects are used to store related data and functionality in key-value pairs.</p>\n\n<h2>Creating an Object</h2>\n<pre>let person = {\n  name: \"Alice\",\n  age: 25,\n  isStudent: true\n};</pre>\n\n<h2>Accessing Properties</h2>\n<pre>console.log(person.name); // \"Alice\"\nconsole.log(person[\"age\"]); // 25</pre>\n\n<h2>Modifying Properties</h2>\n<pre>person.age = 26;\nperson[\"isStudent\"] = false;\nconsole.log(person);</pre>\n\n<h2>Adding New Properties</h2>\n<pre>person.city = \"New York\";\nconsole.log(person);</pre>\n\n<h2>Deleting Properties</h2>\n<pre>delete person.isStudent;\nconsole.log(person);</pre>\n\n<h2>Objects with Functions (Methods)</h2>\n<pre>let user = {\n  name: \"Bob\",\n  greet: function() {\n    console.log(\"Hello, \" + this.name);\n  }\n};\nuser.greet();</pre>\n\n<h2>Why Use Objects?</h2>\n<ul>\n<li>Group related data together</li>\n<li>Model real-world entities (e.g. users, cars, settings)</li>\n<li>Use methods to add behavior to data</li>\n</ul>",
@@ -138,7 +201,7 @@
         ]
     },
     "IL9bIq9ByaJr6KVLSyDX": {
-        "id": 8,
+        "id": 11,
         "parent": "js101",
         "title": "Classes",
         "default": "class Person {\n  constructor(name) {\n    this.name = name\n  }\n}",
