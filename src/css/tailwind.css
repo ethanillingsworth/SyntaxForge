@@ -69,7 +69,15 @@
     }
 
     header {
-        @apply bg-forge-surface border-b-2 border-forge-muted p-4 text-2xl font-bold row gap-9 sticky top-0 h-16
+        @apply bg-forge-surface border-b-2 border-forge-muted p-4 text-lg font-bold row gap-2 sticky top-0 h-auto flex-wrap place-content-center md:text-2xl md:flex-nowrap md:gap-9 md:place-content-start
+    }
+
+    #head {
+        @apply w-full text-center text-xl md:text-2xl md:w-auto
+    }
+
+    #back {
+        @apply lg:ml-auto
     }
 
     header a {

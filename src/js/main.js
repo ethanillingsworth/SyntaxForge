@@ -1,4 +1,4 @@
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
 import { auth, db } from "./firebase.js";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import '../css/tailwind.css';
@@ -183,3 +183,7 @@ export function safeEval(input, test) {
     return { res: a(), logs: logs };
 
 }
+
+onAuthStateChanged(auth, () => {
+    $("#login").addClass("hidden")
+})
