@@ -1,0 +1,7 @@
+{
+    "js101": {
+        "name": "Intro to JavaScript",
+        "desc": "Master the core building blocks of JavaScript with hands-on lessons. This course lays a strong foundation for writing logic, organizing data, and creating structured, interactive code—perfect for aspiring developers taking their first steps into programming.",
+        "lang": "javascript"
+    }
+}

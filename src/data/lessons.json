@@ -1,0 +1,157 @@
+{
+    "zXtKRwB1rw4XMRXcE5Fn": {
+        "id": 1,
+        "parent": "js101",
+        "title": "Variables and Data Types",
+        "content": "<h2>What is a Variable?</h2>\n  <p>\n    A variable is a container for storing data values. In JavaScript, you can declare a variable using <code>var</code>, <code>let</code>, or <code>const</code>.\n  </p>\n\n  <pre><code>// Example:\nlet name = \"Alice\";\nconst age = 25;\nvar isStudent = true;\n</code></pre>\n\n  <h2>Variable Keywords</h2>\n  <ul>\n    <li><strong>let</strong> \u2013 block-scoped, can be reassigned.</li>\n    <li><strong>const</strong> \u2013 block-scoped, cannot be reassigned.</li>\n    <li><strong>var</strong> \u2013 function-scoped, older and less recommended.</li>\n  </ul>\n\n  <h2>Common Data Types</h2>\n  <ul>\n    <li><strong>String</strong> \u2013 text, e.g. <code>\"Hello\"</code></li>\n    <li><strong>Number</strong> \u2013 numeric values, e.g. <code>42</code></li>\n    <li><strong>Boolean</strong> \u2013 true or false</li>\n    <li><strong>Undefined</strong> \u2013 a variable declared but not assigned</li>\n    <li><strong>Null</strong> \u2013 intentionally empty value</li>\n    <li><strong>Object</strong> \u2013 complex data structures (arrays, functions, etc.)</li>\n  </ul>\n\n  <h2>Examples:</h2>\n  <pre><code>let city = \"New York\";        // String\nlet year = 2025;              // Number\nlet isLoggedIn = false;       // Boolean\nlet score;                    // Undefined\nlet empty = null;             // Null\nlet user = { name: \"Ellie\" }; // Object\n</code></pre>\n\n  <h2>Quick Tip</h2>\n  <p>\n    Use <code>typeof</code> to check the type of a variable:\n  </p>\n  <pre><code>console.log(typeof city); // \"string\"\nconsole.log(typeof year); // \"number\"\n</code></pre>",
+        "tasks": [
+            {
+                "check": "typeof myName == \"string\"",
+                "text": "Make a String variable called myName"
+            },
+            {
+                "check": "typeof age == \"number\"",
+                "text": "Create a Number variable called age"
+            },
+            {
+                "text": "Create a Boolean variable called isStudent",
+                "check": "typeof isStudent == \"boolean\""
+            }
+        ]
+    },
+    "ikWyuQmAifhepuY3zivt": {
+        "title": "Operators",
+        "id": 2,
+        "parent": "js101",
+        "content": "<p>Operators are used to perform operations on values and variables. JavaScript supports different types of operators.</p>\n\n  <h2>Arithmetic Operators</h2>\n  <p>Used to perform basic math operations:</p>\n  <ul>\n    <li><code>+</code> Addition</li>\n    <li><code>-</code> Subtraction</li>\n    <li><code>*</code> Multiplication</li>\n    <li><code>/</code> Division</li>\n    <li><code>%</code> Modulus</li>\n    <li><code>**</code> Exponentiation</li>\n  </ul>\n  <pre>\nlet x = 10;\nlet y = 2;\nconsole.log(x + y); // 12\nconsole.log(x % y); // 0\n  </pre>\n\n  <h2>Comparison Operators</h2>\n  <p>Used to compare values and return true or false:</p>\n  <ul>\n    <li><code>==</code> Equal to (loose)</li>\n    <li><code>===</code> Equal to (strict)</li>\n    <li><code>!=</code> Not equal (loose)</li>\n    <li><code>!==</code> Not equal (strict)</li>\n    <li><code>&gt;</code>, <code>&lt;</code>, <code>&gt;=</code>, <code>&lt;=</code> Greater/less than</li>\n  </ul>\n  <pre>\nconsole.log(5 == \"5\");  // true\nconsole.log(5 === \"5\"); // false\n  </pre>\n\n  <h2>Logical Operators</h2>\n  <p>Used for boolean logic:</p>\n  <ul>\n    <li><code>&&</code> AND</li>\n    <li><code>||</code> OR</li>\n    <li><code>!</code> NOT</li>\n  </ul>\n  <pre>\nlet a = true;\nlet b = false;\nconsole.log(a && b); // false\nconsole.log(a || b); // true\nconsole.log(!a);     // false\n  </pre>\n\n  <h2>Assignment Operators</h2>\n  <p>Used to assign values to variables:</p>\n  <ul>\n    <li><code>=</code> Assign</li>\n    <li><code>+=</code> Add and assign</li>\n    <li><code>-=</code> Subtract and assign</li>\n    <li><code>*=</code>, <code>/=</code> Multiply/divide and assign</li>\n  </ul>\n  <pre>\nlet num = 5;\nnum += 3; // num is now 8\n  </pre>",
+        "tasks": [
+            {
+                "check": "result === 8",
+                "text": "Create a variable called result and set it to 5 + 3"
+            },
+            {
+                "check": "remainder === 1",
+                "text": "Create a variable called remainder and set it to 10 % 3"
+            },
+            {
+                "check": "isEqual == true",
+                "text": "Create a variable called isEqual and set it to whether 5 == '5'"
+            }
+        ]
+    },
+    "D2yjhqRhs4bZ2ZLIZk32": {
+        "id": 3,
+        "parent": "js101",
+        "title": "Conditional Statements",
+        "content": "<p>Conditional statements are used to perform different actions based on different conditions.</p>\n\n  <h2>if Statement</h2>\n  <p>The <code>if</code> statement runs a block of code if a condition is true.</p>\n  <pre>\nlet age = 18;\n\nif (age >= 18) {\n  console.log(\"You are an adult.\");\n}\n  </pre>\n\n  <h2>if...else Statement</h2>\n  <p>The <code>if...else</code> statement runs one block if the condition is true, and another if it is false.</p>\n  <pre>\nlet isRaining = true;\n\nif (isRaining) {\n  console.log(\"Take an umbrella.\");\n} else {\n  console.log(\"Enjoy the sunshine!\");\n}\n  </pre>\n\n  <h2>else if Statement</h2>\n  <p>Use <code>else if</code> to test multiple conditions.</p>\n  <pre>\nlet score = 85;\n\nif (score >= 90) {\n  console.log(\"Grade: A\");\n} else if (score >= 80) {\n  console.log(\"Grade: B\");\n} else {\n  console.log(\"Keep studying!\");\n}\n  </pre>\n\n  <h2>switch Statement</h2>\n  <p>The <code>switch</code> statement is used to perform different actions based on different values.</p>\n  <pre>\nlet day = \"Monday\";\n\nswitch (day) {\n  case \"Monday\":\n    console.log(\"Start of the week!\");\n    break;\n  case \"Friday\":\n    console.log(\"Almost weekend!\");\n    break;\n  default:\n    console.log(\"Just another day.\");\n}\n  </pre>",
+        "tasks": [
+            {
+                "text": "Create a variable age set to 18, then use an if statement to set output to \"You are an adult.\" if age is 18 or more",
+                "check": "output === \"You are an adult.\""
+            },
+            {
+                "check": "dayMessage === \"Start of the week!\"",
+                "text": "Create a variable day set to \"Monday\" and use a switch statement to set dayMessage to \"Start of the week!\""
+            }
+        ]
+    },
+    "Hxq9RwJHlpievmU3r3R4": {
+        "id": 4,
+        "parent": "js101",
+        "title": "Loops",
+        "content": "<p>Loops let you run the same block of code multiple times. JavaScript provides several types of loops.</p>\n\n  <h2>for Loop</h2>\n  <p>Use a <code>for</code> loop when you know how many times you want to run the code.</p>\n  <pre>\nfor (let i = 0; i < 5; i++) {\n  console.log(\"Number: \" + i);\n}\n  </pre>\n\n  <h2>while Loop</h2>\n  <p>The <code>while</code> loop runs as long as a condition is true.</p>\n  <pre>\nlet count = 0;\n\nwhile (count < 3) {\n  console.log(\"Count: \" + count);\n  count++;\n}\n  </pre>\n\n  <h2>do...while Loop</h2>\n  <p>The <code>do...while</code> loop runs the code block at least once before checking the condition.</p>\n  <pre>\nlet num = 1;\n\ndo {\n  console.log(\"Number is: \" + num);\n  num++;\n} while (num <= 3);\n  </pre>\n\n  <h2>for...of Loop</h2>\n  <p>The <code>for...of</code> loop is useful for iterating over arrays or strings.</p>\n  <pre>\nlet fruits = [\"apple\", \"banana\", \"cherry\"];\n\nfor (let fruit of fruits) {\n  console.log(fruit);\n}\n  </pre>\n\n  <h2>break and continue</h2>\n  <p><code>break</code> exits the loop early, and <code>continue</code> skips to the next iteration.</p>\n  <pre>\nfor (let i = 1; i <= 5; i++) {\n  if (i === 3) continue;\n  if (i === 5) break;\n  console.log(i);\n}\n// Output: 1, 2, 4\n  </pre>",
+        "tasks": [
+            {
+                "text": "Use a for loop to add the numbers 1 through 5 and store the result in a variable called sum",
+                "check": "sum === 15"
+            },
+            {
+                "text": "Create a while loop that adds numbers 0 to 2 to a string variable called output",
+                "check": "output === \"012\""
+            },
+            {
+                "text": "Use a do...while loop to build a string result that contains numbers 1 to 3",
+                "check": "result === \"123\""
+            }
+        ]
+    },
+    "yjY25mTzuIGbnYLD2C3M": {
+        "id": 5,
+        "parent": "js101",
+        "title": "Functions",
+        "default": "let greeted = \"\"\n",
+        "content": "<p>Functions are blocks of code designed to perform a particular task. They help you organize and reuse code.</p>\n\n  <h2>Declaring a Function</h2>\n  <p>Use the <code>function</code> keyword followed by a name, parentheses, and a block of code.</p>\n  <pre>\nfunction greet() {\n  console.log(\"Hello!\");\n}\ngreet(); // Calls the function\n</pre>\n\n  <h2>Function Parameters</h2>\n  <p>Functions can take input values called <em>parameters</em>.</p>\n  <pre>\nfunction greet(name) {\n  console.log(\"Hello, \" + name + \"!\");\n}\ngreet(\"Alice\"); // Output: Hello, Alice!\n</pre>\n\n  <h2>Return Values</h2>\n  <p>Functions can return values using the <code>return</code> keyword.</p>\n  <pre>\nfunction add(a, b) {\n  return a + b;\n}\nlet result = add(3, 4);\nconsole.log(result); // 7\n</pre>\n\n  <h2>Function Expressions</h2>\n  <p>You can also assign functions to variables.</p>\n  <pre>\nconst sayHi = function() {\n  console.log(\"Hi there!\");\n};\nsayHi();\n</pre>\n\n  <h2>Arrow Functions</h2>\n  <p>Arrow functions are a shorter way to write functions.</p>\n  <pre>\nconst multiply = (x, y) => {\n  return x * y;\n};\nconsole.log(multiply(2, 5)); // 10\n</pre>\n\n  <h2>Why Use Functions?</h2>\n  <ul>\n    <li>Reuse code easily</li>\n    <li>Keep your code organized</li>\n    <li>Make your programs easier to read and maintain</li>\n  </ul>",
+        "tasks": [
+            {
+                "check": "typeof greet === \"function\"",
+                "text": "Create a function called greet"
+            },
+            {
+                "check": "greet('Sam'); greeted === \"Hello, Sam!\"",
+                "text": "Make a function called greet that takes a name and sets greeted to 'Hello, ' followed by the name and an exclamation mark"
+            },
+            {
+                "check": "sum === 9",
+                "text": "Create a function called add that takes two numbers and returns their sum. Call it with 4 and 5 and store the result in sum"
+            }
+        ]
+    },
+    "aYs6sAmJmXwjXjab4otR": {
+        "parent": "js101",
+        "title": "Arrays",
+        "id": 6,
+        "content": "<p>An array is a special variable that can hold multiple values at once.</p>\n\n<h2>Creating an Array</h2>\n<pre>let fruits = [\"apple\", \"banana\", \"cherry\"];\nconsole.log(fruits);</pre>\n\n<h2>Accessing Array Elements</h2>\n<p>You access array elements by their index (starting at 0).</p>\n<pre>console.log(fruits[0]); // \"apple\"\nconsole.log(fruits[2]); // \"cherry\"</pre>\n\n<h2>Changing Values</h2>\n<pre>fruits[1] = \"blueberry\";\nconsole.log(fruits); // [\"apple\", \"blueberry\", \"cherry\"]</pre>\n\n<h2>Array Length</h2>\n<p>Use the <code>length</code> property to find the number of items in an array.</p>\n<pre>console.log(fruits.length); // 3</pre>\n\n<h2>Common Array Methods</h2>\n<ul>\n<li><code>push()</code> \u2013 Add to the end</li>\n<li><code>pop()</code> \u2013 Remove from the end</li>\n<li><code>shift()</code> \u2013 Remove from the beginning</li>\n<li><code>unshift()</code> \u2013 Add to the beginning</li>\n<li><code>indexOf()</code> \u2013 Find the index of an item</li>\n</ul>\n<pre>fruits.push(\"date\");\nconsole.log(fruits); // [\"apple\", \"blueberry\", \"cherry\", \"date\"]\n\nfruits.pop();\nconsole.log(fruits); // [\"apple\", \"blueberry\", \"cherry\"]</pre>\n\n<h2>Looping Through Arrays</h2>\n<pre>for (let i = 0; i &lt; fruits.length; i++) {\n  console.log(fruits[i]);\n}\n\nfor (let fruit of fruits) {\n  console.log(fruit);\n}</pre>\n\n<h2>Why Use Arrays?</h2>\n<ul>\n<li>Store multiple values in a single variable</li>\n<li>Easily organize and loop through data</li>\n<li>Use powerful built-in methods to manipulate data</li>\n</ul>",
+        "tasks": [
+            {
+                "check": "Array.isArray(colors) && colors.length === 3",
+                "text": "Create an array called colors with three color names"
+            },
+            {
+                "check": "firstColor === colors[0]",
+                "text": "Create a variable firstColor and set it to the first item in the colors array"
+            },
+            {
+                "check": "colors[1] === \"green\"",
+                "text": "Change the second item in the colors array to \"green\""
+            }
+        ]
+    },
+    "hBFHgiZuAlymlPzQq7AS": {
+        "id": 7,
+        "title": "Objects",
+        "parent": "js101",
+        "content": "<p>Objects are used to store related data and functionality in key-value pairs.</p>\n\n<h2>Creating an Object</h2>\n<pre>let person = {\n  name: \"Alice\",\n  age: 25,\n  isStudent: true\n};</pre>\n\n<h2>Accessing Properties</h2>\n<pre>console.log(person.name); // \"Alice\"\nconsole.log(person[\"age\"]); // 25</pre>\n\n<h2>Modifying Properties</h2>\n<pre>person.age = 26;\nperson[\"isStudent\"] = false;\nconsole.log(person);</pre>\n\n<h2>Adding New Properties</h2>\n<pre>person.city = \"New York\";\nconsole.log(person);</pre>\n\n<h2>Deleting Properties</h2>\n<pre>delete person.isStudent;\nconsole.log(person);</pre>\n\n<h2>Objects with Functions (Methods)</h2>\n<pre>let user = {\n  name: \"Bob\",\n  greet: function() {\n    console.log(\"Hello, \" + this.name);\n  }\n};\nuser.greet();</pre>\n\n<h2>Why Use Objects?</h2>\n<ul>\n<li>Group related data together</li>\n<li>Model real-world entities (e.g. users, cars, settings)</li>\n<li>Use methods to add behavior to data</li>\n</ul>",
+        "default": "const person = {\n  isStudent: true\n}",
+        "tasks": [
+            {
+                "check": "typeof person === 'object' && person.name === 'Alice'",
+                "text": "Create an object called person with a property name set to 'Alice'"
+            },
+            {
+                "check": "person.age === 30",
+                "text": "Add a property age with value 30 to the person object"
+            },
+            {
+                "check": "!('isStudent' in person)",
+                "text": "Remove a property isStudent from the person object"
+            }
+        ]
+    },
+    "IL9bIq9ByaJr6KVLSyDX": {
+        "id": 8,
+        "parent": "js101",
+        "title": "Classes",
+        "default": "class Person {\n  constructor(name) {\n    this.name = name\n  }\n}",
+        "content": "<p>Classes are templates for creating objects. They let you define reusable blueprints for objects with properties and methods.</p>\n\n<h2>Defining a Class</h2>\n<pre>class Person {\n  constructor(name, age) {\n    this.name = name;\n    this.age = age;\n  }\n\n  greet() {\n    console.log(\"Hi, my name is \" + this.name);\n  }\n}</pre>\n\n<h2>Creating an Object from a Class</h2>\n<pre>let alice = new Person(\"Alice\", 25);\nalice.greet(); // \"Hi, my name is Alice\"</pre>\n\n<h2>Adding Methods</h2>\n<pre>class Calculator {\n  add(a, b) {\n    return a + b;\n  }\n\n  subtract(a, b) {\n    return a - b;\n  }\n}\n\nlet calc = new Calculator();\nconsole.log(calc.add(3, 2)); // 5</pre>\n\n<h2>Inheritance</h2>\n<p>You can create a class that inherits from another using <code>extends</code>.</p>\n<pre>class Animal {\n  speak() {\n    console.log(\"Animal speaks\");\n  }\n}\n\nclass Dog extends Animal {\n  speak() {\n    console.log(\"Woof!\");\n  }\n}\n\nlet pet = new Dog();\npet.speak(); // \"Woof!\"</pre>\n\n<h2>Why Use Classes?</h2>\n<ul>\n<li>Organize related code into reusable templates</li>\n<li>Create multiple objects from one blueprint</li>\n<li>Use inheritance to share behavior across classes</li>\n</ul>",
+        "tasks": [
+            {
+                "check": "typeof alice === 'object' && alice.name === 'Alice'",
+                "text": "Create an instance alice of Person with a name property set to 'Alice'"
+            },
+            {
+                "check": "typeof alice.greet === 'function' && alice.greet() == 'Hi, my name is Alice'",
+                "text": "Add a method greet to Person that returns 'Hi, my name is ' plus the name"
+            }
+        ]
+    }
+}

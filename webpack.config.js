@@ -68,6 +68,10 @@ export default {
                     to: '',                 // output it at the root of /public
                 },
                 {
+                    from: 'src/data/',
+                    to: 'data',
+                },
+                {
                     from: "src/ads.txt",
                     to: ''
                 },

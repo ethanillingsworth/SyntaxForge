@@ -1,8 +1,15 @@
-import { createUserWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth, db } from "./firebase.js";
-import { collection, doc, getDoc, getDocs, orderBy, query, setDoc, where } from "firebase/firestore";
+import { doc, getDoc, setDoc } from "firebase/firestore";
 import '../css/tailwind.css';
 import $ from "jquery"
+
+
+
+const lessons = await (await fetch("/data/lessons.json")).json() || {}
+const courses = await (await fetch("/data/courses.json")).json() || {}
+
+
 
 export class User {
     constructor(uid) {
@@ -75,19 +82,9 @@ export class Lesson {
         this.id = id
     }
 
-    async update(data) {
-        await setDoc(doc(db, `lessons/${this.id}`), data, { merge: true })
-    }
-
     async get() {
-        const r = await getDoc(doc(db, `lessons/${this.id}`))
 
-        if (r.exists()) {
-            return r.data()
-        }
-        else {
-            return {}
-        }
+        return lessons[this.id] || {}
     }
 }
 
@@ -97,45 +94,33 @@ export class Course {
     }
 
     async getLessons() {
-        const q = query(collection(db, "lessons"), where("parent", "==", this.id), orderBy("id"))
-        const d = await getDocs(q)
-        const l = []
+        const filtered = Object.entries(lessons)
+            .filter(([key, lesson]) => lesson.parent === this.id)
+            .sort((a, b) => {
+                const idA = parseInt(a[1].id)
+                const idB = parseInt(b[1].id)
+                return idA - idB
+            })
 
-        for (const lesson of d.docs) {
-            l.push(new Lesson(lesson.id))
-        }
-
+        const l = filtered.map(([key]) => new Lesson(key))
         return l
     }
 
     static async getAll() {
-        const q = query(collection(db, "courses"))
-        const d = await getDocs(q)
-        const l = []
-
-        for (const course of d.docs) {
-            l.push(new Course(course.id))
-        }
-
-        return l
+        return Object.keys(courses).map((id) => { return new Course(id) })
     }
 
     async getLessonID(num) {
-        const q = query(collection(db, "lessons"), where("parent", "==", this.id), where("id", "==", num))
-        const d = await getDocs(q)
+        const match = Object.entries(lessons)
+            .find(
+                ([key, lesson]) => lesson.parent === this.id && lesson.id === num
+            )
 
-        return d.docs[0].id || null
+        return match ? match[0] : null
     }
 
     async get() {
-        const r = await getDoc(doc(db, `courses/${this.id}`))
-
-        if (r.exists()) {
-            return r.data()
-        }
-        else {
-            return {}
-        }
+        return courses[this.id] || {}
     }
 
     async display(userData, on = "#avail") {
@@ -150,10 +135,10 @@ export class Course {
 
         let num = 0;
         if (Object.keys(data).length > 0) {
-            const lessons = await this.getLessons()
-            const total = lessons.length
+            const l = await this.getLessons()
+            const total = l.length
 
-            for (const lesson of lessons) {
+            for (const lesson of l) {
                 if (userData.lessons[lesson.id] && userData.lessons[lesson.id].finished) {
                     $(`#${lesson.id}`).addClass("gradient-bg")
                     num++
