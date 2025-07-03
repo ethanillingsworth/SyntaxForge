@@ -123,7 +123,9 @@ export class Course {
         return courses[this.id] || {}
     }
 
-    async display(userData, on = "#avail") {
+    async display(id = "nouser") {
+
+        const userData = await new User(id).get()
 
         const data = await this.get()
 
@@ -134,6 +136,7 @@ export class Course {
 
 
         let num = 0;
+        let percent = 0
         if (Object.keys(data).length > 0) {
             const l = await this.getLessons()
             const total = l.length
@@ -145,12 +148,15 @@ export class Course {
                 }
             }
 
-            let percent = Math.round((num / total) * 100) || 0
+            percent = Math.round((num / total) * 100) || 0
             progress.val(percent)
 
         }
         link.append(name, desc, progress)
-
+        let on = $("#yours")
+        if (percent == 0) {
+            on = $("#avail")
+        }
         $(on).append(link)
 
 

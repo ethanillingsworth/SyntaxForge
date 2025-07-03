@@ -14,14 +14,8 @@ onAuthStateChanged(auth, async () => {
         id = "nouser"
     }
 
-    const userData = await new User(id).get()
     for (const course of courses) {
-        let on = $("#avail")
 
-        if (userData && userData.lessons) {
-            on = $("#yours")
-        }
-
-        await course.display(userData, on)
+        await course.display(id)
     }
 })

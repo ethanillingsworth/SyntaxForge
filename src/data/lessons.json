@@ -335,5 +335,145 @@
                 "check": "titleCase('jAVaSCRipt rOCks') === 'Javascript Rocks'"
             }
         ]
+    },
+    "7903d41f-4cde-4e49-8360-2452645e1a07": {
+        "id": 1,
+        "parent": "js102",
+        "title": "Scope and Hoisting",
+        "default": "function testScope() {\n  let scopedVar;\n}\n\nvar x;\nconst PI = 3.14;",
+        "content": "<p>JavaScript has function and block scope. <code>var</code> is function-scoped, while <code>let</code> and <code>const</code> are block-scoped.</p>\n\n<h2>Hoisting</h2>\n<p>Variable declarations with <code>var</code> are 'hoisted' to the top of their scope, but not the assignments.</p>\n<pre><code>console.log(x); // undefined\nvar x = 5;</code></pre>\n<p>With <code>let</code> and <code>const</code>, using the variable before declaring throws an error.</p>",
+        "tasks": [
+            {
+                "text": "Declare a block-scoped variable inside a function using let",
+                "check": "typeof scopedVar !== 'undefined'"
+            },
+            {
+                "text": "Demonstrate hoisting by using var before it's declared",
+                "check": "typeof x === 'undefined'"
+            },
+            {
+                "text": "Declare a const variable named PI with value 3.14",
+                "check": "PI === 3.14"
+            }
+        ]
+    },
+    "ac6b59ee-a980-496b-bb30-6af99add5165": {
+        "id": 2,
+        "parent": "js102",
+        "title": "Array Methods: map, filter, reduce",
+        "default": "const numbers = [1, 2, 3, 4, 5];\n\n// use map, filter, reduce here",
+        "content": "<p>JavaScript arrays have powerful methods to process and transform data.</p>\n\n<h2>map()</h2>\n<pre><code>const doubled = numbers.map(n => n * 2);</code></pre>\n\n<h2>filter()</h2>\n<pre><code>const evens = numbers.filter(n => n % 2 === 0);</code></pre>\n\n<h2>reduce()</h2>\n<pre><code>const sum = numbers.reduce((a, b) => a + b, 0);</code></pre>",
+        "tasks": [
+            {
+                "text": "Use map to create a new array that doubles each number in numbers",
+                "check": "JSON.stringify(numbers.map(n => n * 2)) === '[2,4,6,8,10]'"
+            },
+            {
+                "text": "Use filter to create an array of even numbers from numbers",
+                "check": "JSON.stringify(numbers.filter(n => n % 2 === 0)) === '[2,4]'"
+            },
+            {
+                "text": "Use reduce to sum all the values in numbers",
+                "check": "numbers.reduce((a,b)=>a+b,0) === 15"
+            }
+        ]
+    },
+    "a3b28551-aa2b-4d05-aa92-7e773d36d748": {
+        "id": 3,
+        "parent": "js102",
+        "title": "Destructuring and Spread/Rest",
+        "default": "const arr = [1, 2, 3];\nconst obj = { name: 'Alex', age: 30 };\n\nlet first, second;\nlet userName, userAge;\nfunction sum(...args) {\n  // your code here\n}",
+        "content": "<p>Destructuring lets you unpack values from arrays or properties from objects into variables.</p>\n\n<h2>Array Destructuring</h2>\n<pre><code>const [a, b] = [1, 2];</code></pre>\n\n<h2>Object Destructuring</h2>\n<pre><code>const { name, age } = { name: 'Alex', age: 30 };</code></pre>\n\n<h2>Spread Operator</h2>\n<pre><code>const newArr = [...arr];</code></pre>\n\n<h2>Rest Parameter</h2>\n<pre><code>function sum(...args) { return args.reduce((a,b) => a + b, 0); }</code></pre>",
+        "tasks": [
+            {
+                "text": "Use array destructuring to assign the first and second values of arr to variables first and second",
+                "check": "first === 1 && second === 2"
+            },
+            {
+                "text": "Use object destructuring to assign name and age from obj to userName and userAge",
+                "check": "userName === 'Alex' && userAge === 30"
+            },
+            {
+                "text": "Use a rest parameter to create a function sum that returns the sum of any number of arguments",
+                "check": "sum(1,2,3) === 6"
+            }
+        ]
+    },
+    "9a4a8e60-36f8-41e3-802f-2c73e0f3beae": {
+        "id": 4,
+        "parent": "js102",
+        "title": "Truthy/Falsy & Short-Circuiting",
+        "default": "let value;\nlet access = true;\nlet result = value || 'default';\nif (access) result = 'granted';",
+        "content": "<p>JavaScript treats certain values as truthy or falsy in conditionals. Short-circuiting allows for fallback logic using <code>||</code> and <code>&&</code>.</p>\n<pre><code>console.log(0 || 'default'); // 'default'\nconsole.log(1 && 'yes');     // 'yes'</code></pre>",
+        "tasks": [
+            {
+                "text": "Use || to assign 'default' if a value is falsy",
+                "check": "result === 'default'"
+            },
+            {
+                "text": "Use && to assign 'granted' only if access is true",
+                "check": "result === 'granted'"
+            }
+        ]
+    },
+    "9fe2694a-7b90-4ac9-a69b-7d7a464eb7e3": {
+        "id": 5,
+        "parent": "js102",
+        "title": "Callback Functions",
+        "default": "function greet(name, callback) {\n  return callback(name);\n}\n\nfunction sayHello(name) {\n  // your code here\n}",
+        "content": "<p>A callback is a function passed into another function to be called later.</p>\n<pre><code>function sayHello(name) {\n  console.log('Hello ' + name);\n}\n\ngreet('Sam', sayHello);</code></pre>",
+        "tasks": [
+            {
+                "text": "Pass a function as a callback to greet and produce 'Hello Sam'",
+                "check": "greet('Sam', n => 'Hello ' + n) === 'Hello Sam'"
+            }
+        ]
+    },
+    "68aa96fa-bb64-4f45-9837-5e0df0d0616b": {
+        "id": 6,
+        "parent": "js102",
+        "title": "Closures",
+        "default": "function makeCounter() {\n  let count = 0;\n  return function() {\n    // your code here\n  }\n}",
+        "content": "<p>A closure is a function that remembers the variables in its lexical scope.</p>\n<pre><code>const counter = makeCounter();\ncounter(); // 1\ncounter(); // 2</code></pre>",
+        "tasks": [
+            {
+                "text": "Use closure to preserve state across function calls",
+                "check": "typeof makeCounter === 'function'"
+            }
+        ]
+    },
+    "c8f48a93-f1e1-4763-bb86-9f17499a64b5": {
+        "id": 7,
+        "parent": "js102",
+        "title": "Set & Map",
+        "default": "const s = new Set();\ns.add(1);\ns.add(2);\n\nconst m = new Map();\nm.set('a', 1);",
+        "content": "<p>Set stores unique values. Map stores key-value pairs.</p>\n<pre><code>s.add(1); s.add(1); // Set only stores 1 once\nm.set('a', 1);</code></pre>",
+        "tasks": [
+            {
+                "text": "Add 2 values to a Set and verify it has size 2",
+                "check": "s.size === 2"
+            },
+            {
+                "text": "Add a key-value pair to a Map and retrieve it",
+                "check": "m.get('a') === 1"
+            }
+        ]
+    },
+    "1b181418-16b7-44a3-9e35-2c349896acc3": {
+        "id": 8,
+        "parent": "js102",
+        "title": "Function Expressions vs Declarations",
+        "default": "const sayHi = function() {\n  // your code here\n};\n\nfunction sayBye() {\n  // your code here\n}",
+        "content": "<p>Function declarations are hoisted, expressions are not.</p>\n<pre><code>sayHi(); // works only after definition\nsayBye(); // works even before definition</code></pre>",
+        "tasks": [
+            {
+                "text": "Declare a function expression assigned to sayHi",
+                "check": "sayHi() === 'Hi'"
+            },
+            {
+                "text": "Declare a function declaration called sayBye",
+                "check": "sayBye() === 'Bye'"
+            }
+        ]
     }
 }
