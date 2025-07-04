@@ -104,7 +104,7 @@
 
     main {
 
-        @apply h-full col overflow-auto p-12 place-content-start
+        @apply h-full col overflow-auto p-6 place-content-start md:p-12
     }
 
     .card p {
