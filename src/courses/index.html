@@ -24,19 +24,25 @@
 </head>
 
 <body>
-    <header class="relative">
-        <a class="gradient-text" href="/">SyntaxForge</a>
+    <header>
+        <a class="gradient-text" id="head" href="/">SyntaxForge</a>
         <a href="/courses">Courses</a>
+        <a href="/editor">Playground</a>
+
+        <div id="back">
+            <a href="/login" id="login">Login</a>
+
+        </div>
     </header>
 
     <main class="place-content-start">
         <h2>Your Courses</h2>
-        <div class="grid grid-cols-3 gap-6" id="yours">
+        <div class="grid grid-cols-1 gap-3 md:grid-cols-3 md:gap-6" id="yours">
 
         </div>
 
         <h2>Available Courses</h2>
-        <div class="grid grid-cols-3 gap-6" id="avail">
+        <div class="grid grid-cols-1 gap-3 md:grid-cols-3 md:gap-6" id="avail">
 
         </div>
     </main>

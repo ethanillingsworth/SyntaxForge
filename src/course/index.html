@@ -8,21 +8,28 @@
 </head>
 
 <body>
-    <header class="relative">
-        <a class="gradient-text" href="/">SyntaxForge</a>
+    <header>
+        <a class="gradient-text" id="head" href="/">SyntaxForge</a>
         <a href="/courses">Courses</a>
+        <a href="/editor">Playground</a>
+
+        <div id="back">
+            <a href="/login" id="login">Login</a>
+
+        </div>
     </header>
 
-    <main class="place-content-start place-items-start row gap-12">
-        <div class="col w-2/3">
-            <h1 class="text-3xl font-extrabold" id="name">Course Name</h1>
-            <p class="text-xl" id="desc">Desc</p>
+    <main class="place-content-start place-items-start row gap-12 flex-wrap md:flex-nowrap">
+        <div class="col w-full md:w-2/3">
+            <h1 class="text-2xl md:text-3xl font-extrabold" id="name">Course Name</h1>
+            <p class="text-lg md:text-xl" id="desc">Desc</p>
             <div class="col w-full mt-3">
-                <h2 id="per">0% Done</h2>
+                <h2 id="per" class="text-lg md:text-2xl">0% Done</h2>
                 <progress id="pbar" value="0" max="100"></progress>
             </div>
         </div>
-        <div class="col w-1/3 overflow-y-auto place-content-start p-4 h-full" id="lessons">
+        <div class="col w-full md:w-1/3 md:overflow-y-auto place-content-start md:p-4 md:h-full text-lg md:text-2xl"
+            id="lessons">
 
         </div>
     </main>

@@ -39,6 +39,14 @@
     @apply hover:scale-100 hover:border-transparent hover:cursor-default
 }
 
+@utility terminal {
+    @apply md:w-1/4 w-full md:h-full h-1/2 col bg-black place-content-start place-items-start font-mono p-4 gap-0.5
+}
+
+@utility text-md {
+    @apply text-base
+}
+
 @layer base {
     body {
         @apply m-0 h-dvh flex flex-col bg-forge-background text-forge-text
@@ -69,7 +77,7 @@
     }
 
     header {
-        @apply bg-forge-surface border-b-2 border-forge-muted p-4 text-lg font-bold row gap-2 sticky top-0 h-auto flex-wrap place-content-center md:text-2xl md:flex-nowrap md:gap-9 md:place-content-start
+        @apply bg-forge-surface border-b-2 border-forge-muted p-4 text-base font-bold row gap-2 sticky top-0 h-auto flex-wrap place-content-center md:text-2xl md:flex-nowrap md:gap-9 md:place-content-start
     }
 
     #head {
@@ -91,15 +99,23 @@
     }
 
     h2 {
-        @apply text-2xl font-semibold
+        @apply text-xl md:text-2xl font-semibold
     }
 
     h3 {
-        @apply font-semibold
+        @apply font-semibold text-md
+    }
+
+    #content h3 {
+        @apply text-lg
+    }
+
+    #tasks h3 {
+        @apply text-sm md:text-md
     }
 
     p {
-        @apply text-forge-subtext
+        @apply text-forge-subtext text-sm
     }
 
     main {
@@ -132,11 +148,11 @@
     }
 
     #content p {
-        @apply text-lg
+        @apply md:text-lg text-md
     }
 
     pre {
-        @apply bg-forge-surface w-full rounded-2xl px-4 py-2
+        @apply bg-forge-surface w-full rounded-2xl px-4 py-2 text-sm md:text-md max-w-full text-wrap
     }
 
     input[type=checkbox] {

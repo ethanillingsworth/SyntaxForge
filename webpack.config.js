@@ -15,6 +15,8 @@ export default {
         courses: "./src/js/courses.js",
         course: "./src/js/course.js",
         lesson: "./src/js/lesson.js",
+        editor: "./src/js/editor.js",
+
     },
     mode: 'development',
     output: {
@@ -95,6 +97,12 @@ export default {
             template: "./src/login/index.html",
             filename: "login/index.html",
             chunks: ['login'],
+            favicon: './src/imgs/logo.png'
+        }),
+        new HtmlWebpackPlugin({
+            template: "./src/editor/index.html",
+            filename: "editor/index.html",
+            chunks: ['editor'],
             favicon: './src/imgs/logo.png'
         }),
         new HtmlWebpackPlugin({

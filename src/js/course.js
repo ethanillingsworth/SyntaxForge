@@ -23,7 +23,7 @@ for (const lesson of lessons) {
 
     const card = $("<a/>").attr("href", `/lesson/${lesson.id}`).addClass("card w-full").attr("id", lesson.id)
 
-    const title = $("<h3/>").text(ldata.title).addClass("text-2xl text-center")
+    const title = $("<h3/>").text(ldata.title).addClass("text-center")
 
     card.append(title)
 

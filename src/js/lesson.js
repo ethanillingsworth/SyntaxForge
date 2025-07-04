@@ -220,31 +220,54 @@ function setupResizer() {
     const right = $('#editor');
     const container = resizer.parent();
     let isDragging = false;
+    const isMobile = window.matchMedia("(max-width: 768px)").matches;
 
-    resizer.on('mousedown', function (e) {
+    resizer.on('mousedown touchstart', function (e) {
         e.preventDefault();
         isDragging = true;
-        $('body').css('cursor', 'col-resize');
+        $('body').css('cursor', isMobile ? 'row-resize' : 'col-resize');
     });
 
-    $(document).on('mousemove', function (e) {
+    $(document).on('mousemove touchmove', function (e) {
         if (!isDragging) return;
 
-        const containerWidth = container.width();
-        const newLeftWidth = e.clientX - container.offset().left;
-        const resizerWidth = resizer.outerWidth();
-        const newRightWidth = containerWidth - newLeftWidth - resizerWidth;
+        let clientX, clientY;
+        if (e.type.startsWith('touch')) {
+            clientX = e.originalEvent.touches[0].clientX;
+            clientY = e.originalEvent.touches[0].clientY;
+        } else {
+            clientX = e.clientX;
+            clientY = e.clientY;
+        }
 
-        left.css('width', newLeftWidth + 'px');
-        right.css('width', newRightWidth + 'px');
+        if (isMobile) {
+            // Vertical resizing on mobile
+            const containerHeight = container.height();
+            const newTopHeight = clientY - container.offset().top;
+            const resizerHeight = resizer.outerHeight();
+            const newBottomHeight = containerHeight - newTopHeight - resizerHeight;
+
+            left.css('height', newTopHeight + 'px');
+            right.css('height', newBottomHeight + 'px');
+        } else {
+            // Horizontal resizing on desktop
+            const containerWidth = container.width();
+            const newLeftWidth = clientX - container.offset().left;
+            const resizerWidth = resizer.outerWidth();
+            const newRightWidth = containerWidth - newLeftWidth - resizerWidth;
+
+            left.css('width', newLeftWidth + 'px');
+            right.css('width', newRightWidth + 'px');
+        }
     });
 
-    $(document).on('mouseup', function () {
+    $(document).on('mouseup touchend', function () {
         if (isDragging) {
             isDragging = false;
             $('body').css('cursor', 'default');
         }
     });
 }
+
 
 setupResizer()

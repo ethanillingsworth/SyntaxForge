@@ -27,6 +27,8 @@
     <header>
         <a class="gradient-text" id="head" href="/">SyntaxForge</a>
         <a href="/courses">Courses</a>
+        <a href="/editor">Playground</a>
+
         <div id="back">
             <a href="/login" id="login">Login</a>
 
@@ -48,11 +50,11 @@
                             Learning</button>
 
                     </a>
-                    <!-- <a href="/editor">
+                    <a href="/editor">
                         <button
                             class="muted px-6 py-2 bg-forge-muted hover:scale-105 transition-transform text-white">Launch
                             Playground</button>
-                    </a> -->
+                    </a>
                 </div>
             </div>
         </section>
@@ -79,15 +81,14 @@
             <h2 class="text-3xl">Editor Preview</h2>
             <div
                 class="row h-96 w-full md:w-3/4 mt-4 gap-0 flex-wrap md:flex-nowrap place-content-start place-items-start">
-                <div class="col md:w-3/4 w-full h-full overflow-hidden gap-0">
+                <div class="col md:w-3/4 w-full h-full overflow-hidden gap-0 place-content-start">
                     <div id="editor" class="w-full h-full"></div>
                     <div
                         class="row w-full bg-forge-surface p-2 place-content-end border-t-2 border-t-forge-accent text-sm">
                         <button id="run">Run Code</button>
                     </div>
                 </div>
-                <div id="output"
-                    class="md:w-1/4 w-full md:h-full h-1/2 col bg-black place-content-start place-items-start font-mono p-4 gap-0.5">
+                <div id="output" class="terminal">
                     <span>Code Sample Terminal v1.0.0</span>
                 </div>
             </div>
