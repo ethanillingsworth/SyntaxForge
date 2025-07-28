@@ -184,6 +184,8 @@ export function safeEval(input, test) {
 
 }
 
-onAuthStateChanged(auth, () => {
-    $("#login").addClass("hidden")
+onAuthStateChanged(auth, (user) => {
+    if (user) {
+        $("#login").addClass("hidden")
+    }
 })

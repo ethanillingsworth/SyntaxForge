@@ -5,13 +5,13 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "command": "npm run build",
+            "command": "npm install; npm run build",
             "name": "Build",
             "request": "launch",
             "type": "node-terminal"
         },
         {
-            "command": "npm run serve",
+            "command": "npm install; npm run serve",
             "name": "Serve",
             "request": "launch",
             "type": "node-terminal"
