@@ -1,22 +1,18 @@
-import { Course, Lesson, safeEval, User } from "./main.js";
+import { Course, Editor, Lesson, safeEval, User } from "./main.js";
 import $ from "jquery"
-import { basicSetup } from "codemirror"
-import { javascript } from "@codemirror/lang-javascript"
-import { basicDark } from "@fsegurai/codemirror-theme-bundle";
 import { auth } from "./firebase.js";
 import { onAuthStateChanged } from "firebase/auth";
-import { indentWithTab } from "@codemirror/commands";
-import { keymap, EditorView } from "@codemirror/view";
 
 
 
-let view = new EditorView({
-    extensions: [basicSetup, keymap.of(indentWithTab), javascript(), basicDark],
 
-    parent: $("#edit")[0]
+const editor = new Editor()
 
-})
+editor.disableTerminal()
 
+const next = $("<button/>").text("Next Lesson").addClass("hidden")
+
+editor.addCustomButton(next)
 
 const pathParts = window.location.pathname.split('/');
 const lessonId = pathParts[pathParts.length - 1];
@@ -52,9 +48,7 @@ onAuthStateChanged(auth, async () => {
     if (dat.lessons && dat.lessons[lesson.id]) {
         const saveData = dat.lessons[lesson.id]
         // update editor
-        view.dispatch({
-            changes: { from: 0, to: view.state.doc.length, insert: saveData.code }
-        });
+        editor.setContent(saveData.code)
 
         // update tasks
         for (let num = 0; num < saveData.checks.length; num++) {
@@ -70,27 +64,27 @@ onAuthStateChanged(auth, async () => {
         // if complete show next button
 
         if (saveData.finished) {
-            $("#next").removeClass("hidden")
+            next.removeClass("hidden")
         }
 
 
     }
 
-    $("#run").on("click", () => {
+    editor.runButton.on("click", () => {
         runUserCode()
 
     })
 
 
     function runUserCode() {
-        const content = view.state.doc.toString()
+        const content = editor.getContent()
         let count = 0;
         let checks = []
         let finished = false
         for (let index = 0; index < data.tasks.length; index++) {
             const test = data.tasks[index]
             try {
-                const res = safeEval(content, ';' + test.check).res
+                const res = editor.safeEval(content, ';' + test.check).res
                 if (res == true) {
                     $(`#task-${index}`).attr("checked", true)
                     count++
@@ -102,11 +96,11 @@ onAuthStateChanged(auth, async () => {
                 }
 
                 if (count == data.tasks.length) {
-                    $("#next").removeClass("hidden")
+                    next.removeClass("hidden")
                     finished = true
                 }
                 else {
-                    $("#next").addClass("hidden")
+                    next.addClass("hidden")
                 }
             }
             catch {
@@ -127,38 +121,8 @@ onAuthStateChanged(auth, async () => {
     }
 })
 
-const editorSize = localStorage.getItem("editorSize") || "16px"
 
-$("#fontsize").val(editorSize)
-
-$(".cm-editor").css("font-size", editorSize)
-
-$("#fontsize").on("change", () => {
-    $(".cm-editor").css("font-size", $("#fontsize").val())
-    localStorage.setItem("editorSize", $("#fontsize").val())
-})
-
-let editing = false;
-
-$("#title").on("click", async () => {
-    if (admin) {
-        if (editing == false) {
-            $("#rendered").addClass("hidden")
-            $("#raw").removeClass("hidden")
-            editing = true
-        }
-        else {
-            editing = false
-            raw = $("#raw").val()
-            $("#rendered").html(raw)
-            $("#rendered").removeClass("hidden")
-            $("#raw").addClass("hidden")
-
-            await lesson.update({ content: raw })
-        }
-    }
-
-})
+// TODO: Implement updating title, content, etc
 
 const data = await lesson.get()
 
@@ -169,10 +133,7 @@ $("#raw").val(data.content)
 $("#title").text(data.title)
 
 if (data.default) {
-    view.dispatch({
-        changes: { from: 0, to: view.state.doc.length, insert: data.default }
-    });
-
+    editor.setContent(data.default)
 }
 
 raw = data.content
@@ -183,7 +144,7 @@ const parentData = await parent.get()
 $("#parent").text(parentData.name).attr("href", "/course/" + parent.id)
 document.title = `SyntaxForge | ${parentData.name}/${data.title}`
 
-$("#next").on("click", async () => {
+next.on("click", async () => {
     const nextLesson = await parent.getLessonID(data.id + 1)
 
     if (nextLesson == null) {

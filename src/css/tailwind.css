@@ -40,16 +40,20 @@
 }
 
 @utility terminal {
-    @apply md:w-1/4 w-full md:h-full h-1/2 col bg-black place-content-start place-items-start font-mono p-4 gap-0.5
+    @apply md:w-1/4 w-full md:h-full overflow-auto h-1/2 col bg-black place-content-start place-items-start font-mono p-4 gap-0.5
 }
 
 @utility text-md {
     @apply text-base
 }
 
+@utility editor {
+    @apply h-full w-full
+}
+
 @layer base {
     body {
-        @apply m-0 h-dvh flex flex-col bg-forge-background text-forge-text
+        @apply m-0 h-dvh flex flex-col bg-forge-background text-forge-text;
     }
 
     #resizer {
@@ -60,7 +64,7 @@
 
 
     .cm-editor {
-        @apply w-full h-full;
+        @apply w-full h-full overflow-auto;
         box-shadow: none !important;
     }
 
