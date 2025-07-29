@@ -1,11 +1,20 @@
+// Firebase funcs
 import { createUserWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
 import { auth, db } from "./firebase.js";
 import { doc, getDoc, setDoc } from "firebase/firestore";
+
+// DOM libs
 import '../css/tailwind.css';
 import $ from "jquery"
 
+// Code Editor stuff
+import { basicSetup } from "codemirror"
+import { javascript } from "@codemirror/lang-javascript"
+import { basicDark } from "@fsegurai/codemirror-theme-bundle";
+import { indentWithTab } from "@codemirror/commands";
+import { keymap, EditorView } from "@codemirror/view";
 
-
+// Load JSON data
 const lessons = await (await fetch("/data/lessons.json")).json() || {}
 const courses = await (await fetch("/data/courses.json")).json() || {}
 
@@ -163,26 +172,122 @@ export class Course {
     }
 }
 
-export function safeEval(input, test) {
 
-    let logs = []
+export class Editor {
+    constructor(parent = $("#editor"), defaultCode = "") {
+        this.wrapper = $("<div>").addClass("editor row gap-0")
 
-    var console = {
-        log: function (text) {
-            logs.push(text)
+        this.col = $("<div/>").addClass("col h-full w-full gap-0 place-content-start place-items-start")
+
+        this.buttons = $("<div/>").addClass("row w-full bg-forge-surface p-2 place-content-end border-t-2 border-t-forge-accent text-sm")
+
+        this.buttonsBack = $("<div/>").addClass("row mr-auto")
+
+        this.buttons.append(this.buttonsBack)
+
+        this.terminal = $("<div/>").addClass("terminal").text("SyntaxForge Terminal v1.0.0")
+
+        this.wrapper.append(this.col, this.terminal)
+
+        this.view = new EditorView({
+            extensions: [basicSetup, keymap.of(indentWithTab), javascript(), basicDark],
+            parent: this.col[0]
+        })
+
+        this.fontSize = $("<select/>").html(`
+            <option>10px</option>
+            <option>12px</option>
+            <option>14px</option>
+            <option selected>16px</option>
+            <option>18px</option>
+            <option>20px</option>`).addClass("muted")
+        
+        const editorSize = localStorage.getItem("editorSize") || "16px"
+        
+        this.fontSize.val(editorSize)
+        
+        this.fontSize.on("change", () => {
+            $(".cm-editor").css("font-size", this.fontSize.val())
+            localStorage.setItem("editorSize", this.fontSize.val())
+        })
+
+        this.runButton = $("<button/>").text("Run Code")
+
+        this.runButton.on("click", () => {
+            this.terminal.text("")
+            for (const log of this.safeEval(this.getContent()).logs) {
+                this.terminal.append($("<span/>").text(log))
+            }
+            this.terminal.scrollTop(this.terminal.get(0).scrollHeight)
+        })
+
+        this.addCustomButton(this.runButton)
+        this.addCustomButton(this.fontSize, true)
+
+
+        this.col.append(this.buttons)
+
+        this.setContent(defaultCode)
+
+        parent.append(this.wrapper)
+        $(".cm-editor").css("font-size", editorSize)
+        
+    }
+
+    disableTerminal() {
+        this.terminal.addClass("hidden")
+    }
+
+    enableTerminal() {
+        this.terminal.removeClass("hidden")
+    }
+
+
+    addCustomButton(e, back=false) {
+        if (back) {
+            this.buttonsBack.append(e)
+        }
+        else {
+            this.buttons.append(e)
         }
     }
-    var window = function () { }
-    var document = function () { }
-    var editor = function () { }
 
-    const a = function () { return eval(input + (test || "")) }
+    safeEval(input, test=null) {
+
+        let logs = []
+
+        var console = {
+            log: function (text) {
+                logs.push(text)
+            }
+        }
+        var window = function () { }
+        var document = function () { }
+        var editor = function () { }
+        var print = function () { }
+
+        const a = function () { return eval(input + (test || "")) }
 
 
-    // Return the eval'd result
-    return { res: a(), logs: logs };
+        // Return the eval'd result
+        return { res: a(), logs: logs };
 
+    }
+
+    getContent() {
+        return this.view.state.doc.toString();
+    }
+
+    setContent(code) {
+        this.view.dispatch({
+            changes: {
+                from: 0, to: this.view.state.doc.length, insert: code
+            }
+        });
+    }
 }
+
+export function safeEval() {}
 
 onAuthStateChanged(auth, (user) => {
     if (user) {
