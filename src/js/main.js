@@ -13,6 +13,7 @@ import { javascript } from "@codemirror/lang-javascript"
 import { basicDark } from "@fsegurai/codemirror-theme-bundle";
 import { indentWithTab } from "@codemirror/commands";
 import { keymap, EditorView } from "@codemirror/view";
+import { Prec } from "@codemirror/state";
 
 // Load JSON data
 const lessons = await (await fetch("/data/lessons.json")).json() || {}
@@ -190,9 +191,27 @@ export class Editor {
         this.wrapper.append(this.col, this.terminal)
 
         this.view = new EditorView({
-            extensions: [basicSetup, keymap.of(indentWithTab), javascript(), basicDark],
+            extensions: [
+                basicSetup,
+                javascript(),
+                basicDark,
+                Prec.highest(
+                    keymap.of([
+                        indentWithTab,
+                        {
+                            key: "Mod-Enter",
+                            run: () => {
+                            console.log("Mod-Enter triggered");
+                            this.runButton.trigger("click");
+                            return true;
+                            }
+                        }
+                    ])
+                )
+            ],
             parent: this.col[0]
-        })
+        });
+
 
         this.fontSize = $("<select/>").html(`
             <option>10px</option>
@@ -231,6 +250,12 @@ export class Editor {
 
         parent.append(this.wrapper)
         $(".cm-editor").css("font-size", editorSize)
+
+        $(document).on('keypress', (e) => {
+            if (e.ctrlKey && e.key == "Enter") {
+                this.runButton.trigger("click")
+            }
+        });
         
     }
 
