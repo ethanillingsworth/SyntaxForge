@@ -1,7 +1,6 @@
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebase.js";
-import { Course, User } from "./main.js";
-import $ from "jquery"
+import { Course } from "./main.js";
 const courses = await Course.getAll()
 
 onAuthStateChanged(auth, async () => {

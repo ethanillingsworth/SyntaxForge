@@ -74,10 +74,6 @@ export default {
                     to: 'data',
                 },
                 {
-                    from: "src/ads.txt",
-                    to: ''
-                },
-                {
                     from: "src/robots.txt",
                     to: ""
                 },
