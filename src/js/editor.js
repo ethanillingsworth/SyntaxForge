@@ -17,8 +17,27 @@ else {
 }
 `
 
-const editor = new Editor($("#editor"), code)
+// Load saved code from localStorage or use default
+const savedCode = localStorage.getItem('playground-code') || code;
 
+const editor = new Editor($("#editor"), savedCode)
+
+// Save code to localStorage whenever it changes
+let saveTimeout;
+editor.view.dom.addEventListener('input', () => {
+    // Debounce saving to avoid excessive localStorage writes
+    clearTimeout(saveTimeout);
+    saveTimeout = setTimeout(() => {
+        const currentCode = editor.getContent();
+        localStorage.setItem('playground-code', currentCode);
+    }, 500); 
+});
+
+// Also save when run button is clicked
+editor.runButton.on("click", () => {
+    const currentCode = editor.getContent();
+    localStorage.setItem('playground-code', currentCode);
+});
 
 
 
