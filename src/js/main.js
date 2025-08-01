@@ -312,8 +312,6 @@ export class Editor {
     }
 }
 
-export function safeEval() {}
-
 onAuthStateChanged(auth, (user) => {
     if (user) {
         $("#login").addClass("hidden")
