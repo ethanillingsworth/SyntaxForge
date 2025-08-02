@@ -16,5 +16,11 @@
             "request": "launch",
             "type": "node-terminal"
         },
+        {
+            "command": "npm install; npm run docs",
+            "name": "Generate Dev Docs",
+            "request": "launch",
+            "type": "node-terminal"
+        },
     ]
 }
