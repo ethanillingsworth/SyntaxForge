@@ -5,7 +5,7 @@
         "excludePattern": "(node_modules|docs)"
     },
     "opts": {
-    "template": "node_modules/clean-jsdoc-theme",
-    "destination": "./docs"
+        "template": "node_modules/clean-jsdoc-theme",
+        "destination": "./docs"
     }
 }

@@ -9,7 +9,7 @@
   "scripts": {
     "serve": "webpack serve",
     "build": "webpack",
-    "docs": "jsdoc -c jsdoc.json"
+    "docs": "jsdoc -c jsdoc.json --readme README.md"
   },
   "dependencies": {
     "@codemirror/commands": "^6.8.1",
