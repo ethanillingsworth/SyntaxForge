@@ -297,7 +297,7 @@ export class Course {
 */
 export class Editor {
     constructor(parent = $("#editor"), defaultCode = "") {
-        this.wrapper = $("<div>").addClass("editor row gap-0")
+        this.wrapper = $("<div>").addClass("editor gap-0")
 
         this.col = $("<div/>").addClass("col h-full w-full gap-0 place-content-start place-items-start")
 
@@ -307,7 +307,7 @@ export class Editor {
 
         this.buttons.append(this.buttonsBack)
 
-        this.terminal = $("<div/>").addClass("terminal").text("SyntaxForge Terminal v1.0.0")
+        this.terminal = $("<div/>").addClass("terminal order-last md:order-none").text("SyntaxForge Terminal v1.0.0")
 
         this.wrapper.append(this.col, this.terminal)
 
