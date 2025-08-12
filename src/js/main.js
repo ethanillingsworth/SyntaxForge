@@ -307,9 +307,10 @@ export class Editor {
 
         this.buttons.append(this.buttonsBack)
 
+        this.resizer = $("<div/>").addClass("hidden md:block min-w-1 w-1 h-full cursor-col-resize bg-forge-accent hover:bg-forge-accent-hover")
         this.terminal = $("<div/>").addClass("terminal order-last md:order-none").text("SyntaxForge Terminal v1.0.0")
 
-        this.wrapper.append(this.col, this.terminal)
+        this.wrapper.append(this.col, this.resizer, this.terminal)
 
         this.view = new EditorView({
             extensions: [
@@ -378,6 +379,8 @@ export class Editor {
             }
         });
         
+        // Setup resizer functionality
+        this.setupResizer()
     }
     /**
     * Disables the editors terminal
@@ -470,6 +473,96 @@ export class Editor {
         this.view.dispatch({
             changes: {
                 from: 0, to: this.view.state.doc.length, insert: code
+            }
+        });
+    }
+
+    /**
+    * Sets up the resizer functionality for the terminal
+    * 
+    * @example
+    * editor.setupResizer() // Enables terminal resizing
+    */
+    setupResizer() {
+        let isDragging = false;
+        const minTerminalWidth = 200; // Minimum terminal width
+        
+        // Check if we're on mobile (screen width < 768px, which is Tailwind's md breakpoint)
+        const isMobile = () => window.innerWidth < 768;
+        
+        // Function to apply appropriate terminal width
+        const applyTerminalWidth = () => {
+            if (isMobile()) {
+                // On mobile, remove any fixed width and let CSS handle it (w-full)
+                this.terminal.css('width', '');
+            } else {
+                // On desktop, apply saved width or default
+                const savedWidth = localStorage.getItem('terminal-width');
+                if (savedWidth) {
+                    this.terminal.css('width', savedWidth + 'px');
+                }
+            }
+        };
+
+        // Apply initial width
+        applyTerminalWidth();
+
+        this.resizer.on('mousedown touchstart', (e) => {
+            // Don't allow resizing on mobile
+            if (isMobile()) return;
+            
+            e.preventDefault();
+            isDragging = true;
+            $('body').css('cursor', 'col-resize');
+            $('body').css('user-select', 'none');
+        });
+
+        $(document).on('mousemove touchmove', (e) => {
+            if (!isDragging || isMobile()) return;
+
+            let clientX;
+            if (e.type.startsWith('touch')) {
+                clientX = e.originalEvent.touches[0].clientX;
+            } else {
+                clientX = e.clientX;
+            }
+
+            const containerRect = this.wrapper[0].getBoundingClientRect();
+            const newTerminalWidth = containerRect.right - clientX;
+            const maxTerminalWidth = window.innerWidth * 0.7;
+            
+            // Constrain the width within min/max bounds
+            const constrainedWidth = Math.max(minTerminalWidth, Math.min(maxTerminalWidth, newTerminalWidth));
+            
+            this.terminal.css('width', constrainedWidth + 'px');
+        });
+
+        $(document).on('mouseup touchend', () => {
+            if (isDragging) {
+                isDragging = false;
+                $('body').css('cursor', 'default');
+                $('body').css('user-select', 'auto');
+                
+                // Save the current terminal width to localStorage (only on desktop)
+                if (!isMobile()) {
+                    const currentWidth = this.terminal.width();
+                    localStorage.setItem('terminal-width', currentWidth);
+                }
+            }
+        });
+
+        // Handle window resize to reapply appropriate width
+        $(window).on('resize', () => {
+            applyTerminalWidth();
+            
+            // If we're on desktop and current width exceeds max, constrain it
+            if (!isMobile()) {
+                const maxWidth = window.innerWidth * 0.7;
+                const currentWidth = this.terminal.width();
+                if (currentWidth > maxWidth) {
+                    this.terminal.css('width', maxWidth + 'px');
+                    localStorage.setItem('terminal-width', maxWidth);
+                }
             }
         });
     }

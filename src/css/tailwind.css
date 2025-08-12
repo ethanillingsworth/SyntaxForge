@@ -40,7 +40,7 @@
 }
 
 @utility terminal {
-    @apply md:w-1/4 w-full md:h-full overflow-auto h-1/2 md:min-h-0 min-h-48 col bg-black place-content-start place-items-start font-mono p-4 gap-0.5
+    @apply md:w-1/4 w-full md:h-full overflow-auto h-1/2 md:min-h-0 min-h-48 col bg-black place-content-start place-items-start font-mono p-4 gap-0.5 md:min-w-48 md:max-w-none
 }
 
 @utility text-md {
@@ -48,7 +48,7 @@
 }
 
 @utility editor {
-    @apply h-full w-full flex-col md:flex-row
+    @apply h-full w-full flex flex-col md:flex-row
 }
 
 @layer base {
