@@ -17,7 +17,7 @@ document.title = `SyntaxForge | ${data.name}`;
 $("#name").text(data.name);
 $("#desc").text(data.desc);
 
-const lessons = course.getLessons();
+const lessons = await course.getLessons();
 
 for (const lesson of lessons) {
 	const ldata = await lesson.get();

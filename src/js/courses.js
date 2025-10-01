@@ -1,7 +1,7 @@
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebase.js";
 import { Course } from "./main.js";
-const courses = Course.getAll();
+const courses = await Course.getAll();
 
 onAuthStateChanged(auth, async () => {
 	const cu = auth.currentUser;
