@@ -19,6 +19,8 @@ $("#desc").text(data.desc);
 
 const lessons = await course.getLessons();
 
+console.log(lessons);
+
 for (const lesson of lessons) {
 	const ldata = await lesson.get();
 
@@ -50,7 +52,7 @@ onAuthStateChanged(auth, async () => {
 
 	let num = 0;
 	if (Object.keys(dat).length > 0) {
-		const lessons = course.getLessons();
+		const lessons = await course.getLessons();
 		const total = lessons.length;
 
 		for (const lesson of lessons) {
