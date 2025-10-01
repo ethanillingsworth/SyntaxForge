@@ -17,14 +17,4 @@
     <lastmod>2025-07-04</lastmod>
     <priority>0.85</priority>
   </url>
-  <url>
-    <loc>https://syntaxforge.dev/course</loc>
-    <lastmod>2025-07-01</lastmod>
-    <priority>0.80</priority>
-  </url>
-  <url>
-    <loc>https://syntaxforge.dev/lesson</loc>
-    <lastmod>2025-07-01</lastmod>
-    <priority>0.70</priority>
-  </url>
 </urlset>
