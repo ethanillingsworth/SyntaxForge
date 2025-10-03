@@ -12,11 +12,15 @@ const next = $("<button/>").text("Next Lesson").addClass("hidden");
 editor.addCustomButton(next);
 
 const pathParts = window.location.pathname.split("/");
-const lessonId = pathParts[pathParts.length - 1];
+const lessonIndex = pathParts[pathParts.length - 1];
+const sectionIndex = pathParts[pathParts.length - 3];
+const courseId = pathParts[pathParts.length - 5];
 
-if (lessonId == "lesson" || lessonId == "") window.location.href = "/courses";
+// if (lessonId == "lesson" || lessonId == "") window.location.href = "/courses";
 
-const lesson = new Lesson(lessonId);
+const course = new Course(courseId);
+
+const lesson = course.getSection(sectionIndex).getLesson(lessonIndex);
 
 let currentUser;
 let admin = false;
@@ -125,14 +129,11 @@ if (data.default) {
 }
 
 raw = data.content;
-const parent = new Course(data.parent);
-
-const parentData = await parent.get();
 
 $("#parent")
-	.text(parentData.name)
-	.attr("href", "/course/" + parent.id);
-document.title = `SyntaxForge | ${parentData.name}/${data.title}`;
+	.text(course.get().name)
+	.attr("href", "/course/" + course.id);
+document.title = `SyntaxForge | ${course.get().name}/${data.title}`;
 
 next.on("click", async () => {
 	const nextLesson = await parent.getLessonID(data.id + 1);
