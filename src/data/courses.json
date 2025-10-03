@@ -2,16 +2,18 @@
     "js101": {
         "name": "Intro to JavaScript",
         "desc": "Master the core building blocks of JavaScript with hands-on lessons. This course lays a strong foundation for writing logic, organizing data, and creating structured, interactive code—perfect for aspiring developers taking their first steps into programming.",
-        "lang": "javascript"
-    },
-    "js102": {
-        "name": "Intermediate JavaScript",
-        "desc": "Build on your JavaScript foundation with deeper concepts like scope, array methods, destructuring, and callbacks. This course prepares you for real-world development and cleaner, more efficient code.",
-        "lang": "javascript"
-    },
-    "js-challenges-1": {
-        "name": "JavaScript Challenges 1",
-        "desc": "Sharpen your skills with bite-sized JavaScript puzzles. This pack is all about practicing: functions, strings, arrays, and logic.",
-        "lang": "javascript"
+        "lang": "javascript",
+        "sections": [
+            {
+                "title": "Basic Concepts",
+                "desc": "This unit goes over basic concepts of javascript, including variables, constants, number operations, string concatination, and logging to the console.",
+                "lessons": [
+                    {
+                        "title": "Log to The Console",
+                        "type": "FRQ"
+                    }
+                ]
+            }
+        ]
     }
 }
