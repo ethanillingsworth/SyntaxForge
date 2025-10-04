@@ -136,7 +136,6 @@ export class Lesson {
 	}
 
 	get() {
-		console.log(this.parent);
 		return this.parent.get().lessons[this.index];
 	}
 }
@@ -239,7 +238,7 @@ export class Course {
 	 * Course.display() // for a user logged out
 	 */
 	async display(id = "nouser") {
-		const userData = await new User(id).get();
+		const userData = (await new User(id).get())["courses"];
 
 		const data = this.get();
 
@@ -252,19 +251,32 @@ export class Course {
 
 		let num = 0;
 		let percent = 0;
-		if (Object.keys(data).length > 0) {
-			const l = this.getSections();
-			let total = 0;
 
-			for (const section of l) {
-				for (const lesson of section.getLessons()) {
-					total += 1;
+		const l = this.getSections();
+		let total = 0;
+
+		for (const section of l) {
+			for (const lesson of section.getLessons()) {
+				if (
+					userData &&
+					userData[this.id] &&
+					userData[this.id][section.index] &&
+					userData[this.id][section.index][lesson.index]
+				) {
+					const lessonData =
+						userData[this.id][section.index][lesson.index];
+
+					if (lessonData.finished) {
+						num += 1;
+					}
 				}
+				total += 1;
 			}
-
-			percent = Math.round((num / total) * 100) || 0;
-			progress.val(percent);
 		}
+
+		percent = Math.round((num / total) * 100) || 0;
+		progress.val(percent);
+
 		link.append(name, desc, progress);
 		let on = $("#yours");
 		if (percent == 0) {
@@ -296,7 +308,7 @@ export class Editor {
 		);
 
 		this.buttons = $("<div/>").addClass(
-			"row w-full bg-forge-surface p-2 place-content-end border-t-2 border-t-forge-accent text-sm"
+			"row w-full bg-forge-surface p-2 place-content-end border-t-4 border-t-forge-accent text-sm"
 		);
 
 		this.buttonsBack = $("<div/>").addClass("row mr-auto");
@@ -431,7 +443,7 @@ export class Editor {
 	 * editor.saveEval(editor.getContent(), ";test == true") // tests current content with test case
 	 */
 	safeEval(input, test = null) {
-		let logs = [];
+		var logs = [];
 
 		var console = {
 			log: function (text) {

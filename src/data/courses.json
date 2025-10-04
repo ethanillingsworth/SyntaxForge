@@ -6,13 +6,112 @@
         "sections": [
             {
                 "title": "Basic Concepts",
-                "desc": "This unit goes over basic concepts of javascript, including variables, constants, number operations, string concatination, and logging to the console.",
+                "desc": "This unit goes over basic concepts of JavaScript, including variables, constants, number operations, string concatination, and logging to the console.",
                 "lessons": [
                     {
                         "title": "Log to The Console",
+                        "type": "FRQ",
+                        "tasks": [
+                            {
+                                "text": "Log the value 1",
+                                "check": "logs.includes(1)"
+                            },
+                            {
+                                "text": "Log the value 3.14",
+                                "check": "logs.includes(3.14)"
+                            },
+                            {
+                                "text": "Log the value true or false",
+                                "check": "(logs.includes(true) || logs.includes(false))"
+                            },
+                            {
+                                "text": "Log the value null",
+                                "check": "logs.includes(null)"
+                            },
+                            {
+                                "text": "Log the value \"Hello World\"",
+                                "check": "logs.includes(\"Hello World\")"
+                            }
+                        ]
+                    },
+                    {
+                        "title": "Variables",
+                        "type": "FRQ"
+                    },
+                    {
+                        "title": "Constants",
+                        "type": "FRQ"
+                    },
+                    {
+                        "title": "Number Operations",
+                        "type": "FRQ"
+                    },
+                    {
+                        "title": "String Concatination",
                         "type": "FRQ"
                     }
                 ]
+            },
+            {
+                "title": "If/Else Statements and Logic",
+                "desc": "This unit covers if/else statments and general logic, javascripts unique equality properties, and truthy and falsy statements.",
+                "lessons": [
+                    {
+                        "title": "Comparison Operators",
+                        "type": "FRQ"
+                    },
+                    {
+                        "title": "If Statements",
+                        "type": "FRQ"
+                    },
+                    {
+                        "title": "If/Else",
+                        "type": "FRQ"
+                    },
+                    {
+                        "title": "Else If",
+                        "type": "FRQ"
+                    },
+                    {
+                        "title": "Logical Operators",
+                        "type": "FRQ"
+                    },
+                    {
+                        "title": "Truthy and Falsy",
+                        "type": "FRQ"
+                    }
+                ]
+            },
+            {
+                "title": "Functions",
+                "desc": "This unit covers everything to do with functions, paramaters, return values, intro level scope, and arrow functions.",
+                "lessons": [
+                    {
+                        "title": "No-Parameter Functions",
+                        "type": "FRQ"
+                    },
+                    {
+                        "title": "Functions with Parameters",
+                        "type": "FRQ"
+                    },
+                    {
+                        "title": "Return Values",
+                        "type": "FRQ"
+                    },
+                    {
+                        "title": "Multiple Parameters",
+                        "type": "FRQ"
+                    },
+                    {
+                        "title": "Scope (Intro Level)",
+                        "type": "FRQ"
+                    },
+                    {
+                        "title": "Function Expressions & Arrow Functions",
+                        "type": "FRQ"
+                    }
+                ]
+
             }
         ]
     }

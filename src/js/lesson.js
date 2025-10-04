@@ -3,22 +3,34 @@ import $ from "jquery";
 import { auth } from "./firebase.js";
 import { onAuthStateChanged } from "firebase/auth";
 
-const editor = new Editor();
+import { marked } from "marked";
 
-editor.disableTerminal();
+const editor = new Editor();
 
 const next = $("<button/>").text("Next Lesson").addClass("hidden");
 
 editor.addCustomButton(next);
 
 const pathParts = window.location.pathname.split("/");
-const lessonIndex = pathParts[pathParts.length - 1];
-const sectionIndex = pathParts[pathParts.length - 3];
-const courseId = pathParts[pathParts.length - 5];
+const lessonIndex = pathParts[pathParts.length - 1].split("-")[1];
+const sectionIndex = pathParts[pathParts.length - 2].split("-")[1];
+const courseId = pathParts[pathParts.length - 3];
+
+const md = await (
+	await fetch(
+		`/markdown/${courseId}/section-${sectionIndex}/lesson-${lessonIndex}.md`
+	)
+).text();
+
+$("#rendered").addClass("md").html(marked.parse(md));
+
+console.log(md);
 
 // if (lessonId == "lesson" || lessonId == "") window.location.href = "/courses";
 
 const course = new Course(courseId);
+
+const section = course.getSection(sectionIndex);
 
 const lesson = course.getSection(sectionIndex).getLesson(lessonIndex);
 
@@ -36,7 +48,7 @@ onAuthStateChanged(auth, async () => {
 	} else {
 		id = "nouser";
 		const returnToLogin = !confirm(
-			"Progress will not be saved unless you are logged in\nOK - Contiune without saving\nCANCEL - Take me to the login page"
+			"Progress will not be saved unless you are logged in\nOK - Continue without saving\nCANCEL - Take me to the login page"
 		);
 
 		if (returnToLogin) {
@@ -45,12 +57,17 @@ onAuthStateChanged(auth, async () => {
 	}
 
 	currentUser = new User(id);
-	admin = await currentUser.admin();
+	admin = currentUser.admin();
 
 	const dat = await currentUser.get();
 
-	if (dat.lessons && dat.lessons[lesson.id]) {
-		const saveData = dat.lessons[lesson.id];
+	if (
+		dat.courses &&
+		dat.courses[courseId] &&
+		dat.courses[courseId][sectionIndex] &&
+		dat.courses[courseId][sectionIndex][lessonIndex]
+	) {
+		const saveData = dat.courses[courseId][sectionIndex][lessonIndex];
 		// update editor
 		editor.setContent(saveData.code);
 
@@ -70,49 +87,53 @@ onAuthStateChanged(auth, async () => {
 			next.removeClass("hidden");
 		}
 	}
+});
 
-	editor.runButton.on("click", () => {
-		runUserCode();
-	});
+editor.runButton.on("click", () => {
+	runUserCode();
+});
 
-	function runUserCode() {
-		const content = editor.getContent();
-		let count = 0;
-		let checks = [];
-		let finished = false;
-		for (let index = 0; index < data.tasks.length; index++) {
-			const test = data.tasks[index];
-			try {
-				const res = editor.safeEval(content, ";" + test.check).res;
-				if (res == true) {
-					$(`#task-${index}`).attr("checked", true);
-					count++;
-					checks.push(true);
-				} else {
-					$(`#task-${index}`).removeAttr("checked");
-					checks.push(false);
-				}
+function runUserCode() {
+	const content = editor.getContent();
+	let count = 0;
+	let checks = [];
+	let finished = false;
+	for (let index = 0; index < data.tasks.length; index++) {
+		const test = data.tasks[index];
+		try {
+			let res = editor.safeEval(content, ";" + test.check).res;
+			if (res == true) {
+				$(`#task-${index}`).attr("checked", true);
+				count++;
+				checks.push(true);
+			} else {
+				$(`#task-${index}`).removeAttr("checked");
+				checks.push(false);
+			}
 
-				if (count == data.tasks.length) {
-					next.removeClass("hidden");
-					finished = true;
-				} else {
-					next.addClass("hidden");
-				}
-			} catch {}
-		}
+			if (count == data.tasks.length) {
+				next.removeClass("hidden");
+				finished = true;
+			} else {
+				next.addClass("hidden");
+			}
+		} catch {}
+	}
 
-		currentUser.update({
-			lessons: {
-				[lesson.id]: {
-					code: content,
-					checks: checks,
-					finished: finished,
+	currentUser.update({
+		courses: {
+			[courseId]: {
+				[sectionIndex]: {
+					[lessonIndex]: {
+						code: content,
+						checks: checks,
+						finished: finished,
+					},
 				},
 			},
-		});
-	}
-});
+		},
+	});
+}
 
 // TODO: Implement updating title, content, etc
 
@@ -136,12 +157,14 @@ $("#parent")
 document.title = `SyntaxForge | ${course.get().name}/${data.title}`;
 
 next.on("click", async () => {
-	const nextLesson = await parent.getLessonID(data.id + 1);
+	const nextLesson = section.getLesson(parseInt(lessonIndex) + 1);
 
 	if (nextLesson == null) {
-		window.location.href = "/course/" + parent.id;
+		window.location.href = `/course/${courseId}`;
 	} else {
-		window.location.href = "/lesson/" + nextLesson;
+		window.location.href = `/course/${courseId}/section-${sectionIndex}/lesson-${
+			parseInt(lessonIndex) + 1
+		}`;
 	}
 });
 

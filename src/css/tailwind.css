@@ -1,179 +1,220 @@
 @import "tailwindcss";
 
 @theme {
-    --color-forge-background: #0e0e11;
-    --color-forge-surface: #1a1a1f;
-    --color-forge-muted: #2a2a30;
-    --color-forge-text: #e6e6e9;
-    --color-forge-subtext: #a0a0a8;
+	--color-forge-background: #0e0e11;
+	--color-forge-surface: #1a1a1f;
+	--color-forge-muted: #2a2a30;
+	--color-forge-text: #e6e6e9;
+	--color-forge-subtext: #a0a0a8;
 
-    /* Keep one strong accent and one optional secondary */
-    --color-forge-accent: #ff7b72;
-    /* primary accent (warm, stands out) */
-    --color-forge-accent-hover: #e96b65;
-    --color-forge-gold: #f4c06d
+	/* Keep one strong accent and one optional secondary */
+	--color-forge-accent: #ff7b72;
+	/* primary accent (warm, stands out) */
+	--color-forge-accent-hover: #e96b65;
+	--color-forge-gold: #f4c06d;
 }
 
-
 @utility row {
-    @apply gap-3 flex flex-row place-items-center
+	@apply gap-3 flex flex-row place-items-center;
 }
 
 @utility col {
-    @apply gap-3 flex flex-col place-content-center place-items-center
+	@apply gap-3 flex flex-col place-content-center place-items-center;
 }
 
 @utility gradient-bg {
-    @apply bg-gradient-to-r from-forge-accent to-forge-gold
+	@apply bg-gradient-to-r from-forge-accent to-forge-gold;
 }
 
 @utility gradient-text {
-    @apply leading-tight bg-gradient-to-r from-forge-accent to-forge-gold bg-clip-text text-transparent
+	@apply leading-tight bg-gradient-to-r from-forge-accent to-forge-gold bg-clip-text text-transparent;
 }
 
 @utility card {
-    @apply px-4 py-2 bg-forge-surface border-transparent rounded-2xl border-0 hover:scale-105 hover:cursor-pointer
+	@apply px-4 py-2 bg-forge-surface border-transparent rounded-2xl border-0 hover:scale-105 hover:cursor-pointer;
 }
 
 @utility nohover {
-    @apply hover:scale-100 hover:border-transparent hover:cursor-default
+	@apply hover:scale-100 hover:border-transparent hover:cursor-default;
 }
 
 @utility terminal {
-    @apply md:w-1/4 w-full md:h-full overflow-auto h-1/2 md:min-h-0 min-h-48 col bg-black place-content-start place-items-start font-mono p-4 gap-0.5 md:min-w-48 md:max-w-none
+	@apply md:w-1/4 w-full md:h-full overflow-auto h-1/2 md:min-h-0 min-h-48 col bg-black place-content-start place-items-start font-mono p-4 gap-0.5 md:min-w-48 md:max-w-none;
 }
 
 @utility text-md {
-    @apply text-base
+	@apply text-base;
 }
 
 @utility editor {
-    @apply h-full w-full flex flex-col md:flex-row
+	@apply h-full w-full flex flex-col md:flex-row;
+}
+
+@utility section {
+	@apply card select-none w-full hover:scale-100 border-b-2 border-forge-muted hover:bg-forge-muted p-4 flex flex-row place-items-center;
+}
+
+@utility lessonsContent {
+	@apply flex-col hidden overflow-auto rounded-b-2xl;
+}
+
+@utility lesson {
+	@apply section rounded-none;
 }
 
 @layer base {
-    body {
-        @apply m-0 h-dvh flex flex-col bg-forge-background text-forge-text;
-    }
+	body {
+		@apply m-0 h-dvh flex flex-col bg-forge-background text-forge-text;
+	}
 
-    #resizer {
-        width: 5px;
-        cursor: col-resize;
-    }
+	#resizer {
+		width: 5px;
+		cursor: col-resize;
+	}
 
+	.cm-editor {
+		@apply w-full h-full overflow-auto;
+		box-shadow: none !important;
+	}
 
+	.cm-scroller {
+		@apply overflow-auto;
+	}
 
-    .cm-editor {
-        @apply w-full h-full overflow-auto;
-        box-shadow: none !important;
-    }
+	.cm-content {
+		@apply hover:cursor-text;
+	}
 
-    .cm-scroller {
-        @apply overflow-auto
-    }
+	body * {
+		@apply transition;
+	}
 
-    .cm-content {
-        @apply hover:cursor-text;
-    }
+	header {
+		@apply bg-forge-surface border-b-2 border-forge-muted p-4 text-base font-bold row gap-2 sticky top-0 h-auto flex-wrap place-content-center md:text-2xl md:flex-nowrap md:gap-9 md:place-content-start;
+	}
 
-    body * {
-        @apply transition
-    }
+	#head {
+		@apply w-full text-center text-xl md:text-2xl md:w-auto;
+	}
 
-    header {
-        @apply bg-forge-surface border-b-2 border-forge-muted p-4 text-base font-bold row gap-2 sticky top-0 h-auto flex-wrap place-content-center md:text-2xl md:flex-nowrap md:gap-9 md:place-content-start
-    }
+	#back {
+		@apply lg:ml-auto;
+	}
 
-    #head {
-        @apply w-full text-center text-xl md:text-2xl md:w-auto
-    }
+	header a {
+		@apply text-white transition-colors;
+	}
 
-    #back {
-        @apply lg:ml-auto
-    }
+	progress {
+		@apply rounded-xl h-2 w-full bg-forge-muted;
+		@apply [&::-webkit-progress-bar]:rounded-xl [&::-webkit-progress-value]:rounded-xl [&::-webkit-progress-value]:gradient-bg [&::-webkit-progress-bar]:bg-forge-muted;
+		@apply [&::-moz-progress-bar]:gradient-bg;
+	}
 
-    header a {
-        @apply text-white transition-colors
-    }
+	h2 {
+		@apply text-xl md:text-2xl font-semibold;
+	}
 
-    progress {
-        @apply rounded-xl h-2 w-full bg-forge-muted;
-        @apply [&::-webkit-progress-bar]:rounded-xl [&::-webkit-progress-value]:rounded-xl [&::-webkit-progress-value]:gradient-bg [&::-webkit-progress-bar]:bg-forge-muted;
-        @apply [&::-moz-progress-bar]:gradient-bg;
-    }
+	h3 {
+		@apply font-semibold text-md;
+	}
 
-    h2 {
-        @apply text-xl md:text-2xl font-semibold
-    }
+	#content h3 {
+		@apply text-lg;
+	}
 
-    h3 {
-        @apply font-semibold text-md
-    }
+	#tasks h3 {
+		@apply text-sm md:text-md;
+	}
 
-    #content h3 {
-        @apply text-lg
-    }
+	p {
+		@apply text-forge-subtext text-sm;
+	}
 
-    #tasks h3 {
-        @apply text-sm md:text-md
-    }
+	main {
+		@apply h-full col overflow-auto p-6 place-content-start md:p-12;
+	}
 
-    p {
-        @apply text-forge-subtext text-sm
-    }
+	.card p {
+		@apply line-clamp-2;
+	}
 
-    main {
+	.card h3 {
+		@apply text-white;
+	}
 
-        @apply h-full col overflow-auto p-6 place-content-start md:p-12
-    }
+	main > * {
+		@apply w-full;
+	}
 
-    .card p {
-        @apply line-clamp-2
-    }
+	main .row {
+		@apply place-content-center;
+	}
 
-    .card h3 {
-        @apply text-white
-    }
+	input,
+	textarea {
+		@apply bg-forge-muted p-1 placeholder:text-forge-subtext pt-1 pb-1 pl-2 pr-2 rounded-2xl;
+	}
 
-    main>* {
-        @apply w-full
-    }
+	textarea {
+		@apply bg-forge-surface;
+	}
 
-    main .row {
-        @apply place-content-center
-    }
+	#content p {
+		@apply md:text-lg text-md;
+	}
 
-    input, textarea {
-        @apply bg-forge-muted p-1 placeholder:text-forge-subtext pt-1 pb-1 pl-2 pr-2 rounded-2xl
-    }
+	.md h1,
+	.md h2,
+	.md h3,
+	.md h4,
+	.md h5,
+	.md h6 {
+		@apply font-bold cursor-auto;
+	}
 
-    textarea {
-        @apply bg-forge-surface
-    }
+	.md h1 {
+		@apply text-2xl;
+	}
 
-    #content p {
-        @apply md:text-lg text-md
-    }
+	.md h2 {
+		@apply text-xl;
+	}
 
-    pre {
-        @apply bg-forge-surface w-full rounded-2xl px-4 py-2 text-sm md:text-md max-w-full text-wrap
-    }
+	.md h3 {
+		@apply text-lg;
+	}
 
-    input[type=checkbox] {
-        @apply min-w-5 min-h-5 rounded-2xl
-    }
+	.md p {
+		@apply cursor-auto;
+	}
 
-    button,
-    select {
-        @apply bg-forge-accent px-4 py-2 text-nowrap hover:bg-forge-accent-hover font-semibold rounded-2xl hover:cursor-pointer
-    }
+	code {
+		@apply text-forge-accent;
+	}
+	pre {
+		@apply bg-forge-surface w-full text-forge-text rounded-2xl px-4 py-2 text-sm md:text-md max-w-full text-wrap;
+	}
 
-    button.muted, select.muted {
-        @apply bg-forge-muted
-    }
+	pre code {
+		@apply text-forge-text;
+	}
 
-    a {
-        @apply text-forge-accent hover:text-forge-accent-hover
-    }
+	input[type="checkbox"] {
+		@apply min-w-5 min-h-5 rounded-2xl;
+	}
 
+	button,
+	select {
+		@apply bg-forge-accent px-4 py-2 text-nowrap hover:bg-forge-accent-hover font-semibold rounded-2xl hover:cursor-pointer;
+	}
+
+	button.muted,
+	select.muted {
+		@apply bg-forge-muted;
+	}
+
+	a {
+		@apply text-forge-accent hover:text-forge-accent-hover;
+	}
 }

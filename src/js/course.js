@@ -17,22 +17,61 @@ document.title = `SyntaxForge | ${data.name}`;
 $("#name").text(data.name);
 $("#desc").text(data.desc);
 
-// const lessons = await course.getLessons();
+const sections = course.getSections();
 
-// for (const lesson of lessons) {
-// 	const ldata = await lesson.get();
+for (const section of sections) {
+	let open = false;
 
-// 	const card = $("<a/>")
-// 		.attr("href", `/lesson/${lesson.id}`)
-// 		.addClass("card w-full")
-// 		.attr("id", lesson.id);
+	const sec = $("<div/>").addClass("w-full");
 
-// 	const title = $("<h3/>").text(ldata.title).addClass("text-center");
+	const head = $("<div/>")
+		.addClass("section")
+		.attr("id", "section-" + section.index);
+	const secData = section.get();
 
-// 	card.append(title);
+	const dropdown = $("<img/>")
+		.attr("src", "/imgs/icons/dropdown.svg")
+		.addClass("ml-auto h-6");
 
-// 	$("#lessons").append(card);
-// }
+	head.append($("<h2/>").text(`Unit ${section.index} | ${secData.title}`));
+	head.append(dropdown);
+
+	const lessonsContent = $("<div/>").addClass("lessonsContent");
+
+	head.on("click", () => {
+		if (open) {
+			lessonsContent.removeClass("flex");
+			head.removeClass("rounded-br-none rounded-bl-none");
+			dropdown.removeClass("rotate-90");
+		} else {
+			lessonsContent.addClass("flex");
+			head.addClass("rounded-br-none rounded-bl-none");
+			dropdown.addClass("rotate-90");
+		}
+		open = !open;
+	});
+
+	for (const lesson of section.getLessons()) {
+		const lessonData = lesson.get();
+		const l = $("<a/>")
+			.attr(
+				"href",
+				`/course/${courseId}/section-${section.index}/lesson-${lesson.index}`
+			)
+			.addClass(`lesson text-forge-text text-lg`)
+			.attr("id", `${section.index}-${lesson.index}`)
+			.text(
+				`Lesson ${lesson.index} | ${lessonData.title} | ${lessonData.type}`
+			);
+
+		lessonsContent.append(l);
+	}
+
+	sec.append(head);
+	sec.append(lessonsContent);
+
+	$("#lessons").append(sec);
+}
 
 onAuthStateChanged(auth, async () => {
 	const cu = auth.currentUser;
@@ -46,31 +85,49 @@ onAuthStateChanged(auth, async () => {
 
 	const user = new User(id);
 
-	const dat = await user.get();
+	const userData = (await user.get())["courses"];
 
 	let num = 0;
-	// if (Object.keys(dat).length > 0) {
-	// 	const lessons = course.getLessons();
-	// 	const total = lessons.length;
+	let total = 0;
+	if (Object.keys(userData).length > 0) {
+		const sections = course.getSections();
 
-	// 	for (const lesson of lessons) {
-	// 		if (dat.lessons[lesson.id] && dat.lessons[lesson.id].finished) {
-	// 			$(`#${lesson.id}`).addClass("gradient-bg");
-	// 			num++;
-	// 		}
-	// 	}
+		for (const section of sections) {
+			let numberGoodSec = 0;
+			let totalSec = 0;
+			for (const lesson of section.getLessons()) {
+				if (
+					userData &&
+					userData[course.id] &&
+					userData[course.id][section.index] &&
+					userData[course.id][section.index][lesson.index] &&
+					userData[course.id][section.index][lesson.index].finished
+				) {
+					$(`#${section.index}-${lesson.index}`).addClass(
+						"gradient-bg font-bold"
+					);
+					num++;
+					numberGoodSec += 1;
+				}
+				total += 1;
+				totalSec += 1;
+			}
+			if (numberGoodSec == totalSec) {
+				$(`#section-${section.index}`).addClass("gradient-bg");
+			}
+		}
 
-	// 	let percent = Math.round((num / total) * 100) || 0;
-	// 	$("#pbar").val(percent);
+		let percent = Math.round((num / total) * 100) || 0;
+		$("#pbar").val(percent);
 
-	// 	if (percent == 0) {
-	// 		$("#per").text("Not started");
-	// 	} else if (percent == 100) {
-	// 		$("#per").text("DONE!");
-	// 	} else {
-	// 		$("#per").text(`${percent}% Done`);
-	// 	}
-	// } else {
-	// 	$("#per").text("Not started");
-	// }
+		if (percent == 0) {
+			$("#per").text("Not started");
+		} else if (percent == 100) {
+			$("#per").text("DONE!");
+		} else {
+			$("#per").text(`${percent}% Done`);
+		}
+	} else {
+		$("#per").text("Not started");
+	}
 });
