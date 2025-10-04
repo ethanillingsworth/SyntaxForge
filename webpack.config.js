@@ -52,7 +52,7 @@ export default {
 		historyApiFallback: {
 			rewrites: [
 				{
-					from: /^\/course\/[^\/]+\/section\/[^\/]+\/lesson\/[^\/]+$/, // matches /course/something/lesson/something
+					from: /^\/course\/[^\/]+\/section-[^\/]+\/lesson-[^\/]+$/, // /course/ANYTHING/section-ANYTHING/lesson-ANYTHING
 					to: "/lesson/index.html",
 				},
 				{
@@ -75,6 +75,14 @@ export default {
 				{
 					from: "src/data/",
 					to: "data",
+				},
+				{
+					from: "src/imgs/",
+					to: "imgs",
+				},
+				{
+					from: "src/markdown/",
+					to: "markdown",
 				},
 				{
 					from: "src/robots.txt",
