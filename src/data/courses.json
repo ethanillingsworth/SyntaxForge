@@ -6,7 +6,7 @@
         "sections": [
             {
                 "title": "Basic Concepts",
-                "desc": "This unit goes over basic concepts of JavaScript, including variables, constants, number operations, string concatination, and logging to the console.",
+                "desc": "This unit goes over basic concepts of JavaScript, including variables, constants, number operations, string concatenation, and logging to the console.",
                 "lessons": [
                     {
                         "title": "Log to The Console",
@@ -36,7 +36,17 @@
                     },
                     {
                         "title": "Variables",
-                        "type": "FRQ"
+                        "type": "FRQ",
+                        "tasks": [
+                            {
+                                "text": "Create a variable named city with the value of \"Chicago\"",
+                                "check": "city === 'Chicago'"
+                            },
+                            {
+                                "text": "Log the variable city to the console",
+                                "check": "logs.includes('Chicago')"
+                            }
+                        ]
                     },
                     {
                         "title": "Constants",
@@ -47,14 +57,14 @@
                         "type": "FRQ"
                     },
                     {
-                        "title": "String Concatination",
+                        "title": "String Concatenation",
                         "type": "FRQ"
                     }
                 ]
             },
             {
                 "title": "If/Else Statements and Logic",
-                "desc": "This unit covers if/else statments and general logic, javascripts unique equality properties, and truthy and falsy statements.",
+                "desc": "This unit covers if/else statements and general logic, javascripts unique equality properties, and truthy and falsy statements.",
                 "lessons": [
                     {
                         "title": "Comparison Operators",
@@ -84,7 +94,7 @@
             },
             {
                 "title": "Functions",
-                "desc": "This unit covers everything to do with functions, paramaters, return values, intro level scope, and arrow functions.",
+                "desc": "This unit covers everything to do with functions, parameters, return values, intro level scope, and arrow functions.",
                 "lessons": [
                     {
                         "title": "No-Parameter Functions",
