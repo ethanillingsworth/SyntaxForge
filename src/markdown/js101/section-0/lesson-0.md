@@ -68,6 +68,3 @@ Examples:
 console.log(null)
 console.log(undefined)
 ```
-
-## Summary
-

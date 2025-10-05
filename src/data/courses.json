@@ -6,7 +6,7 @@
         "sections": [
             {
                 "title": "Basic Concepts",
-                "desc": "This unit goes over basic concepts of JavaScript, including variables, constants, number operations, string concatination, and logging to the console.",
+                "desc": "This unit goes over basic concepts of JavaScript, including variables, constants, number operations, string concatenation, and logging to the console.",
                 "lessons": [
                     {
                         "title": "Log to The Console",
@@ -36,7 +36,17 @@
                     },
                     {
                         "title": "Variables",
-                        "type": "FRQ"
+                        "type": "FRQ",
+                        "tasks": [
+                            {
+                                "text": "Create a variable named city with the value of \"Chicago\"",
+                                "check": "city === 'Chicago'"
+                            },
+                            {
+                                "text": "Log the variable city to the console",
+                                "check": "logs.includes('Chicago')"
+                            }
+                        ]
                     },
                     {
                         "title": "Constants",
@@ -47,7 +57,7 @@
                         "type": "FRQ"
                     },
                     {
-                        "title": "String Concatination",
+                        "title": "String Concatenation",
                         "type": "FRQ"
                     }
                 ]

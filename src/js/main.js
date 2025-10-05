@@ -409,6 +409,10 @@ export class Editor {
 		this.terminal.removeClass("hidden");
 	}
 
+	verticalMode() {
+		this.wrapper.addClass("flex-col");
+	}
+
 	/**
 	 * Adds an element to the editors buttons
 	 *
