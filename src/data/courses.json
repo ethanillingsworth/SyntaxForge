@@ -64,7 +64,7 @@
             },
             {
                 "title": "If/Else Statements and Logic",
-                "desc": "This unit covers if/else statments and general logic, javascripts unique equality properties, and truthy and falsy statements.",
+                "desc": "This unit covers if/else statements and general logic, javascripts unique equality properties, and truthy and falsy statements.",
                 "lessons": [
                     {
                         "title": "Comparison Operators",
@@ -94,7 +94,7 @@
             },
             {
                 "title": "Functions",
-                "desc": "This unit covers everything to do with functions, paramaters, return values, intro level scope, and arrow functions.",
+                "desc": "This unit covers everything to do with functions, parameters, return values, intro level scope, and arrow functions.",
                 "lessons": [
                     {
                         "title": "No-Parameter Functions",
