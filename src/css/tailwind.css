@@ -4,13 +4,13 @@
 	--color-forge-background: #0e0e11;
 	--color-forge-surface: #1a1a1f;
 	--color-forge-muted: #2a2a30;
-	--color-forge-text: #e6e6e9;
-	--color-forge-subtext: #a0a0a8;
+	--color-forge-text: #ffffff;
+	--color-forge-subtext: #b0b0b0;
 
 	/* Keep one strong accent and one optional secondary */
-	--color-forge-accent: #ff7b72;
+	--color-forge-accent: #fc483f;
 	/* primary accent (warm, stands out) */
-	--color-forge-accent-hover: #e96b65;
+	--color-forge-accent-hover: #e5443b;
 	--color-forge-gold: #f4c06d;
 }
 
@@ -125,6 +125,19 @@
 
 	#tasks h3 {
 		@apply text-sm md:text-md;
+	}
+
+	table {
+		@apply w-fit;
+	}
+
+	th {
+		@apply text-left border-b-2 border-forge-accent;
+	}
+
+	td,
+	th {
+		@apply p-2;
 	}
 
 	p {

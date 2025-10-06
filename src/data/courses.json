@@ -39,7 +39,11 @@
                         "type": "FRQ",
                         "tasks": [
                             {
-                                "text": "Create a variable named city with the value of \"Chicago\"",
+                                "text": "Create a variable named city with any value",
+                                "check": "typeof city !== undefined"
+                            },
+                            {
+                                "text": "Change the value of city to \"Chicago\"",
                                 "check": "city === 'Chicago'"
                             },
                             {
@@ -50,7 +54,17 @@
                     },
                     {
                         "title": "Constants",
-                        "type": "FRQ"
+                        "type": "FRQ",
+                        "tasks": [
+                            {
+                                "text": "Create a constant named myName with the value of your name",
+                                "check": "typeof myName !== undefined"
+                            },
+                            {
+                                "text": "Log myName to the console!",
+                                "check": "logs.includes(myName)"
+                            }
+                        ]
                     },
                     {
                         "title": "Number Operations",
