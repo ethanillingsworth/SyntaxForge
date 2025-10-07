@@ -53,11 +53,19 @@ export default {
 			rewrites: [
 				{
 					from: /^\/course\/[^\/]+\/section-[^\/]+\/lesson-[^\/]+$/, // /course/ANYTHING/section-ANYTHING/lesson-ANYTHING
-					to: "/lesson/index.html",
+					to: "/pages/lesson.html",
 				},
 				{
 					from: /^\/course\/[^\/]+$/, // matches /course/anything
-					to: "/course/index.html", // serve course/index.html
+					to: "/pages/course.html", // serve course/index.html
+				},
+				{
+					from: /^\/([^\/]+)$/, // matches /something
+					to: (context) => `/pages/${context.match[1]}.html`,
+				},
+				{
+					from: /^\/$/, // matches exactly "/"
+					to: "/pages/index.html",
 				},
 			],
 		},
@@ -95,38 +103,38 @@ export default {
 			],
 		}),
 		new HtmlWebpackPlugin({
-			template: "./src/index.html",
-			filename: "index.html",
+			template: "./src/pages/index.html",
+			filename: "pages/index.html",
 			chunks: ["index"],
 			favicon: "./src/imgs/logo.png",
 		}),
 		new HtmlWebpackPlugin({
-			template: "./src/login/index.html",
-			filename: "login/index.html",
+			template: "./src/pages/login.html",
+			filename: "pages/login.html",
 			chunks: ["login"],
 			favicon: "./src/imgs/logo.png",
 		}),
 		new HtmlWebpackPlugin({
-			template: "./src/editor/index.html",
-			filename: "editor/index.html",
+			template: "./src/pages/editor.html",
+			filename: "pages/editor.html",
 			chunks: ["editor"],
 			favicon: "./src/imgs/logo.png",
 		}),
 		new HtmlWebpackPlugin({
-			template: "./src/courses/index.html",
-			filename: "courses/index.html",
+			template: "./src/pages/courses.html",
+			filename: "pages/courses.html",
 			chunks: ["courses"],
 			favicon: "./src/imgs/logo.png",
 		}),
 		new HtmlWebpackPlugin({
-			template: "./src/course/index.html",
-			filename: "course/index.html",
+			template: "./src/pages/course.html",
+			filename: "pages/course.html",
 			chunks: ["course"],
 			favicon: "./src/imgs/logo.png",
 		}),
 		new HtmlWebpackPlugin({
-			template: "./src/lesson/index.html",
-			filename: "lesson/index.html",
+			template: "./src/pages/lesson.html",
+			filename: "pages/lesson.html",
 			chunks: ["lesson"],
 			favicon: "./src/imgs/logo.png",
 		}),
