@@ -89,7 +89,7 @@ onAuthStateChanged(auth, async () => {
 
 	let num = 0;
 	let total = 0;
-	if (Object.keys(userData).length > 0) {
+	if (Object.keys(userData || {}).length > 0) {
 		const sections = course.getSections();
 
 		for (const section of sections) {
