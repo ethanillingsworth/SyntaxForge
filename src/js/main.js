@@ -316,7 +316,7 @@ export class Editor {
 		this.buttons.append(this.buttonsBack);
 
 		this.terminal = $("<div/>")
-			.addClass("terminal order-last md:order-none max-w-1/5")
+			.addClass("terminal order-last md:order-none min-w-1/5")
 			.text("SyntaxForge Terminal v1.0.0");
 
 		this.wrapper.append(this.col, this.terminal);
