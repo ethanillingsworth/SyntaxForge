@@ -1,0 +1,9 @@
+[[redirects]]
+  from = "/course/:slug"
+  to = "/course/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/course/*/section-*/lesson-*"
+  to = "/lesson/index.html"
+  status = 200

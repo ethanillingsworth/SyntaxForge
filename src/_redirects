@@ -1,2 +1,0 @@
-/course/:slug    /course/index.html    200
-/course/:course/section-:section/lesson-:lesson   /lesson/index.html   200

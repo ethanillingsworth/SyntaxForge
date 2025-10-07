@@ -17,4 +17,39 @@
     <lastmod>2025-07-04</lastmod>
     <priority>0.85</priority>
   </url>
+  <url>
+    <loc>https://syntaxforge.dev/course/js101</loc>
+    <lastmod>2025-10-07</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://syntaxforge.dev/course/js101/section-0/lesson-0</loc>
+    <lastmod>2025-10-07</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://syntaxforge.dev/course/js101/section-0/lesson-1</loc>
+    <lastmod>2025-10-07</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://syntaxforge.dev/course/js101/section-0/lesson-2</loc>
+    <lastmod>2025-10-07</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://syntaxforge.dev/course/js101/section-0/lesson-3</loc>
+    <lastmod>2025-10-07</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://syntaxforge.dev/course/js101/section-0/lesson-4</loc>
+    <lastmod>2025-10-07</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://syntaxforge.dev/course/js101/section-0/lesson-5</loc>
+    <lastmod>2025-10-07</lastmod>
+    <priority>0.8</priority>
+  </url>
 </urlset>
