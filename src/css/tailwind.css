@@ -82,7 +82,7 @@
 	}
 
 	.cm-content {
-		@apply hover:cursor-text;
+		@apply hover:cursor-text overflow-auto;
 	}
 
 	body * {

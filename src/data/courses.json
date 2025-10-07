@@ -94,13 +94,58 @@
                     },
                     {
                         "title": "String Concatenation",
-                        "type": "FRQ"
+                        "type": "FRQ",
+                        "tasks": [
+                            {
+                                "text": "Create a variable named city with any string value",
+                                "check": "typeof city === 'string'"
+                            },
+                            {
+                                "text": "Log \"Hello from CITY\" to the console",
+                                "check": "logs[0].includes(`Hello from`)"
+                            },
+                            {
+                                "text": "Change the variable of city to a different string value",
+                                "check": "typeof city === 'string'"
+                            },
+                            {
+                                "text": "Log \"Hello from CITY\" to the console a second time",
+                                "check": "logs[1].includes(`Hello from`)"
+                            }
+                        ]
+                    },
+                    {
+                        "title": "Your City",
+                        "type": "Unit Test",
+                        "tasks": [
+                            {
+                                "text": "Create a constant named cityName with the value of your city's name as a string.",
+                                "check": "typeof cityName === 'string'"
+                            },
+                            {
+                                "text": "Create a variable named cityPop with the value of your city's population",
+                                "check": "typeof cityPop === 'number'"
+                            },
+                            {
+                                "text": "Log \"cityName - Population: cityPop\" to the console",
+                                "check": "logs.includes(`${cityName} - Population: ${cityPop}`)"
+                            },
+                            {
+                                "text": "Change your city's population to 1 million",
+                                "check": "cityPop === 1000000"
+                            },
+                            {
+                                "text": "Log \"cityName - Population: cityPop\" to the console",
+                                "check": "logs.includes(`${cityName} - Population: 1000000`)"
+                            }
+
+                        ]
                     }
                 ]
             },
             {
                 "title": "If/Else Statements and Logic",
-                "desc": "This unit covers if/else statements and general logic, javascripts unique equality properties, and truthy and falsy statements.",
+                "desc": "This unit covers if/else statements and general logic, javascript's unique equality properties, and truthy and falsy statements.",
                 "lessons": [
                     {
                         "title": "Comparison Operators",

@@ -73,3 +73,5 @@ package-lock.json
 serviceKey.json
 public/
 docs/
+# Local Netlify folder
+.netlify

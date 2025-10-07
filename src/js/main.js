@@ -304,7 +304,7 @@ export class Editor {
 		this.wrapper = $("<div>").addClass("editor gap-0");
 
 		this.col = $("<div/>").addClass(
-			"col h-full w-full gap-0 place-content-start place-items-start"
+			"col h-full max-w-4/5 w-full gap-0 place-content-start place-items-start"
 		);
 
 		this.buttons = $("<div/>").addClass(
@@ -316,7 +316,7 @@ export class Editor {
 		this.buttons.append(this.buttonsBack);
 
 		this.terminal = $("<div/>")
-			.addClass("terminal order-last md:order-none")
+			.addClass("terminal order-last md:order-none max-w-1/5")
 			.text("SyntaxForge Terminal v1.0.0");
 
 		this.wrapper.append(this.col, this.terminal);
