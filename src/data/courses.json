@@ -68,7 +68,29 @@
                     },
                     {
                         "title": "Number Operations",
-                        "type": "FRQ"
+                        "type": "FRQ",
+                        "tasks": [
+                            {
+                                "text": "Create 4 variables named, add, sub, mul, and div all, set them all to the value of 4",
+                                "check": "typeof add === 'number' && typeof sub === 'number' && typeof mul === 'number' && typeof div === 'number'"
+                            },
+                            {
+                                "text": "Add 87 to the add variable",
+                                "check": "add === 4 + 87"
+                            },
+                            {
+                                "text": "Subtract 938 to the sub variable",
+                                "check": "sub === 4 - 938"
+                            },
+                            {
+                                "text": "Multiply the mul variable by 3.14",
+                                "check": "mul === 4 * 3.14"
+                            },
+                            {
+                                "text": "Divide the div variable by 8",
+                                "check": "div === 4 / 8"
+                            }
+                        ]
                     },
                     {
                         "title": "String Concatenation",
