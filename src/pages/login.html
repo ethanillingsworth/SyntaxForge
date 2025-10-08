@@ -1,55 +1,87 @@
 <!DOCTYPE html>
 <html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>SyntaxForge | Login to Your Account</title>
+		<meta
+			name="description"
+			content="Access your SyntaxForge account to continue your coding journey with personalized lessons and challenges."
+		/>
+		<meta
+			property="og:title"
+			content="SyntaxForge | Login to Your Account"
+		/>
+		<meta
+			property="og:description"
+			content="Access your SyntaxForge account to continue your coding journey with personalized lessons and challenges."
+		/>
+		<meta property="og:image" content="https://syntaxforge.dev/logo.png" />
+		<meta property="og:url" content="https://syntaxforge.dev/login" />
+		<meta property="og:type" content="website" />
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta
+			name="twitter:title"
+			content="SyntaxForge | Login to Your Account"
+		/>
+		<meta
+			name="twitter:description"
+			content="Access your SyntaxForge account to continue your coding journey with personalized lessons and challenges."
+		/>
+		<meta name="twitter:image" content="https://syntaxforge.dev/logo.png" />
+		<link rel="canonical" href="https://syntaxforge.dev/login" />
+	</head>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SyntaxForge | Login to Your Account</title>
-    <meta name="description"
-        content="Access your SyntaxForge account to continue your coding journey with personalized lessons and challenges.">
-    <meta property="og:title" content="SyntaxForge | Login to Your Account" />
-    <meta property="og:description"
-        content="Access your SyntaxForge account to continue your coding journey with personalized lessons and challenges." />
-    <meta property="og:image" content="https://syntaxforge.dev/logo.png" />
-    <meta property="og:url" content="https://syntaxforge.dev/login" />
-    <meta property="og:type" content="website" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="SyntaxForge | Login to Your Account" />
-    <meta name="twitter:description"
-        content="Access your SyntaxForge account to continue your coding journey with personalized lessons and challenges." />
-    <meta name="twitter:image" content="https://syntaxforge.dev/logo.png" />
-    <link rel="canonical" href="https://syntaxforge.dev/login" />
-
-
-</head>
-
-<body>
-
-    <!-- <header class="shadow-md border-b border-forge-muted">
+	<body>
+		<!-- <header class="shadow-md border-b border-forge-muted">
         <div class="text-xl font-bold text-forge-accent p-4">
             <a href="/">Syntax Forge</a>
         </div>
     </header> -->
 
-    <main class="place-content-center">
-        <div
-            class="border-forge-accent border-4 bg-forge-surface rounded-2xl w-auto max-w-1/ overflow-visible p-8 place-self-center col shadow-lg shadow-forge-accent/30">
-            <h1 class="text-4xl font-extrabold text-center mb-4 gradient-text">
-                SyntaxForge
-            </h1>
+		<main class="place-content-center">
+			<div
+				class="border-forge-accent border-2 bg-forge-surface rounded-2xl w-auto max-w-1/ overflow-visible p-8 place-self-center col shadow-lg shadow-forge-accent/30"
+			>
+				<h1
+					class="text-4xl font-extrabold text-center mb-4 gradient-text"
+				>
+					SyntaxForge
+				</h1>
 
-            <!-- <input class="text-xl" placeholder="username" id="username" type="text"> -->
-            <input class="text-xl" placeholder="email" id="email" type="email">
-            <input class="text-xl" placeholder="password" id="password" type="password">
+				<!-- <input class="text-xl" placeholder="username" id="username" type="text"> -->
+				<input
+					class="text-xl"
+					placeholder="email"
+					id="email"
+					type="email"
+				/>
+				<input
+					class="text-xl"
+					placeholder="password"
+					id="password"
+					type="password"
+				/>
 
-            <div class="row mt-4 place-content-center gap-5">
-                <button id="signup" class="text-xl w-full">Sign Up</button>
-                <button id="login" class="text-xl w-full">Login</button>
-            </div>
+				<div class="row place-content-center gap-4 w-full">
+					<button id="signup" class="text-md w-full">Sign Up</button>
+					<button id="login-button" class="text-md w-full">
+						Login
+					</button>
+				</div>
 
-        </div>
-    </main>
-
-</body>
-
+				<div class="flex place-items-center w-full flex-row">
+					<hr class="w-full" />
+					<h3 class="mx-2">or</h3>
+					<hr class="w-full" />
+				</div>
+				<div class="flex flex-row">
+					<div id="github" class="oauth bg-black">
+						<img src="imgs/icons/github.svg" />
+						Github
+					</div>
+				</div>
+			</div>
+		</main>
+	</body>
 </html>
