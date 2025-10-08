@@ -68,7 +68,7 @@
 
 @layer base {
 	body {
-		@apply m-0 h-dvh flex flex-col bg-forge-background text-forge-text;
+		@apply m-0 h-dvh flex flex-col bg-forge-background scheme-only-dark text-forge-text;
 	}
 
 	.oauth img {
