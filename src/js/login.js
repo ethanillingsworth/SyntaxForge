@@ -17,9 +17,17 @@ $("#signup").on("click", async () => {
 });
 
 $("#login-button").on("click", () => {
-	signInWithEmailAndPassword(auth, email.val(), password.val()).then(() => {
-		window.location.href = "/";
-	});
+	signInWithEmailAndPassword(auth, email.val(), password.val())
+		.then(() => {
+			// Redirect to the intended page or home if none specified
+			const redirectPath = sessionStorage.getItem('redirectAfterLogin') || '/';
+			sessionStorage.removeItem('redirectAfterLogin');
+			window.location.href = redirectPath;
+		})
+		.catch((error) => {
+			console.error("Login failed:", error);
+			// Handle login error (e.g., show error message to user)
+		});
 });
 
 const provider = new GithubAuthProvider();
@@ -27,7 +35,10 @@ const provider = new GithubAuthProvider();
 $("#github").on("click", () => {
 	signInWithPopup(auth, provider)
 		.then((result) => {
-			// This gives you a GitHub Access Token. You can use it to access the GitHub API.
+			// Redirect to the intended page or home if none specified
+			const redirectPath = sessionStorage.getItem('redirectAfterLogin') || '/';
+			sessionStorage.removeItem('redirectAfterLogin');
+			window.location.href = redirectPath;
 			const credential = GithubAuthProvider.credentialFromResult(result);
 			const token = credential.accessToken;
 

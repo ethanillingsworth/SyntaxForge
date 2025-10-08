@@ -15,6 +15,7 @@ export default {
 		course: "./src/js/course.js",
 		lesson: "./src/js/lesson.js",
 		editor: "./src/js/editor.js",
+		'protected-routes': "./src/js/protected-routes.js"
 	},
 	mode: "development",
 	output: {
