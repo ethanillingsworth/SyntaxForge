@@ -246,3 +246,5 @@ function setupResizer() {
 }
 
 setupResizer();
+
+editor.verticalMode();

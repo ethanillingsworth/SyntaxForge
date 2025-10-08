@@ -410,7 +410,14 @@ export class Editor {
 	}
 
 	verticalMode() {
-		this.wrapper.addClass("flex-col");
+		this.wrapper.addClass("flex flex-col h-full");
+		this.col.addClass("flex-1 overflow-auto");
+		this.col.removeClass("max-w-4/5").addClass("w-full"); // full width
+		this.terminal.css({
+			minWidth: "100%",
+			height: "250px",
+			flexShrink: 0,
+		});
 	}
 
 	/**
