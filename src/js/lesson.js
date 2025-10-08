@@ -46,14 +46,9 @@ onAuthStateChanged(auth, async () => {
 	if (cu) {
 		id = cu.uid;
 	} else {
-		id = "nouser";
-		const returnToLogin = !confirm(
-			"Progress will not be saved unless you are logged in\nOK - Continue without saving\nCANCEL - Take me to the login page"
-		);
-
-		if (returnToLogin) {
-			window.location.href = "/login";
-		}
+		// if no user send to login page
+		window.location.href = "/login";
+		
 	}
 
 	currentUser = new User(id);
