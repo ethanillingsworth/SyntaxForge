@@ -16,7 +16,7 @@ $("#signup").on("click", async () => {
 	window.location.href = "/";
 });
 
-$("#login").on("click", () => {
+$("#login-button").on("click", () => {
 	signInWithEmailAndPassword(auth, email.val(), password.val()).then(() => {
 		window.location.href = "/";
 	});
