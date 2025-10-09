@@ -158,7 +158,7 @@ SyntaxForge/
 6. Push to your branch: `git push origin feature/amazing-feature`
 7. Open a Pull Request
 
-## 🎃 Hacktoberfest 2024
+## 🎃 Hacktoberfest 2025
 
 SyntaxForge is officially participating in **Hacktoberfest**! 🎉
 
