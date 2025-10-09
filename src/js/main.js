@@ -2,9 +2,9 @@
 import {
 	createUserWithEmailAndPassword,
 	onAuthStateChanged,
-	signOut
+	signOut,
 } from "firebase/auth";
-import { auth } from "./firebase.js";
+import { auth, db } from "./firebase.js";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 
 // DOM libs
@@ -502,19 +502,31 @@ onAuthStateChanged(auth, (user) => {
 	if (user) {
 		// Hide the login button
 		$("#login").addClass("hidden");
-		
+
 		// Create avatar container
 		const avatarContainer = $("<div/>")
 			.attr("id", "user-avatar")
 			.addClass("relative cursor-pointer");
-		
+
 		// Function to generate a consistent color from string (like how Google does)
 		const stringToColor = (str) => {
 			const colors = [
-				'#F44336', '#E91E63', '#9C27B0', '#673AB7',
-				'#3F51B5', '#2196F3', '#03A9F4', '#00BCD4',
-				'#009688', '#4CAF50', '#8BC34A', '#CDDC39',
-				'#FF9800', '#FF5722', '#795548', '#607D8B'
+				"#F44336",
+				"#E91E63",
+				"#9C27B0",
+				"#673AB7",
+				"#3F51B5",
+				"#2196F3",
+				"#03A9F4",
+				"#00BCD4",
+				"#009688",
+				"#4CAF50",
+				"#8BC34A",
+				"#CDDC39",
+				"#FF9800",
+				"#FF5722",
+				"#795548",
+				"#607D8B",
 			];
 			let hash = 0;
 			for (let i = 0; i < str.length; i++) {
@@ -522,50 +534,58 @@ onAuthStateChanged(auth, (user) => {
 			}
 			return colors[Math.abs(hash) % colors.length];
 		};
-		
+
 		// Function to get the first letter
 		const getInitial = (name, email) => {
 			if (name) {
 				return name.charAt(0).toUpperCase();
 			}
-			return email ? email.charAt(0).toUpperCase() : 'U';
+			return email ? email.charAt(0).toUpperCase() : "U";
 		};
-		
+
 		// Function to create default avatar
 		const createDefaultAvatar = (size, fontSize) => {
 			const initial = getInitial(user.displayName, user.email);
 			const bgColor = stringToColor(user.email);
-			
+
 			return $("<div/>")
 				.text(initial)
-				.addClass(`${size} rounded-full border-2 border-forge-accent text-white font-medium ${fontSize}`)
+				.addClass(
+					`${size} rounded-full border-2 border-forge-accent text-white font-medium ${fontSize}`
+				)
 				.css({
 					backgroundColor: bgColor,
 					display: "flex",
 					alignItems: "center",
-					justifyContent: "center"
+					justifyContent: "center",
 				});
 		};
-		
+
 		// Create avatar - either image or default
 		let avatar;
 		if (user.photoURL) {
 			avatar = $("<img/>")
 				.attr("src", user.photoURL)
 				.attr("alt", "User Avatar")
-				.addClass("w-10 h-10 rounded-full border-2 border-forge-accent object-cover")
-				.on("error", function() {
-					$(this).replaceWith(createDefaultAvatar("w-10 h-10", "text-lg"));
+				.addClass(
+					"w-10 h-10 rounded-full border-2 border-forge-accent object-cover"
+				)
+				.on("error", function () {
+					$(this).replaceWith(
+						createDefaultAvatar("w-10 h-10", "text-lg")
+					);
 				});
 		} else {
 			avatar = createDefaultAvatar("w-10 h-10", "text-lg");
 		}
-		
+
 		// Create popup menu (hidden by default)
 		const popup = $("<div/>")
 			.attr("id", "avatar-popup")
-			.addClass("hidden absolute right-0 top-12 bg-forge-surface border-2 border-forge-accent rounded-lg p-4 shadow-lg min-w-[200px] z-50");
-		
+			.addClass(
+				"hidden absolute right-0 top-12 bg-forge-surface border-2 border-forge-accent rounded-lg p-4 shadow-lg min-w-[200px] z-50"
+			);
+
 		// Popup avatar
 		let popupAvatar;
 		if (user.photoURL) {
@@ -573,25 +593,35 @@ onAuthStateChanged(auth, (user) => {
 				.attr("src", user.photoURL)
 				.attr("alt", "User Avatar")
 				.addClass("w-16 h-16 rounded-full mx-auto mb-2 object-cover")
-				.on("error", function() {
-					$(this).replaceWith(createDefaultAvatar("w-16 h-16 mx-auto mb-2", "text-3xl"));
+				.on("error", function () {
+					$(this).replaceWith(
+						createDefaultAvatar(
+							"w-16 h-16 mx-auto mb-2",
+							"text-3xl"
+						)
+					);
 				});
 		} else {
-			popupAvatar = createDefaultAvatar("w-16 h-16 mx-auto mb-2", "text-3xl");
+			popupAvatar = createDefaultAvatar(
+				"w-16 h-16 mx-auto mb-2",
+				"text-3xl"
+			);
 		}
-		
+
 		const userName = $("<p/>")
-			.text(user.displayName || user.email.split('@')[0])
+			.text(user.displayName || user.email.split("@")[0])
 			.addClass("text-center font-semibold mb-2");
-		
+
 		const userEmail = $("<p/>")
 			.text(user.email)
 			.addClass("text-center text-sm text-forge-subtext mb-4");
-		
+
 		const logoutButton = $("<button/>")
 			.text("Logout")
-			.addClass("w-full bg-forge-accent text-white py-2 rounded hover:opacity-80");
-		
+			.addClass(
+				"w-full bg-forge-accent text-white py-2 rounded hover:opacity-80"
+			);
+
 		// Logout functionality
 		logoutButton.on("click", async () => {
 			try {
@@ -601,26 +631,26 @@ onAuthStateChanged(auth, (user) => {
 				console.error("Error signing out:", error);
 			}
 		});
-		
+
 		// Assemble popup
 		popup.append(popupAvatar, userName, userEmail, logoutButton);
-		
+
 		// Toggle popup on avatar click
 		avatarContainer.on("click", (e) => {
 			e.stopPropagation();
 			popup.toggleClass("hidden");
 		});
-		
+
 		// Close popup when clicking outside
 		$(document).on("click", (e) => {
 			if (!$(e.target).closest("#user-avatar").length) {
 				popup.addClass("hidden");
 			}
 		});
-		
+
 		// Assemble avatar container
 		avatarContainer.append(avatar, popup);
-		
+
 		// Add to header (replace the #back div content)
 		$("#back").append(avatarContainer);
 	} else {

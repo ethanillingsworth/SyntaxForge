@@ -1,15 +1,20 @@
 import { initializeApp } from "firebase/app";
-import { getAuth, GoogleAuthProvider } from "firebase/auth";
+import { getAuth } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
 
-
-// Firebase configuration
+// DO NOT CHANGE!!!
 const firebaseConfig = {
-  apiKey: "AIzaSyCmP6hJrpE774PN5rnK3NH3WF_jwJmtlsc",
-  authDomain: "syntaxforge-61123.firebaseapp.com",
-  projectId: "syntaxforge-61123",
-  storageBucket: "syntaxforge-61123.firebasestorage.app",
-  messagingSenderId: "645115417875",
-  appId: "1:645115417875:web:cc0d8549f71265f158f6e6"
+	apiKey: "AIzaSyC6j74iFFOH2q5U4kul-R74Z_IOkPyS0yo",
+
+	authDomain: "syntaxforge-fb.firebaseapp.com",
+
+	projectId: "syntaxforge-fb",
+
+	storageBucket: "syntaxforge-fb.firebasestorage.app",
+
+	messagingSenderId: "874960583919",
+
+	appId: "1:874960583919:web:b9fa27d775b508fb53ef1a",
 };
 
 // Initialize Firebase
@@ -17,4 +22,4 @@ const app = initializeApp(firebaseConfig);
 
 // Initialize Firebase Authentication
 export const auth = getAuth(app);
-export const googleProvider = new GoogleAuthProvider();
+export const db = getFirestore(app);
