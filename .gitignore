@@ -75,3 +75,4 @@ public/
 docs/
 # Local Netlify folder
 .netlify
+.DS_STORE
