@@ -1,31 +1,20 @@
-// Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
-import { getAuth } from "firebase/auth";
+import { getAuth, GoogleAuthProvider } from "firebase/auth";
 
 
-// Your web app's Firebase configuration
+// Firebase configuration
 const firebaseConfig = {
-
-    apiKey: "AIzaSyC6j74iFFOH2q5U4kul-R74Z_IOkPyS0yo",
-
-    authDomain: "syntaxforge-fb.firebaseapp.com",
-
-    projectId: "syntaxforge-fb",
-
-    storageBucket: "syntaxforge-fb.firebasestorage.app",
-
-    messagingSenderId: "874960583919",
-
-    appId: "1:874960583919:web:b9fa27d775b508fb53ef1a"
-
+  apiKey: "AIzaSyCmP6hJrpE774PN5rnK3NH3WF_jwJmtlsc",
+  authDomain: "syntaxforge-61123.firebaseapp.com",
+  projectId: "syntaxforge-61123",
+  storageBucket: "syntaxforge-61123.firebasestorage.app",
+  messagingSenderId: "645115417875",
+  appId: "1:645115417875:web:cc0d8549f71265f158f6e6"
 };
 
-
-
 // Initialize Firebase
-export const app = initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig);
 
-export const db = getFirestore(app)
-
-export const auth = getAuth(app)
+// Initialize Firebase Authentication
+export const auth = getAuth(app);
+export const googleProvider = new GoogleAuthProvider();
