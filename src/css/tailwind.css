@@ -151,6 +151,14 @@
 		@apply p-2 text-forge-text hover:text-forge-accent transition-colors duration-300;
 	}
 
+	.mobile-menu-button svg {
+		@apply transition-transform duration-300;
+	}
+
+	.mobile-menu-button.active svg {
+		@apply rotate-90;
+	}
+
 	.mobile-menu {
 		@apply flex items-center;
 	}
