@@ -568,22 +568,22 @@ onAuthStateChanged(auth, (user) => {
 				.attr("src", user.photoURL)
 				.attr("alt", "User Avatar")
 				.addClass(
-					"w-10 h-10 rounded-full border-2 border-forge-accent object-cover"
+					"w-8 h-8 rounded-full border-2 border-forge-accent object-cover"
 				)
 				.on("error", function () {
 					$(this).replaceWith(
-						createDefaultAvatar("w-10 h-10", "text-lg")
+						createDefaultAvatar("w-8 h-8", "text-lg")
 					);
 				});
 		} else {
-			avatar = createDefaultAvatar("w-10 h-10", "text-lg");
+			avatar = createDefaultAvatar("w-8 h-8", "text-lg");
 		}
 
 		// Create popup menu (hidden by default)
 		const popup = $("<div/>")
 			.attr("id", "avatar-popup")
 			.addClass(
-				"hidden absolute right-0 top-12 bg-forge-surface border-2 border-forge-accent rounded-lg p-4 shadow-lg min-w-[200px] z-50"
+				"hidden absolute right-0 top-12 bg-forge-surface border-2 border-forge-accent rounded-lg p-4 shadow-lg min-w-[200px] z-100"
 			);
 
 		// Popup avatar
@@ -619,7 +619,7 @@ onAuthStateChanged(auth, (user) => {
 		const logoutButton = $("<button/>")
 			.text("Logout")
 			.addClass(
-				"w-full bg-forge-accent text-white py-2 rounded hover:opacity-80"
+				"w-full bg-forge-accent text-md text-white py-2 rounded-2xl hover:opacity-80"
 			);
 
 		// Logout functionality
