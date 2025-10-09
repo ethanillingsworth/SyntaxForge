@@ -24,37 +24,23 @@ $("#login-button").on("click", () => {
 });
 
 const provider = new GithubAuthProvider();
-const googleProvider = new GoogleAuthProvider();
 
 $("#github").on("click", () => {
 	signInWithPopup(auth, provider)
-		.then(async (result) => {
+		.then((result) => {
 			// This gives you a GitHub Access Token. You can use it to access the GitHub API.
 			const credential = GithubAuthProvider.credentialFromResult(result);
-			const accessToken = credential?.accessToken;
+			const token = credential.accessToken;
 
 			// The signed-in user info.
 			const user = result.user;
-			console.log(user);
-			
-			// Get Firebase ID token (more reliable than access token)
-			const idToken = await user.getIdToken();
-			localStorage.setItem("token", idToken);
-			
-			// Store access token if available (for GitHub API access)
-			if (accessToken) {
-				localStorage.setItem("github_token", accessToken);
-			}
-			
-			// Store user info
-			localStorage.setItem("user", JSON.stringify({
-				uid: user.uid,
-				email: user.email,
-				displayName: user.displayName,
-				photoURL: user.photoURL
-			}));
+			// IdP data available using getAdditionalUserInfo(result)
+			// ...
+			localStorage.setItem("auth_token",token);
+			localStorage.setItem("user",JSON.stringify(user));
 
-			console.log("GitHub sign-in successful");
+			console.log(1);
+
 			window.location.href = "/";
 		})
 		.catch((error) => {
@@ -62,34 +48,30 @@ $("#github").on("click", () => {
 			const errorCode = error.code;
 			const errorMessage = error.message;
 			// The email of the user's account used.
-			const email = error.customData?.email;
+			const email = error.customData.email;
 			// The AuthCredential type that was used.
 			const credential = GithubAuthProvider.credentialFromError(error);
+			// ...
 
-			console.log("GitHub sign-in error:", error);
+			console.log(error);
 		});
 });
 
+const googleProvider = new GoogleAuthProvider();
 $("#google").on("click", () => {
 	signInWithPopup(auth, googleProvider)
-		.then(async (result) => {
-			// The signed-in user info.
+		.then((result) => {
+			// This gives you a GitHub Access Token. You can use it to access the GitHub API.
 			const credential = GoogleAuthProvider.credentialFromResult(result);
+			const token = credential.accessToken;
+
+			// The signed-in user info.
 			const user = result.user;
-			console.log(user);
-			
-			// Get Firebase ID token instead of access token
-			const idToken = await user.getIdToken();
-			localStorage.setItem("token", idToken);
-			localStorage.setItem("accessToken:",credential?.token)
-			
-			// Store user info if needed
-			localStorage.setItem("user", JSON.stringify({
-				uid: user.uid,
-				email: user.email,
-				displayName: user.displayName,
-				photoURL: user.photoURL
-			}));
+			// IdP data available using getAdditionalUserInfo(result)
+			// ...
+			localStorage.setItem("auth_token",token);
+			localStorage.setItem("user",JSON.stringify(user));
+			console.log(1);
 
 			window.location.href = "/";
 		})
@@ -98,10 +80,11 @@ $("#google").on("click", () => {
 			const errorCode = error.code;
 			const errorMessage = error.message;
 			// The email of the user's account used.
-			const email = error.customData?.email;
+			const email = error.customData.email;
 			// The AuthCredential type that was used.
 			const credential = GoogleAuthProvider.credentialFromError(error);
+			// ...
 
-			console.log("Google sign-in error:", error);
+			console.log(error);
 		});
 });

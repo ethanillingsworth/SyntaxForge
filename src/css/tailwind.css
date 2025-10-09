@@ -123,6 +123,26 @@
 		@apply hidden md:flex items-center gap-2;
 	}
 
+	.mobile-nav {
+		@apply md:hidden absolute top-full left-0 right-0 bg-forge-surface/95 backdrop-blur-md border-b border-forge-accent/20 shadow-lg transform transition-all duration-300 ease-in-out;
+	}
+
+	.mobile-nav.hidden {
+		@apply opacity-0 -translate-y-2 pointer-events-none;
+	}
+
+	.mobile-nav.show {
+		@apply opacity-100 translate-y-0 pointer-events-auto;
+	}
+
+	.mobile-nav-menu {
+		@apply flex flex-col p-4 gap-3;
+	}
+
+	.mobile-nav-menu a {
+		@apply px-4 py-3 rounded-lg hover:bg-forge-muted/50 transition-all duration-300 font-medium text-white border-l-2 border-transparent hover:border-forge-accent;
+	}
+
 	.auth-section {
 		@apply flex items-center ml-auto;
 	}
