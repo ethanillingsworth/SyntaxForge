@@ -23,10 +23,10 @@ $("#login-button").on("click", () => {
 	});
 });
 
-const provider = new GithubAuthProvider();
+const githubProvider = new GithubAuthProvider();
 
 $("#github").on("click", () => {
-	signInWithPopup(auth, provider)
+	signInWithPopup(auth, githubProvider)
 		.then((result) => {
 			// This gives you a GitHub Access Token. You can use it to access the GitHub API.
 			const credential = GithubAuthProvider.credentialFromResult(result);
@@ -58,20 +58,19 @@ $("#github").on("click", () => {
 });
 
 const googleProvider = new GoogleAuthProvider();
+
 $("#google").on("click", () => {
 	signInWithPopup(auth, googleProvider)
 		.then((result) => {
-			// This gives you a GitHub Access Token. You can use it to access the GitHub API.
+			// This gives you a Google Access Token. You can use it to access Google APIs.
 			const credential = GoogleAuthProvider.credentialFromResult(result);
 			const token = credential.accessToken;
 
 			// The signed-in user info.
 			const user = result.user;
-			// IdP data available using getAdditionalUserInfo(result)
-			// ...
-			localStorage.setItem("auth_token",token);
-			localStorage.setItem("user",JSON.stringify(user));
-			console.log(1);
+			// user.displayName, user.email, user.photoURL available
+			
+			console.log("Google login successful");
 
 			window.location.href = "/";
 		})
@@ -83,7 +82,6 @@ $("#google").on("click", () => {
 			const email = error.customData.email;
 			// The AuthCredential type that was used.
 			const credential = GoogleAuthProvider.credentialFromError(error);
-			// ...
 
 			console.log(error);
 		});
