@@ -3,8 +3,7 @@ import { auth } from "./firebase.js";
 import { Course } from "./main.js";
 import { initMobileMenu } from './mobile-menu.js';
 
-// Initialize mobile menu
-initMobileMenu();
+
 
 const courses = Course.getAll();
 

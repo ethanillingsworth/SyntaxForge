@@ -17,6 +17,11 @@ import { basicDark } from "@fsegurai/codemirror-theme-bundle";
 import { indentWithTab } from "@codemirror/commands";
 import { keymap, EditorView } from "@codemirror/view";
 import { Prec } from "@codemirror/state";
+import { initMobileMenu } from "./mobile-menu.js";
+
+
+//for mobile view
+initMobileMenu()
 
 // Load JSON data
 const courses = (await (await fetch("/data/courses.json")).json()) || {};

@@ -4,9 +4,6 @@ import { Editor } from './main.js';
 import { initMobileMenu } from './mobile-menu.js';
 import $ from "jquery"
 
-// Initialize mobile menu
-initMobileMenu();
-
 
 
 const code = `// Code Example
