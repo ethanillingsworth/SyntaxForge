@@ -36,6 +36,8 @@ $("#github").on("click", () => {
 			const user = result.user;
 			// IdP data available using getAdditionalUserInfo(result)
 			// ...
+			localStorage.setItem("auth_token",token);
+			localStorage.setItem("user",JSON.stringify(user));
 
 			console.log(1);
 

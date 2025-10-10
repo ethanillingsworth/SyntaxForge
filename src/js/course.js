@@ -1,7 +1,10 @@
 import { onAuthStateChanged } from "firebase/auth";
 import { Course, User } from "./main.js";
+import { initMobileMenu } from './mobile-menu.js';
 import $ from "jquery";
 import { auth } from "./firebase.js";
+
+
 
 const pathParts = window.location.pathname.split("/");
 const courseId = pathParts[pathParts.length - 1];

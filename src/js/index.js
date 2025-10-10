@@ -1,7 +1,9 @@
 import '../css/tailwind.css'
 
 import { Editor } from './main.js';
+import { initMobileMenu } from './mobile-menu.js';
 import $ from "jquery"
+
 
 
 const code = `// Code Example

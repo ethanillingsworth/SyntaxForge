@@ -28,12 +28,30 @@
 
 	<body>
 		<header>
-			<a class="gradient-text" id="head" href="/">SyntaxForge</a>
-			<a href="/courses">Courses</a>
-			<a href="/editor">Playground</a>
-
-			<div id="back">
+			<div class="logo-section">
+				<a class="gradient-text" id="head" href="/">SyntaxForge</a>
+			</div>
+			<nav class="nav-section">
+				<a href="/courses" class="nav-menu">Courses</a>
+				<a href="/editor" class="nav-menu">Playground</a>
+			</nav>
+			<div class="mobile-menu md:hidden">
+				<button id="mobile-menu-btn" class="mobile-menu-button">
+					<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+					</svg>
+				</button>
+			</div>
+			<div id="back" class="auth-section">
 				<a href="/login" id="login">Login</a>
+			</div>
+			
+			<!-- Mobile Navigation Menu -->
+			<div id="mobile-nav" class="mobile-nav hidden">
+				<div class="mobile-nav-menu">
+					<a href="/courses">Courses</a>
+					<a href="/editor">Playground</a>
+				</div>
 			</div>
 		</header>
 

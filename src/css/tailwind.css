@@ -31,7 +31,7 @@
 }
 
 @utility gradient-text {
-	@apply leading-tight bg-gradient-to-r from-forge-accent to-forge-gold bg-clip-text text-transparent;
+	@apply leading-tight bg-gradient-to-r from-forge-accent to-forge-gold bg-clip-text text-transparent drop-shadow-sm;
 }
 
 @utility card {
@@ -66,6 +66,8 @@
 	@apply section rounded-none;
 }
 
+
+
 @layer base {
 	body {
 		@apply m-0 h-dvh flex flex-col bg-forge-background scheme-only-dark text-forge-text;
@@ -98,19 +100,84 @@
 	}
 
 	header {
-		@apply bg-forge-surface border-b-2 border-forge-muted p-4 text-base font-bold row gap-2 sticky top-0 h-auto flex-wrap place-content-center md:text-2xl md:flex-nowrap md:gap-9 md:place-content-start;
+		@apply bg-forge-surface/90 backdrop-blur-md border-b border-forge-accent/20 p-4 text-base font-bold gap-4 sticky top-0 h-auto flex flex-row flex-wrap place-items-center place-content-between md:text-2xl md:flex-nowrap md:gap-6 z-10 shadow-lg shadow-forge-background/50;
 	}
 
 	#head {
-		@apply w-full text-center text-xl md:text-2xl md:w-auto;
+		@apply w-auto text-left text-xl md:text-2xl font-extrabold tracking-tight hover:scale-105 transition-all duration-300;
+	}
+
+	#head:hover {
+		filter: drop-shadow(0 0 8px rgba(252, 72, 63, 0.3));
 	}
 
 	#back {
 		@apply lg:ml-auto;
 	}
 
+	.logo-section {
+		@apply flex items-center;
+	}
+
+	.nav-section {
+		@apply hidden md:flex items-center gap-2;
+	}
+
+	.mobile-nav {
+		@apply md:hidden absolute top-full left-0 right-0 bg-forge-surface/95 backdrop-blur-md border-b border-forge-accent/20 shadow-lg transform transition-all duration-300 ease-in-out;
+	}
+
+	.mobile-nav.hidden {
+		@apply opacity-0 -translate-y-2 pointer-events-none;
+	}
+
+	.mobile-nav.show {
+		@apply opacity-100 translate-y-0 pointer-events-auto;
+	}
+
+	.mobile-nav-menu {
+		@apply flex flex-col p-4 gap-3;
+	}
+
+	.mobile-nav-menu a {
+		@apply px-4 py-3 rounded-lg hover:bg-forge-muted/50 transition-all duration-300 font-medium text-white border-l-2 border-transparent hover:border-forge-accent;
+	}
+
+	.auth-section {
+		@apply flex items-center ml-auto;
+	}
+
+	.mobile-menu-button {
+		@apply p-2 text-forge-text hover:text-forge-accent transition-colors duration-300;
+	}
+
+	.mobile-menu-button svg {
+		@apply transition-transform duration-300;
+	}
+
+	.mobile-menu-button.active svg {
+		@apply rotate-90;
+	}
+
+	.mobile-menu {
+		@apply flex items-center;
+	}
+
 	header a {
-		@apply text-white transition-colors;
+		@apply text-white transition-all duration-300 hover:text-forge-accent relative;
+	}
+
+	/* Add nav menu hover effects */
+	.nav-menu {
+		@apply px-3 py-2 rounded-lg hover:bg-forge-muted/50 transition-all duration-300 font-medium;
+	}
+
+	.nav-menu:hover {
+		@apply transform scale-105;
+	}
+
+	#login {
+		@apply px-4 py-2 bg-gradient-to-r from-forge-accent to-forge-gold text-white rounded-lg font-semibold hover:shadow-lg hover:shadow-forge-accent/25 transition-all duration-300 hover:scale-105;
 	}
 
 	progress {
