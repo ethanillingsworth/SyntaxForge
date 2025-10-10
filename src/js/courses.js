@@ -1,9 +1,6 @@
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebase.js";
 import { Course } from "./main.js";
-import { initMobileMenu } from './mobile-menu.js';
-
-
 
 const courses = Course.getAll();
 

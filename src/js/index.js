@@ -1,10 +1,7 @@
-import '../css/tailwind.css'
+import "../css/tailwind.css";
 
-import { Editor } from './main.js';
-import { initMobileMenu } from './mobile-menu.js';
-import $ from "jquery"
-
-
+import { Editor } from "./main.js";
+import $ from "jquery";
 
 const code = `// Code Example
 const amICool = true
@@ -15,7 +12,6 @@ if (amICool) {
 else {
     console.log("I am not very cool :(")
 }
-`
+`;
 
-const editor = new Editor($("#editor"), code)
-
+const editor = new Editor($("#editor"), code);
