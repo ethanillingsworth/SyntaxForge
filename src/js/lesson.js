@@ -5,9 +5,21 @@ import { auth } from "./firebase.js";
 import { onAuthStateChanged } from "firebase/auth";
 
 import { marked } from "marked";
+import highlightJs from "highlight.js";
+import "highlight.js/styles/atom-one-dark.css";
 
 // Initialize mobile menu
 initMobileMenu();
+
+marked.setOptions({
+	highlight: function (code, lang) {
+		if (lang && highlightJs.getLanguage(lang)) {
+			return highlightJs.highlight(code, { language: lang }).value;
+		} else {
+			return highlightJs.highlightAuto(code).value;
+		}
+	}
+});
 
 const editor = new Editor();
 
@@ -27,6 +39,11 @@ const md = await (
 ).text();
 
 $("#rendered").addClass("md").html(marked.parse(md));
+
+// Apply syntax highlighting to all code blocks
+$("#rendered pre code").each(function () {
+	highlightJs.highlightElement(this);
+});
 
 console.log(md);
 
@@ -138,7 +155,7 @@ function runUserCode() {
 
 const data = await lesson.get();
 
-$("#rendered").html(data.content);
+// $("#rendered").html(data.content);
 
 $("#raw").val(data.content);
 
@@ -163,7 +180,7 @@ next.on("click", async () => {
 	} else {
 		window.location.href = `/course/${courseId}/section-${sectionIndex}/lesson-${
 			parseInt(lessonIndex) + 1
-		}`;
+			}`;
 	}
 });
 

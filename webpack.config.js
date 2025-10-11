@@ -72,7 +72,7 @@ export default {
 	},
 	plugins: [
 		new MiniCssExtractPlugin({
-			filename: "css/tailwind.css",
+			filename: "css/[name].css",
 		}),
 		new CopyWebpackPlugin({
 			patterns: [
