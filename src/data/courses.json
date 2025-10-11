@@ -148,7 +148,42 @@
                 "lessons": [
                     {
                         "title": "Comparison Operators",
-                        "type": "FRQ"
+                        "type": "FRQ",
+                        "tasks": [
+                            {
+                                "text": "Log the result of 5 > 3",
+                                "check": "logs[0] === true"
+                            },
+                            {
+                                "text": "Log the result of 10 < 2",
+                                "check": "logs[1] === false"
+                            },
+                            {
+                                "text": "Log the result of 7 >= 7",
+                                "check": "logs[2] === true"
+                            },
+                            {
+                                "text": "Log the result of 4 <= 3",
+                                "check": "logs[3] === false"
+                            },
+                            {
+                                "text": "Log the result of 8 == '8'",
+                                "check": "logs[4] === true"
+                            },
+                            {
+                                "text": "Log the result of 8 === '8'",
+                                "check": "logs[5] === false"
+                            },
+                            {
+                                "text": "Log the result of 9 != 5",
+                                "check": "logs[6] === true"
+                            },
+                            {
+                                "text": "Log the result of 9 !== '9'",
+                                "check": "logs[7] === true"
+                            }
+                        ]
+
                     },
                     {
                         "title": "If Statements",
