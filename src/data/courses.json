@@ -138,7 +138,6 @@
                                 "text": "Log \"cityName - Population: cityPop\" to the console",
                                 "check": "logs.includes(`${cityName} - Population: 1000000`)"
                             }
-
                         ]
                     }
                 ]
@@ -174,6 +173,16 @@
                 ]
             },
             {
+                "title": "Math",
+                "desc": "This unit covers the Math class in javascript, its constants and methods.",
+                "lessons": []
+            },
+            {
+                "title": "String Methods",
+                "desc": "This unit covers methods used with string, difference in string types, escape characters, and template literals.",
+                "lessons": []
+            },
+            {
                 "title": "Functions",
                 "desc": "This unit covers everything to do with functions, parameters, return values, intro level scope, and arrow functions.",
                 "lessons": [
@@ -202,7 +211,21 @@
                         "type": "FRQ"
                     }
                 ]
-
+            },
+            {
+                "title": "Arrays",
+                "desc": "This unit covers everything to with arrays, getting, setting, and deleting values and methods.",
+                "lessons": []
+            },
+            {
+                "title": "Loops",
+                "desc": "This unit covers everything to with loops, both while and for, and their subtypes.",
+                "lessons": []
+            },
+            {
+                "title": "Objects",
+                "desc": "This unit covers everything to with objects, how to loop through them, get items, set items, along with some useful methods.",
+                "lessons": []
             }
         ]
     }
