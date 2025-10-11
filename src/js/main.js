@@ -135,23 +135,63 @@ export class User {
 	}
 }
 
+/**
+ * Creates a new Lesson object
+ *
+ * @param {Section} parent - The parent Section this lesson belongs to
+ * @param {number} index - The index of this lesson within the section
+ *
+ * @returns {Lesson} - Lesson object created
+ *
+ * @example
+ * const lesson = new Lesson(section, 0)
+ */
 export class Lesson {
 	constructor(parent, index) {
 		this.parent = parent;
 		this.index = index;
 	}
 
+
+	/**
+	 * Get lesson data from its parent Section
+	 *
+	 * @returns {object} - Lesson data
+	 *
+	 * @example
+	 * lesson.get() // returns the lesson object
+	 */
 	get() {
 		return this.parent.get().lessons[this.index];
 	}
 }
 
+/**
+ * Creates a new Section object
+ *
+ * @param {Course} parent - The parent Course this section belongs to
+ * @param {number} index - The index of this section within the course
+ *
+ * @returns {Section} - Section object created
+ *
+ * @example
+ * const section = new Section(course, 1)
+ */
 export class Section {
 	constructor(parent, index) {
 		this.parent = parent;
 		this.index = index;
 	}
 
+
+	/**
+	 * Get all lessons belonging to this section
+	 *
+	 * @returns {Lesson[]} - List of lessons
+	 *
+	 * @example
+	 * section.getLessons() // [Lesson1, Lesson2]
+	 */
 	getLessons() {
 		const l = [];
 		for (const index in this.get().lessons) {
@@ -161,10 +201,30 @@ export class Section {
 		return l;
 	}
 
+
+	/**
+	 * Get a single lesson by index
+	 *
+	 * @param {number} index - The index of the lesson
+	 *
+	 * @returns {Lesson} - The requested lesson object
+	 *
+	 * @example
+	 * section.getLesson(0) // returns Lesson object
+	 */
 	getLesson(index) {
 		return new Lesson(this, index);
 	}
 
+
+	/**
+	 * Returns section data from the parent Course
+	 *
+	 * @returns {object} - Section data
+	 *
+	 * @example
+	 * section.get() // returns section data
+	 */
 	get() {
 		return this.parent.get().sections[this.index];
 	}
