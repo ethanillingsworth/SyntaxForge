@@ -467,7 +467,11 @@ export class Editor {
 		var print = function () {};
 
 		const a = function () {
-			return eval(input + (test || ""));
+			try {
+				return eval(input + (test || ""));
+			} catch (error) {
+				logs.push(error.toString());
+			}
 		};
 
 		// Return the eval'd result
