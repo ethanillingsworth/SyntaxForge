@@ -1,7 +1,7 @@
 # SyntaxForge 🔥
 
 <div align="center">
-  <img src="src/imgs/logo.png" alt="SyntaxForge Logo" width="120" height="120">
+  <img src="https://syntaxforge.dev/imgs/logo.png" alt="SyntaxForge Logo" width="120" height="120">
   
   **Master programming skills at your own pace with interactive coding lessons and challenges**
   
@@ -96,11 +96,11 @@ SyntaxForge is an innovative interactive coding education platform designed to h
 
 ### Development Scripts
 
-| Script | Description |
-|--------|-------------|
-| `npm run serve` | Start webpack dev server |
-| `npm run build` | Build for production |
-| `npm run docs` | Generate JSDoc documentation |
+| Script          | Description                  |
+| --------------- | ---------------------------- |
+| `npm run serve` | Start webpack dev server     |
+| `npm run build` | Build for production         |
+| `npm run docs`  | Generate JSDoc documentation |
 
 ### Tech Stack
 
