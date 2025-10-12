@@ -1,129 +1,181 @@
 <!DOCTYPE html>
 <html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>SyntaxForge | Interactive Coding Lessons & Challenges</title>
+		<meta
+			name="description"
+			content="Learn coding through interactive lessons and challenges. SyntaxForge helps beginners and advanced coders master programming skills at their own pace."
+		/>
+		<meta
+			property="og:title"
+			content="SyntaxForge | Interactive Coding Lessons & Challenges"
+		/>
+		<meta
+			property="og:description"
+			content="Learn coding through interactive lessons and challenges. SyntaxForge helps coders at any level build real skills."
+		/>
+		<meta property="og:image" content="https://syntaxforge.dev/logo.png" />
+		<meta property="og:url" content="https://syntaxforge.dev" />
+		<meta property="og:type" content="website" />
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta
+			name="twitter:title"
+			content="SyntaxForge | Interactive Coding Lessons & Challenges"
+		/>
+		<meta
+			name="twitter:description"
+			content="Learn coding through interactive lessons and challenges. SyntaxForge helps coders at any level build real skills."
+		/>
+		<meta name="twitter:image" content="https://syntaxforge.dev/logo.png" />
+		<link rel="canonical" href="https://syntaxforge.dev/" />
+	</head>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SyntaxForge | Interactive Coding Lessons & Challenges</title>
-    <meta name="description"
-        content="Learn coding through interactive lessons and challenges. SyntaxForge helps beginners and advanced coders master programming skills at their own pace.">
-    <meta property="og:title" content="SyntaxForge | Interactive Coding Lessons & Challenges" />
-    <meta property="og:description"
-        content="Learn coding through interactive lessons and challenges. SyntaxForge helps coders at any level build real skills." />
-    <meta property="og:image" content="https://syntaxforge.dev/logo.png" />
-    <meta property="og:url" content="https://syntaxforge.dev" />
-    <meta property="og:type" content="website" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="SyntaxForge | Interactive Coding Lessons & Challenges" />
-    <meta name="twitter:description"
-        content="Learn coding through interactive lessons and challenges. SyntaxForge helps coders at any level build real skills." />
-    <meta name="twitter:image" content="https://syntaxforge.dev/logo.png" />
-    <link rel="canonical" href="https://syntaxforge.dev/" />
+	<body>
+		<header>
+			<div class="logo-section">
+				<a class="gradient-text" id="head" href="/">SyntaxForge</a>
+			</div>
+			<nav class="nav-section">
+				<a href="/courses" class="nav-menu">Courses</a>
+				<a href="/editor" class="nav-menu">Playground</a>
+			</nav>
+			<div class="mobile-menu md:hidden">
+				<button id="mobile-menu-btn" class="mobile-menu-button">
+					<svg
+						class="w-6 h-6"
+						fill="none"
+						stroke="currentColor"
+						viewBox="0 0 24 24"
+					>
+						<path
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							stroke-width="2"
+							d="M4 6h16M4 12h16M4 18h16"
+						></path>
+					</svg>
+				</button>
+			</div>
+			<div id="back" class="auth-section">
+				<a href="/login" id="login">Login</a>
+			</div>
 
+			<!-- Mobile Navigation Menu -->
+			<div id="mobile-nav" class="mobile-nav hidden">
+				<div class="mobile-nav-menu">
+					<a href="/courses">Courses</a>
+					<a href="/editor">Playground</a>
+				</div>
+			</div>
+		</header>
 
-</head>
+		<main class="p-0">
+			<section
+				class="hero-section min-h-full flex items-center justify-center"
+			>
+				<div class="col text-center">
+					<h1
+						class="text-4xl md:text-5xl font-extrabold text-forge-text"
+					>
+						Welcome to
+						<span class="gradient-text">SyntaxForge</span>
+					</h1>
+					<p class="text-lg text-forge-subtext">
+						Learn to code with interactive lessons, instant
+						feedback, and a built-in editor.
+					</p>
+					<div
+						class="row text-lg md:text-xl mt-4 flex md:flex-row flex-col justify-center gap-4"
+					>
+						<a href="/courses">
+							<button
+								class="bg-forge-accent w-[16rem] md:px-6 md:py-2 py-1 px-3 hover:scale-105 transition-transform text-white"
+							>
+								Start Learning
+							</button>
+						</a>
+						<a href="/editor">
+							<button
+								class="muted md:px-6 w-[16rem] md:py-2 py-1 px-3 bg-forge-muted hover:scale-105 transition-transform text-white"
+							>
+								Launch Playground
+							</button>
+						</a>
+					</div>
+				</div>
+			</section>
 
-<body>
-    <header>
-        <div class="logo-section">
-            <a class="gradient-text" id="head" href="/">SyntaxForge</a>
-        </div>
-        <nav class="nav-section">
-            <a href="/courses" class="nav-menu">Courses</a>
-            <a href="/editor" class="nav-menu">Playground</a>
-        </nav>
-        <div class="mobile-menu md:hidden">
-            <button id="mobile-menu-btn" class="mobile-menu-button">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-                </svg>
-            </button>
-        </div>
-        <div id="back" class="auth-section">
-            <a href="/login" id="login">Login</a>
-        </div>
-        
-        <!-- Mobile Navigation Menu -->
-        <div id="mobile-nav" class="mobile-nav hidden">
-            <div class="mobile-nav-menu">
-                <a href="/courses">Courses</a>
-                <a href="/editor">Playground</a>
-            </div>
-        </div>
-    </header>
+			<!-- Mission statement -->
+			<section class="max-w-4xl mx-auto text-center pt-16 py-4 px-4">
+				<h2 class="text-3xl font-bold text-forge-text mb-4">
+					Our Mission
+				</h2>
+				<p class="text-lg text-forge-subtext">
+					To make learning to code accessible, interactive, and fun
+					for everyone, regardless of their background, by providing
+					hands-on lessons and instant feedback.
+				</p>
+			</section>
 
-    <main class="p-0">
-        <section class="hero-section min-h-full flex items-center justify-center">
-            <div class="col text-center">
-                <h1 class="text-4xl md:text-5xl font-extrabold text-forge-text">
-                    Welcome to <span class="gradient-text">SyntaxForge</span>
-                </h1>
-                <p class="text-lg text-forge-subtext">
-                    Learn to code with interactive lessons, instant feedback, and a built-in editor.
-                </p>
-                <div class="row text-lg md:text-xl mt-4 flex md:flex-row flex-col justify-center gap-4">
-                    <a href="/courses">
-                        <button class="bg-forge-accent w-[16rem] md:px-6 md:py-2 py-1 px-3 hover:scale-105 transition-transform text-white">Start
-                            Learning</button>
+			<section
+				class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl text-center pt-10 px-8"
+			>
+				<div class="card">
+					<h2 class="text-xl font-semibold mb-2">
+						Interactive Lessons
+					</h2>
+					<p class="text-forge-subtext">
+						Master programming topics through structured,
+						step-by-step lessons.
+					</p>
+				</div>
+				<div class="card">
+					<h2 class="text-xl font-semibold mb-2">
+						Coding Challenges
+					</h2>
+					<p class="text-forge-subtext">
+						Test your skills with challenges made to reinforce each
+						topic.
+					</p>
+				</div>
+				<div class="card">
+					<h2 class="text-xl font-semibold mb-2">
+						Progress Tracking
+					</h2>
+					<p class="text-forge-subtext">
+						Track your learning journey and stay motivated.
+					</p>
+				</div>
+			</section>
 
-                    </a>
-                    <a href="/editor">
-                        <button
-                            class="muted md:px-6 w-[16rem] md:py-2 py-1 px-3 bg-forge-muted hover:scale-105 transition-transform text-white">Launch
-                            Playground</button>
-                    </a>
-                </div>
-            </div>
-        </section>
+			<section class="col mt-16 px-8">
+				<h2 class="text-3xl">Editor Preview</h2>
+				<div
+					id="editor"
+					class="row h-96 w-full md:w-3/4 mt-4 gap-0 flex-wrap md:flex-nowrap place-content-start place-items-start"
+				></div>
+			</section>
 
-
-        <!-- Mission statement -->
-        <section class="max-w-4xl mx-auto text-center pt-16 py-4 px-4">
-        <h2 class="text-3xl font-bold text-forge-text mb-4">Our Mission</h2>
-        <p class="text-lg text-forge-subtext">
-        To make learning to code accessible, interactive, and fun for everyone, regardless of their background, by providing hands-on lessons and instant feedback.
-        </p>
-        </section>
-
-        <section class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl text-center pt-10 px-8">
-            <div class="card">
-                <h2 class="text-xl font-semibold mb-2">Interactive Lessons</h2>
-                <p class="text-forge-subtext">Master programming topics through structured,
-                    step-by-step lessons.
-                </p>
-            </div>
-            <div class="card">
-                <h2 class="text-xl font-semibold mb-2 ">Coding Challenges</h2>
-                <p class="text-forge-subtext">Test your skills with challenges made to reinforce each topic.
-                </p>
-            </div>
-            <div class="card">
-                <h2 class="text-xl font-semibold mb-2">Progress Tracking</h2>
-                <p class="text-forge-subtext">Track your learning journey and stay motivated.</p>
-            </div>
-        </section>
-
-        <section class="col mt-16 px-8">
-            <h2 class="text-3xl">Editor Preview</h2>
-            <div
-                id="editor" class="row h-96 w-full md:w-3/4 mt-4 gap-0 flex-wrap md:flex-nowrap place-content-start place-items-start">
-                
-            </div>
-        </section>
-
-        <!-- footer section -->
-        <footer class="bg-forge-surface text-center py-8 mt-16">
-    <div class="max-w-4xl mx-auto px-4">
-        <a href="https://github.com/ethanillingsworth" target="_blank" rel="noopener noreferrer" class="text-forge-subtext hover:text-forge-accent transition-colors">
-            Visit our GitHub
-        </a>
-        <p class="text-sm text-forge-subtext mt-4">
-            &copy; 2025 SyntaxForge. All Rights Reserved.
-        </p>
-    </div>
-</footer>
-    </main>
-    
-</body>
-
+			<!-- footer section -->
+			<footer
+				class="bg-forge-surface border-t-forge-accent border-t-2 text-center py-8 mt-16"
+			>
+				<div class="max-w-4xl mx-auto px-4">
+					<a
+						href="https://github.com/ethanillingsworth"
+						target="_blank"
+						rel="noopener noreferrer"
+						class="text-forge-subtext hover:text-forge-accent transition-colors"
+					>
+						Visit our GitHub
+					</a>
+					<p class="text-sm text-forge-subtext mt-4">
+						&copy; 2025 SyntaxForge. All Rights Reserved.
+					</p>
+				</div>
+			</footer>
+		</main>
+	</body>
 </html>

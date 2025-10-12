@@ -66,6 +66,10 @@
 	@apply section rounded-none;
 }
 
+@utility hero-section {
+	@apply bg-[url('../imgs/hero-bg.png')] bg-cover bg-center bg-no-repeat;
+}
+
 @layer base {
 	body {
 		@apply m-0 h-dvh flex flex-col bg-forge-background scheme-only-dark text-forge-text;
@@ -303,11 +307,4 @@
 	a {
 		@apply text-forge-accent hover:text-forge-accent-hover;
 	}
-}
-
-.hero-section {
-  background-image: url('../imgs/hero-bg.png'); /* The ../ goes up one directory from css/ to src/ */
-  background-size: cover; /* Ensures the image covers the entire section */
-  background-position: center; /* Centers the image */
-  background-repeat: no-repeat; /* Prevents the image from repeating */
 }
