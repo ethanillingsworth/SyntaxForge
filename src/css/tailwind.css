@@ -304,3 +304,10 @@
 		@apply text-forge-accent hover:text-forge-accent-hover;
 	}
 }
+
+.hero-section {
+  background-image: url('../imgs/hero-bg.png'); /* The ../ goes up one directory from css/ to src/ */
+  background-size: cover; /* Ensures the image covers the entire section */
+  background-position: center; /* Centers the image */
+  background-repeat: no-repeat; /* Prevents the image from repeating */
+}
