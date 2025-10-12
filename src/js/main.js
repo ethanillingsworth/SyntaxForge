@@ -20,9 +20,8 @@ import { keymap, EditorView } from "@codemirror/view";
 import { Prec } from "@codemirror/state";
 import { initMobileMenu } from "./mobile-menu.js";
 
-
 //for mobile view
-initMobileMenu()
+initMobileMenu();
 
 // Load JSON data
 const courses = (await (await fetch("/data/courses.json")).json()) || {};
@@ -152,7 +151,6 @@ export class Lesson {
 		this.index = index;
 	}
 
-
 	/**
 	 * Get lesson data from its parent Section
 	 *
@@ -183,7 +181,6 @@ export class Section {
 		this.index = index;
 	}
 
-
 	/**
 	 * Get all lessons belonging to this section
 	 *
@@ -201,7 +198,6 @@ export class Section {
 		return l;
 	}
 
-
 	/**
 	 * Get a single lesson by index
 	 *
@@ -215,7 +211,6 @@ export class Section {
 	getLesson(index) {
 		return new Lesson(this, index);
 	}
-
 
 	/**
 	 * Returns section data from the parent Course
@@ -637,7 +632,7 @@ onAuthStateChanged(auth, (user) => {
 				.attr("src", user.photoURL)
 				.attr("alt", "User Avatar")
 				.addClass(
-					"w-8 h-8 rounded-full border-2 border-forge-accent object-cover"
+					"w-12 h-12 rounded-full border-2 border-forge-accent object-cover"
 				)
 				.on("error", function () {
 					$(this).replaceWith(
