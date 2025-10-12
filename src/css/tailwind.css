@@ -66,6 +66,10 @@
 	@apply section rounded-none;
 }
 
+@utility hero-section {
+	@apply bg-[url('../imgs/hero-bg.png')] bg-cover bg-center bg-no-repeat;
+}
+
 @layer base {
 	body {
 		@apply m-0 h-dvh flex flex-col bg-forge-background scheme-only-dark text-forge-text;
