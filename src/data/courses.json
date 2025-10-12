@@ -148,27 +148,152 @@
                 "lessons": [
                     {
                         "title": "Comparison Operators",
-                        "type": "FRQ"
+                        "type": "FRQ",
+                        "tasks": [
+                            {
+                                "text": "Log the result of 5 > 3",
+                                "check": "logs[0] === true"
+                            },
+                            {
+                                "text": "Log the result of 10 < 2",
+                                "check": "logs[1] === false"
+                            },
+                            {
+                                "text": "Log the result of 7 >= 7",
+                                "check": "logs[2] === true"
+                            },
+                            {
+                                "text": "Log the result of 4 <= 3",
+                                "check": "logs[3] === false"
+                            },
+                            {
+                                "text": "Log the result of 8 == '8'",
+                                "check": "logs[4] === true"
+                            },
+                            {
+                                "text": "Log the result of 8 === '8'",
+                                "check": "logs[5] === false"
+                            },
+                            {
+                                "text": "Log the result of 9 != 5",
+                                "check": "logs[6] === true"
+                            },
+                            {
+                                "text": "Log the result of 9 !== '9'",
+                                "check": "logs[7] === true"
+                            }
+                        ]
+
                     },
                     {
                         "title": "If Statements",
-                        "type": "FRQ"
+                        "type": "FRQ",
+                        "tasks": [
+                            {
+                                "text": "Create a variable named age set to 20, then log 'Adult' if age is greater than or equal to 18",
+                                "check": "(age === 20 && logs.includes('Adult'))"
+                            },
+                            {
+                                "text": "Create a variable named temperature set to 15, then log 'Cold' if temperature is less than 25",
+                                "check": "(temperature === 15 && logs.includes('Cold'))"
+                            },
+                            {
+                                "text": "Create a variable named score set to 55, then log 'Failed' if score is less than 60",
+                                "check": "(score === 55 && logs.includes('Failed'))"
+                            },
+                            {
+                                "text": "Create a variable named isLoggedIn set to true, then log 'Welcome!' if isLoggedIn is true",
+                                "check": "(isLoggedIn === true && logs.includes('Welcome!'))"
+                            },
+                            {
+                                "text": "Create a variable named hasAccess set to false, then log 'Access Denied' if hasAccess is false",
+                                "check": "(hasAccess === false && logs.includes('Access Denied'))"
+                            }
+                        ]
                     },
                     {
                         "title": "If/Else",
-                        "type": "FRQ"
+                        "type": "FRQ",
+                        "tasks": [
+                            {
+                                "text": "Create a variable named score set to 80. If score is 100, log 'Perfect'; else log 'Keep Trying'",
+                                "check": "(score === 80 && logs.includes('Keep Trying') && !logs.includes('Perfect'))"
+                            },
+                            {
+                                "text": "Create a variable named isMember set to false. If isMember is true, log 'Discount Applied'; else log 'No Discount'",
+                                "check": "(isMember === false && logs.includes('No Discount') && !logs.includes('Discount Applied'))"
+                            },
+                            {
+                                "text": "Create a variable named temperature set to 30. If temperature is less than 25, log 'Cold'; else log 'Warm'",
+                                "check": "(temperature === 30 && logs.includes('Warm') && !logs.includes('Cold'))"
+                            }
+                        ]
                     },
                     {
                         "title": "Else If",
-                        "type": "FRQ"
+                        "type": "FRQ",
+                        "tasks": [
+                            {
+                                "text": "Create a variable named grade set to 85. If grade is 90 or above, log 'A'; else if grade is 80 or above, log 'B'; else log 'C'",
+                                "check": "(grade === 85 && logs.includes('B') && !logs.includes('A') && !logs.includes('C'))"
+                            },
+                            {
+                                "text": "Create a variable named temperature set to 10. If temperature is above 30, log 'Hot'; else if temperature is above 20, log 'Warm'; else log 'Cold'",
+                                "check": "(temperature === 10 && logs.includes('Cold') && !logs.includes('Hot') && !logs.includes('Warm'))"
+                            },
+                            {
+                                "text": "Create a variable named score set to 95. If score is less than 60, log 'Fail'; else if score is less than 90, log 'Good'; else log 'Excellent'",
+                                "check": "(score === 95 && logs.includes('Excellent') && !logs.includes('Good') && !logs.includes('Fail'))"
+                            }
+                        ]
                     },
                     {
                         "title": "Logical Operators",
-                        "type": "FRQ"
+                        "type": "FRQ",
+                        "tasks": [
+                            {
+                                "text": "Create two variables: isSunny set to true and isWeekend set to true. Log 'Go Outside' if both are true",
+                                "check": "(isSunny === true && isWeekend === true && logs.includes('Go Outside'))"
+                            },
+                            {
+                                "text": "Create two variables: hasTicket set to true and isVIP set to false. Log 'Entry Allowed' if either is true",
+                                "check": "(hasTicket === true && isVIP === false && logs.includes('Entry Allowed'))"
+                            },
+                            {
+                                "text": "Create a variable named isRaining set to false. Log 'No Umbrella Needed' if it is not raining",
+                                "check": "(isRaining === false && logs.includes('No Umbrella Needed'))"
+                            },
+                            {
+                                "text": "Create two variables: isLoggedIn set to true and hasPermission set to false. Log 'Access Granted' only if both are true",
+                                "check": "(isLoggedIn === true && hasPermission === false && !logs.includes('Access Granted'))"
+                            },
+                            {
+                                "text": "Create two variables: age set to 16 and hasConsent set to true. Log 'Allowed' if age is at least 18 or hasConsent is true",
+                                "check": "(age === 16 && hasConsent === true && logs.includes('Allowed'))"
+                            },
+                            {
+                                "text": "Create a variable named isOnline set to true. Log 'Offline Mode' only if isOnline is false",
+                                "check": "(isOnline === true && !logs.includes('Offline Mode'))"
+                            }
+                        ]
                     },
                     {
                         "title": "Truthy and Falsy",
-                        "type": "FRQ"
+                        "type": "FRQ",
+                        "tasks": [
+                            {
+                                "text": "Create a variable named name set to an empty string ''. If name is truthy, log 'Has Name'; else log 'No Name'",
+                                "check": "(name === '' && logs.includes('No Name') && !logs.includes('Has Name'))"
+                            },
+                            {
+                                "text": "Create a variable named count set to 0. If count is falsy, log 'Empty'; else log 'Has Count'",
+                                "check": "(count === 0 && logs.includes('Empty') && !logs.includes('Has Count'))"
+                            },
+                            {
+                                "text": "Create a variable named isActive set to 'hello'. If isActive is truthy, log 'Active'; else log 'Inactive'",
+                                "check": "(isActive === 'hello' && logs.includes('Active') && !logs.includes('Inactive'))"
+                            }
+                        ]
                     }
                 ]
             },
