@@ -66,8 +66,6 @@
 	@apply section rounded-none;
 }
 
-
-
 @layer base {
 	body {
 		@apply m-0 h-dvh flex flex-col bg-forge-background scheme-only-dark text-forge-text;
@@ -280,8 +278,8 @@
 	code {
 		@apply text-forge-accent;
 	}
-	pre {
-		@apply bg-forge-surface w-full text-forge-text rounded-2xl px-4 py-2 text-sm md:text-md max-w-full text-wrap;
+	pre code {
+		@apply bg-forge-surface! w-full text-forge-text rounded-2xl px-4 py-2 text-sm md:text-md max-w-full text-wrap;
 	}
 
 	pre code {
