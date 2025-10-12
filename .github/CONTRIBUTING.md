@@ -167,6 +167,21 @@ I've forked the repo and started working on a fix for this issue. Will open a PR
 
 This helps avoid duplicate work and encourages collaboration.
 
+##Unassignment Policy for Inactive Contributors
+
+ ###To ensure active contribution and fair opportunities for everyone:
+
+  If a contributor is inactive for 7 days after being assigned to an issue (no PR, no progress updates, or no communication),
+  the maintainer may unassign them from that issue.
+
+  This allows new contributors to take over and prevents issues from becoming stale.
+
+  If you need more time, please comment on the issue to request an extension.
+
+  Reassignments are always done respectfully and transparently.
+
+ Reason: This policy helps maintain a healthy workflow, encourages consistent participation, and ensures that issues don’t remain blocked during events like Hacktoberfest.
+
 ## Making Code Changes
 
 ### 1. Create a New Branch
