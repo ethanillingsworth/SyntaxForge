@@ -69,7 +69,7 @@ onAuthStateChanged(auth, async () => {
 	} else {
 		// if no user send to login page
 		window.location.href = "/login";
-		
+
 	}
 
 	currentUser = new User(id);
@@ -133,7 +133,7 @@ function runUserCode() {
 			} else {
 				next.addClass("hidden");
 			}
-		} catch {}
+		} catch { }
 	}
 
 	currentUser.update({
@@ -175,12 +175,18 @@ document.title = `SyntaxForge | ${course.get().name}/${data.title}`;
 next.on("click", async () => {
 	const nextLesson = section.getLesson(parseInt(lessonIndex) + 1);
 
-	if (nextLesson == null) {
-		window.location.href = `/course/${courseId}`;
-	} else {
-		window.location.href = `/course/${courseId}/section-${sectionIndex}/lesson-${
-			parseInt(lessonIndex) + 1
+	if (nextLesson != null) {
+		window.location.href = `/course/${courseId}/section-${sectionIndex}/lesson-${parseInt(lessonIndex) + 1
 			}`;
+	} else {
+		const nextSection = course.getSection(parseInt(sectionIndex) + 1);
+
+		if (nextSection != null) {
+			window.location.href = `/course/${courseId}/section-${parseInt(sectionIndex) + 1
+				}/lesson-0`;
+		} else {
+			window.location.href = `/course/${courseId}`;
+		}
 	}
 });
 
