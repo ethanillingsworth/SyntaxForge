@@ -195,6 +195,25 @@ SyntaxForge is officially participating in **Hacktoberfest**! 🎉
 - **Documentation**: Update docs for new features
 - **Responsive Design**: Ensure changes work on mobile devices
 
+🕒 Unassignment Policy for Inactive Contributors
+mTo keep contributions active and fair for everyone, we’ve added an Unassignment Clause to our contributing process.
+
+🔁 Unassignment Clause
+If a contributor is inactive for more than 7 days after being assigned to an issue, the maintainer reserves the right to unassign them.
+Inactivity includes not responding to comments, not submitting any progress updates, or not opening a PR within a week.
+Once unassigned, the issue becomes open for new contributors.
+
+⚙️ How It Works
+A contributor is assigned to an issue.
+If no progress (PR or update) is made within 7 days, a reminder comment will be added.
+If there’s still no response, the issue will be automatically or manually unassigned.
+New contributors can then take up the issue.
+
+💡 Why This Policy Exists
+Keeps the project active and prevents issue backlog.
+Encourages contributors to stay engaged and communicate.
+Ensures fair opportunities for new participants during events like Hacktoberfest.
+
 Ready to contribute? **[Check out our open issues!](https://github.com/your-username/SyntaxForge/issues)**
 
 **New to contributing?** Check out our comprehensive [Contributing Guide](CONTRIBUTING.md) for detailed setup instructions and guidelines.
