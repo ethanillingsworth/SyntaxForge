@@ -175,7 +175,7 @@ document.title = `SyntaxForge | ${course.get().name}/${data.title}`;
 next.on("click", async () => {
 	const nextLesson = section.getLesson(parseInt(lessonIndex) + 1);
 
-	if (nextLesson != null) {
+	if (nextLesson.get() != null) {
 		window.location.href = `/course/${courseId}/section-${sectionIndex}/lesson-${parseInt(lessonIndex) + 1
 			}`;
 	} else {
