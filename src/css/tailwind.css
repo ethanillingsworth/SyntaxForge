@@ -305,4 +305,54 @@
 	a {
 		@apply text-forge-accent hover:text-forge-accent-hover;
 	}
+
+	/* Editor Preview Styles */
+	.editor-preview-container {
+		@apply mx-auto;
+	}
+
+	.editor-window {
+		@apply transition-all duration-300 hover:shadow-2xl hover:shadow-forge-accent/10;
+	}
+
+	.editor-header {
+		@apply backdrop-blur-sm;
+	}
+
+	.editor-window:hover .editor-header {
+		@apply bg-forge-muted/70;
+	}
+
+	/* Add subtle glow effect */
+	.editor-window::before {
+		content: '';
+		position: absolute;
+		top: -2px;
+		left: -2px;
+		right: -2px;
+		bottom: -2px;
+		background: linear-gradient(45deg, transparent, rgba(252, 72, 63, 0.1), transparent);
+		border-radius: 18px;
+		z-index: -1;
+		opacity: 0;
+		transition: opacity 0.3s ease;
+	}
+
+	.editor-window:hover::before {
+		opacity: 1;
+	}
+
+	/* Feature highlights animation */
+	.editor-preview-container .grid > div {
+		@apply transition-all duration-300 hover:scale-105 hover:bg-forge-surface/80 cursor-pointer;
+	}
+
+	.editor-preview-container .grid > div svg {
+		@apply transition-transform duration-300;
+	}
+
+	/* Button animations */
+	.editor-window button {
+		@apply transition-all duration-300 transform hover:scale-105 active:scale-95;
+	}
 }

@@ -1,13 +1,12 @@
-import { Course, Editor, Lesson, safeEval, User } from "./main.js";
-import { initMobileMenu } from './mobile-menu.js';
-import $ from "jquery";
+import { Course, Editor, User } from "./main.js";
+import { initializeApp, AuthUtils } from './utils/common.js';
 import { auth } from "./firebase.js";
 import { onAuthStateChanged } from "firebase/auth";
-
 import { marked } from "marked";
+import $ from "jquery";
 
-// Initialize mobile menu
-initMobileMenu();
+// Initialize common app functionality
+initializeApp();
 
 const editor = new Editor();
 

@@ -1,50 +1,40 @@
+
+
 import '../css/tailwind.css';
-
 import { Editor } from './main.js';
-import { initMobileMenu } from './mobile-menu.js';
-import $ from "jquery"
+import { initializeApp, CodeExecutor, StorageUtils } from './utils/common.js';
+import $ from "jquery";
 
+// Initialize common app functionality
+initializeApp();
 
-
-const code = `// Code Example
+const defaultCode = `// Welcome to SyntaxForge Playground!
 const amICool = true
 
 if (amICool) {
     console.log("I am very cool!")
-}
-else {
+} else {
     console.log("I am not very cool :(")
 }
-`
+
+// Try editing this code!
+const skills = ["JavaScript", "Python", "Ruby"]
+console.log("My skills:", skills.join(", "))`;
 
 // Load saved code from localStorage or use default
-const savedCode = localStorage.getItem('playground-code') || code;
+const savedCode = StorageUtils.load('playground-code', defaultCode);
 
-const editor = new Editor($("#editor"), savedCode)
+const editor = new Editor($("#editor"), savedCode);
+const codeExecutor = new CodeExecutor(editor);
 
-// Save code to localStorage whenever it changes
-let saveTimeout;
-editor.view.dom.addEventListener('input', () => {
-    // Debounce saving to avoid excessive localStorage writes
-    clearTimeout(saveTimeout);
-    saveTimeout = setTimeout(() => {
-        const currentCode = editor.getContent();
-        localStorage.setItem('playground-code', currentCode);
-    }, 500); 
-});
-
-// Also save when run button is clicked
+// Enhanced run button functionality with better feedback
+editor.runButton.off('click'); // Remove default handler
 editor.runButton.on("click", () => {
     const currentCode = editor.getContent();
-    localStorage.setItem('playground-code', currentCode);
+    StorageUtils.save('playground-code', currentCode);
+    
+    // Use the common code executor
+    codeExecutor.execute(currentCode);
 });
 
 
-
-// $("#run").on("click", () => {
-//     const content = view.state.doc.toString()
-//     $("#output").text("")
-//     for (const log of safeEval(content, null).logs) {
-//         $("#output").append($("<span/>").text(log))
-//     }
-// })

@@ -1,7 +1,10 @@
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebase.js";
 import { Course } from "./main.js";
-import { initMobileMenu } from './mobile-menu.js';
+import { initializeApp } from './utils/common.js';
+
+// Initialize common app functionality
+initializeApp();
 
 
 
