@@ -355,4 +355,19 @@
 	.editor-window button {
 		@apply transition-all duration-300 transform hover:scale-105 active:scale-95;
 	}
+
+	/* Hide scrollbars while keeping scroll functionality */
+	* {
+		scrollbar-width: none; /* Firefox */
+		-ms-overflow-style: none; /* Internet Explorer 10+ */
+	}
+	
+	*::-webkit-scrollbar {
+		display: none; /* Safari and Chrome */
+	}
+
+	/* Ensure body and html can still scroll */
+	html, body {
+		overflow-x: hidden; /* Prevent horizontal scroll */
+	}
 }
