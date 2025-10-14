@@ -9,7 +9,8 @@
   "scripts": {
     "serve": "webpack serve",
     "build": "webpack",
-    "docs": "jsdoc -c jsdoc.json --readme README.md"
+    "docs:copy-favicon": "node -e \"require('fs').copyFileSync('src/imgs/logo.png', 'docs/logo.png')\"",
+    "docs": "jsdoc -c jsdoc.json --readme README.md && npm run docs:copy-favicon"
   },
   "dependencies": {
     "@codemirror/commands": "^6.8.1",

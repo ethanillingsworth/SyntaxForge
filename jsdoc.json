@@ -1,11 +1,14 @@
 {
-    "source": {
-        "include": ["src/js"],
-        "includePattern": ".+\\.js$",
-        "excludePattern": "(node_modules|docs)"
-    },
-    "opts": {
-        "template": "node_modules/clean-jsdoc-theme",
-        "destination": "./docs"
+  "source": {
+    "include": ["src/js"],
+    "includePattern": ".+\\.js$",
+    "excludePattern": "(node_modules|docs)"
+  },
+  "opts": {
+    "template": "node_modules/clean-jsdoc-theme",
+    "destination": "./docs",
+    "theme_opts": {
+      "favicon": "logo.png"
     }
+  }
 }
