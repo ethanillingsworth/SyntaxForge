@@ -1,5 +1,5 @@
 ---
-name: ISSUE
+name: Issue Template
 about: A template used for Issues
 title: ''
 labels: ''
