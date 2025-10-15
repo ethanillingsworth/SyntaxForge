@@ -1,6 +1,6 @@
 ---
 name: Old Template (Not Recommended)
-about: Kept for old times sake. Can be used for either PR's or Issue's but not recommended.
+about: Kept for old times sake. Can be used for either PR's or Issues but not recommended.
 title: ''
 labels: ''
 assignees: ''

@@ -1,6 +1,6 @@
 ---
-name: ISSUE
-about: A template used for Issues's
+name: Issue Template
+about: A template used for Issues
 title: ''
 labels: ''
 assignees: ''

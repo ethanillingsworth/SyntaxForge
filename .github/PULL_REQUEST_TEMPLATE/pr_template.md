@@ -1,5 +1,5 @@
 ---
-name: PR
+name: Pull Request Template
 about: A template used for PR's
 title: ''
 labels: ''
