@@ -355,3 +355,30 @@
         ]
     }
 }
+
+[
+    {
+        "title": "Defining and Calling Functions",
+        "type": "FRQ"
+    },
+    {
+        "title": "Function Parameters",
+        "type": "FRQ"
+    },
+    {
+        "title": "Function Return Values",
+        "type": "FRQ"
+    },
+    {
+        "title": "Default Parameters",
+        "type": "FRQ"
+    },
+    {
+        "title": "Understanding Scope (Local vs. Global)",
+        "type": "FRQ"
+    },
+    {
+        "title": "Introduction to Arrow Functions",
+        "type": "FRQ"
+    }
+]
