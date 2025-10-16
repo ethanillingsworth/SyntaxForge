@@ -183,7 +183,6 @@
                                 "check": "logs[7] === true"
                             }
                         ]
-
                     },
                     {
                         "title": "If Statements",
@@ -299,8 +298,37 @@
             },
             {
                 "title": "Math",
-                "desc": "This unit covers the Math class in javascript, its constants and methods.",
-                "lessons": []
+                "desc": "This unit covers the Math class in JavaScript, including its constants, rounding methods, random number generation, and common mathematical functions.",
+                "lessons": [
+                    {
+                        "title": "Math Constants",
+                        "type": "FRQ"
+                    },
+                    {
+                        "title": "Rounding Methods",
+                        "type": "FRQ"
+                    },
+                    {
+                        "title": "Min and Max",
+                        "type": "FRQ"
+                    },
+                    {
+                        "title": "Powers and Roots",
+                        "type": "FRQ"
+                    },
+                    {
+                        "title": "Random Numbers",
+                        "type": "FRQ"
+                    },
+                    {
+                        "title": "Trigonometry",
+                        "type": "FRQ"
+                    },
+                    {
+                        "title": "Advanced Math",
+                        "type": "FRQ"
+                    }
+                ]
             },
             {
                 "title": "String Methods",
