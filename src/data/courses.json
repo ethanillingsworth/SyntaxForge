@@ -333,7 +333,40 @@
             {
                 "title": "String Methods",
                 "desc": "This unit covers methods used with string, difference in string types, escape characters, and template literals.",
-                "lessons": []
+                "lessons": [
+                    {
+                        "title": "String Basics and Types",
+                        "type": "FRQ"
+                    },
+                    {
+                        "title": "String Length and Access",
+                        "type": "FRQ"
+                    },
+                    {
+                        "title": "String Case Methods",
+                        "type": "FRQ"
+                    },
+                    {
+                        "title": "Searching and Indexing",
+                        "type": "FRQ"
+                    },
+                    {
+                        "title": "Extracting Substrings",
+                        "type": "FRQ"
+                    },
+                    {
+                        "title": "Replacing and Trimming",
+                        "type": "FRQ"
+                    },
+                    {
+                        "title": "Template Literals and Escape Characters",
+                        "type": "FRQ"
+                    },
+                    {
+                        "title": "Advanced String Methods",
+                        "type": "FRQ"
+                    }
+                ]
             },
             {
                 "title": "Functions",
