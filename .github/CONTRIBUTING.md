@@ -18,6 +18,7 @@ This guide explains how to contribute effectively, understand the codebase, and 
 - [Coding Guidelines](#coding-guidelines)
 - [Commit and Branch Naming](#commit-and-branch-naming)
 - [Hacktoberfest Participation](#hacktoberfest-participation)
+- [Low Quality Pull Requests](#low-quality-pull-requests)
 - [Communication and Support](#communication-and-support)
 - [Code of Conduct](#code-of-conduct)
 
@@ -404,6 +405,24 @@ Look for issues labeled:
 - **Test your changes thoroughly**
 - **Write clear commit messages**
 - **Include proper documentation**
+
+## Low Quality Pull Requests
+
+A **Low Quality Pull Request** is defined as one that does not meet the basic contribution or quality standards of this project. Such PRs may be closed or asked to be improved by the project owner or maintainer.
+
+### What Counts as a Low Quality PR
+- Completely or mostly AI-generated content with little to no human understanding or editing.  
+- Lack of understanding of the project’s structure, technologies, or contribution process.  
+- Broken or non-functional code, or files that negatively affect the project.  
+- Spammy or irrelevant changes (e.g., typo fixes in unrelated files, formatting-only PRs).  
+- Poor or missing documentation for code changes.
+
+### Key Points to Remember
+- You **may use AI tools** to assist, but make sure to review and understand the generated code. Always disclose AI assistance in your PR title or description (e.g., “Assisted by AI tool”).  
+- If you’re new or unsure, you can **start with documentation** or **good first issues** before tackling code changes.  
+- If you don’t understand a part of the project, please ask for clarification in Discussions or Issues instead of guessing.  
+- PRs that break the build, introduce errors, or show a lack of understanding may be rejected.  
+- Always test your code locally before submitting a PR.
 
 ## Communication and Support
 
