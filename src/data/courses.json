@@ -397,7 +397,14 @@
                         "type": "FRQ"
                     }
                 ]
-            },
+            }
+        ]
+    },
+    "js201": {
+        "name": "Intermediate JavaScript",
+        "desc": "This course will take your coding skills to the next level with a deeper look into how JavaScript really works. You'll explore advanced functions, objects, and asynchronous programming to write cleaner, more powerful code. By the end, you'll be ready to handle complex logic and build more dynamic, real-world applications.",
+        "lang": "javascript",
+        "sections": [
             {
                 "title": "Arrays",
                 "desc": "This unit covers everything to with arrays, getting, setting, and deleting values and methods.",
