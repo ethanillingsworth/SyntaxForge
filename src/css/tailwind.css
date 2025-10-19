@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&family=Geist:wght@100..900&display=swap');
 
 @theme {
 	--color-forge-background: #0e0e11;
@@ -43,7 +44,7 @@
 }
 
 @utility terminal {
-	@apply md:w-1/4 w-full md:h-full overflow-auto h-1/2 md:min-h-0 min-h-48 col bg-black place-content-start place-items-start font-mono p-4 gap-0.5 md:min-w-48 md:max-w-none;
+	@apply md:w-1/4 w-full md:h-full overflow-auto h-1/2 md:min-h-0 min-h-48 col bg-black place-content-start place-items-start font-["Geist_Mono"] p-4 gap-0.5 md:min-w-48 md:max-w-none;
 }
 
 @utility text-md {
@@ -72,7 +73,7 @@
 
 @layer base {
 	body {
-		@apply m-0 h-dvh flex flex-col bg-forge-background scheme-only-dark text-forge-text;
+		@apply m-0 h-dvh flex flex-col font-["Geist"] bg-forge-background scheme-only-dark text-forge-text;
 	}
 
 	.oauth img {
@@ -85,7 +86,7 @@
 	}
 
 	.cm-editor {
-		@apply w-full h-full overflow-auto;
+		@apply w-full h-full overflow-auto !font-["Geist_Mono"];
 		box-shadow: none !important;
 	}
 
@@ -233,7 +234,7 @@
 		@apply text-white;
 	}
 
-	main > * {
+	main>* {
 		@apply w-full;
 	}
 
@@ -282,8 +283,9 @@
 	code {
 		@apply text-forge-accent;
 	}
+
 	pre code {
-		@apply bg-forge-surface! w-full text-forge-text rounded-2xl px-4 py-2 text-sm md:text-md max-w-full text-wrap;
+		@apply !bg-forge-surface w-full text-forge-text rounded-2xl px-4 py-2 text-sm md:text-md max-w-full text-wrap;
 	}
 
 	pre code {
