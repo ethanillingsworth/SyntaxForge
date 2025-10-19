@@ -512,14 +512,16 @@ export class Editor {
 		var logs = [];
 
 		var console = {
-			log: function (text) {
-				logs.push(text);
+			log: function () {
+				for (const arg of arguments) {
+					logs.push(arg)
+				}
 			},
 		};
-		var window = function () {};
-		var document = function () {};
-		var editor = function () {};
-		var print = function () {};
+		var window = function () { };
+		var document = function () { };
+		var editor = function () { };
+		var print = function () { };
 
 		const a = function () {
 			try {

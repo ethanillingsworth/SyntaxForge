@@ -302,7 +302,29 @@
                 "lessons": [
                     {
                         "title": "Math Constants",
-                        "type": "FRQ"
+                        "type": "FRQ",
+                        "tasks": [
+                            {
+                                "text": "Log the value of Math.PI to the console.",
+                                "check": "logs.includes(Math.PI)"
+                            },
+                            {
+                                "text": "Log the value of Math.E and Math.SQRT2 in a single console.log statement, separated by a comma.",
+                                "check": "logs.includes(Math.E) && logs.includes(Math.SQRT2)"
+                            },
+                            {
+                                "text": "Use Math.SQRT2 to calculate the diagonal of a square with side length 1 (formula: side * Math.SQRT2) and log it.",
+                                "check": "logs.includes(1 * Math.SQRT2)"
+                            },
+                            {
+                                "text": "Log the value of Math.LN10 and explain in a comment what it represents.",
+                                "check": "logs.includes(Math.LN10)"
+                            },
+                            {
+                                "text": "Compare Math.LOG10E and 1 / Math.LN10 by logging both values. They should be nearly the same.",
+                                "check": "logs.includes(1 / Math.LN10)"
+                            }
+                        ]
                     },
                     {
                         "title": "Rounding Methods",
