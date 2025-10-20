@@ -430,7 +430,7 @@ A **Low Quality Pull Request** is defined as one that does not meet the basic co
 
 - **Open a Discussion** on GitHub for general questions
 - **Comment under issues** for specific problems
-- **Email maintainers** at maintainers@syntaxforge.dev for sensitive issues
+- **Email maintainers** at [admin@syntaxforge.dev](mailto:admin@syntaxforge.dev) for sensitive issues
 
 ### Best Practices
 
@@ -443,7 +443,7 @@ A **Low Quality Pull Request** is defined as one that does not meet the basic co
 
 - **GitHub Discussions**: For general community discussions
 - **GitHub Issues**: For bug reports and feature requests
-- **Email**: maintainers@syntaxforge.dev for private matters
+- **Email**: [admin@syntaxforge.dev](mailto:admin@syntaxforge.dev) for private matters
 
 ## Code of Conduct
 
@@ -542,7 +542,7 @@ If you encounter issues not covered here:
 
 1. **Search existing issues** on GitHub
 2. **Create a new issue** with detailed information
-3. **Contact maintainers** at maintainers@syntaxforge.dev
+3. **Contact maintainers** at [admin@syntaxforge.dev](mailto:admin@syntaxforge.dev)
 
 ## Thank You! 🙏
 
