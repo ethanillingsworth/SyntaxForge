@@ -364,9 +364,10 @@ export class Editor {
 	constructor(parent = $("#editor"), defaultCode = "") {
 		this.wrapper = $("<div>").addClass("editor gap-0");
 
+		 
 		this.col = $("<div/>").addClass(
-			"col h-full max-w-4/5 w-full gap-0 place-content-start place-items-start"
-		);
+	      "col h-full w-full md:w-3/4 gap-0 place-content-start place-items-start"
+           );
 
 		this.buttons = $("<div/>").addClass(
 			"row w-full bg-forge-surface p-2 place-content-end border-t-4 border-t-forge-accent text-sm"
@@ -470,16 +471,18 @@ export class Editor {
 		this.terminal.removeClass("hidden");
 	}
 
+	 
 	verticalMode() {
-		this.wrapper.addClass("flex flex-col h-full");
-		this.col.addClass("flex-1 overflow-auto");
-		this.col.removeClass("max-w-4/5").addClass("w-full"); // full width
-		this.terminal.css({
-			minWidth: "100%",
-			height: "250px",
-			flexShrink: 0,
-		});
-	}
+    this.wrapper.addClass("flex flex-col h-full");
+    this.col.addClass("flex-1 overflow-auto");
+     
+    this.col.removeClass("max-w-4/5 md:w-3/4").addClass("w-full"); 
+    this.terminal.css({
+        minWidth: "100%",
+        height: "250px",
+        flexShrink: 0,
+    });
+}
 
 	/**
 	 * Adds an element to the editors buttons
