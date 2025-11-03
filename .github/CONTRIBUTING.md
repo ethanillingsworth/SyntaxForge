@@ -17,7 +17,6 @@ This guide explains how to contribute effectively, understand the codebase, and 
 - [Navigating Reviews and Feedback](#navigating-reviews-and-feedback)
 - [Coding Guidelines](#coding-guidelines)
 - [Commit and Branch Naming](#commit-and-branch-naming)
-- [Hacktoberfest Participation](#hacktoberfest-participation)
 - [Low Quality Pull Requests](#low-quality-pull-requests)
 - [Communication and Support](#communication-and-support)
 - [Code of Conduct](#code-of-conduct)
@@ -180,8 +179,6 @@ This allows new contributors to take over and prevents issues from becoming stal
 If you need more time, please comment on the issue to request an extension.
 
 Reassignments are always done respectfully and transparently.
-
-Reason: This policy helps maintain a healthy workflow, encourages consistent participation, and ensures that issues don’t remain blocked during events like Hacktoberfest.
 
 ## Making Code Changes
 
@@ -370,14 +367,11 @@ test: add unit tests for course validation
 - `test`: Adding or updating tests
 - `chore`: Maintenance tasks
 
-## Hacktoberfest Participation
 
-We welcome Hacktoberfest contributions! To make your PRs count:
 
 ### Finding Issues
 
 Look for issues labeled:
-- `hacktoberfest` - General Hacktoberfest contributions
 - `good first issue` - Perfect for newcomers
 - `help wanted` - Community help needed
 - `documentation` - Documentation improvements

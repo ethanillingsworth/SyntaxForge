@@ -7,7 +7,6 @@
   
   [![Website](https://img.shields.io/badge/Website-syntaxforge.dev-blue?style=for-the-badge)](https://syntaxforge.dev)
   [![Documentation](https://img.shields.io/badge/Documentation-docs.syntaxforge.dev-green?style=for-the-badge)](https://docs.syntaxforge.dev)
-  [![Hacktoberfest](https://img.shields.io/badge/Hacktoberfest-Accepted-orange?style=for-the-badge)](https://hacktoberfest.digitalocean.com/)
   [![License](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)](LICENSE)
 </div>
 
@@ -158,14 +157,11 @@ SyntaxForge/
 6. Push to your branch: `git push origin feature/amazing-feature`
 7. Open a Pull Request
 
-## 🎃 Hacktoberfest 2025
 
-SyntaxForge is officially participating in **Hacktoberfest**! 🎉
 
 ### How to Contribute
 
 1. **Find Issues**: Look for issues labeled with:
-   - `hacktoberfest` - General Hacktoberfest contributions
    - `good first issue` - Perfect for newcomers
    - `bug` - Help fix bugs
    - `enhancement` - Improve existing features
@@ -186,8 +182,6 @@ SyntaxForge is officially participating in **Hacktoberfest**! 🎉
    - Pick an issue that interests you
    - Comment on the issue to let us know you're working on it
    - Submit your PR with a clear description
-
-### Hacktoberfest Guidelines
 
 - **Quality over Quantity**: Focus on meaningful contributions
 - **Follow our Code of Conduct**: Be respectful and inclusive
