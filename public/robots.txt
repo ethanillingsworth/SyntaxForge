@@ -1,8 +1,5 @@
 User-agent: *
 Allow: /
 Disallow: /login
-Disallow: /course
-Disallow: /lesson
-
 
 Sitemap: https://syntaxforge.dev/sitemap.xml

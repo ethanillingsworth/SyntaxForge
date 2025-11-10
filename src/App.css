@@ -1,0 +1,167 @@
+@import url('https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&family=Geist:wght@100..900&display=swap');
+@import "tailwindcss";
+
+@theme {
+	--color-forge-background: #0e0e11;
+	--color-forge-surface: #1a1a1f;
+	--color-forge-muted: #2a2a30;
+	--color-forge-text: #ffffff;
+	--color-forge-subtext: #b0b0b0;
+
+	/* Keep one strong accent and one optional secondary */
+	--color-forge-accent: #fc483f;
+	/* primary accent (warm, stands out) */
+	--color-forge-accent-hover: #e5443b;
+	--color-forge-gold: #f4c06d;
+}
+
+
+@utility row {
+	@apply gap-3 flex flex-row;
+}
+
+@utility col {
+	@apply gap-3 flex flex-col;
+}
+
+@utility gradient-bg {
+	@apply bg-linear-to-r from-forge-accent to-forge-gold;
+}
+
+@utility gradient-text {
+	@apply leading-tight bg-linear-to-r from-forge-accent to-forge-gold bg-clip-text text-transparent drop-shadow-sm;
+}
+
+@utility text-md {
+	@apply text-base;
+}
+
+@utility hero {
+	@apply relative top-0 min-h-full w-full col gap-6 place-content-center place-items-center
+}
+
+@utility terminal {
+	@apply font-["Geist_Mono"] bg-zinc-950 h-full p-4 text-nowrap overflow-auto
+}
+
+
+@layer base {
+	body {
+		@apply m-0 h-dvh flex flex-col font-["Geist"] bg-forge-background scheme-only-dark text-forge-text;
+	}
+
+	.cm-editor {
+		@apply h-full w-full overflow-hidden;
+		/* The editor itself should fill and not expand */
+	}
+
+	.cm-scroller {
+		@apply overflow-auto h-full;
+		/* This enables scrolling inside the editor */
+	}
+
+
+	body * {
+		@apply transition-all;
+	}
+
+
+	header {
+		@apply bg-forge-surface/90 backdrop-blur-md border-b border-forge-accent/20 p-4 text-base font-bold gap-3 fixed w-dvw top-0 h-auto flex flex-row flex-wrap md:text-2xl md:flex-nowrap md:gap-6 z-10 shadow-lg shadow-forge-background/50;
+	}
+
+	header a {
+		@apply px-3 py-2 text-white hover:scale-105 rounded-lg hover:bg-forge-muted/50 transition-all duration-300 font-medium;
+	}
+
+
+	progress {
+		@apply rounded-xl h-2 w-full bg-forge-muted;
+		@apply [&::-webkit-progress-bar]:rounded-xl [&::-webkit-progress-value]:rounded-xl [&::-webkit-progress-value]:gradient-bg [&::-webkit-progress-bar]:bg-forge-muted;
+		@apply [&::-moz-progress-bar]:gradient-bg;
+	}
+
+	h1 {
+		@apply text-4xl font-bold md:text-5xl
+	}
+
+	h2 {
+		@apply text-2xl md:text-3xl font-semibold;
+	}
+
+	h3 {
+		@apply font-semibold text-lg;
+	}
+
+	table {
+		@apply w-fit;
+	}
+
+	section {
+		@apply p-16 place-content-center place-items-center col gap-6
+	}
+
+	th {
+		@apply text-left border-b-2 border-forge-accent;
+	}
+
+	td,
+	th {
+		@apply p-2;
+	}
+
+	p {
+		@apply text-forge-subtext text-sm;
+	}
+
+
+	input,
+	textarea {
+		@apply bg-forge-muted p-1 placeholder:text-forge-subtext pt-1 pb-1 pl-2 pr-2 rounded-2xl;
+	}
+
+	textarea {
+		@apply bg-forge-surface;
+	}
+
+
+	code {
+		@apply text-forge-accent;
+	}
+
+	pre code {
+		@apply !bg-forge-surface w-full text-forge-text rounded-2xl px-4 py-2 text-sm md:text-md max-w-full text-wrap;
+	}
+
+	input[type="checkbox"] {
+		@apply min-w-5 min-h-5 rounded-2xl;
+	}
+
+	button,
+	select {
+		@apply bg-forge-accent px-4 py-2 text-nowrap hover:bg-forge-accent-hover font-semibold rounded-2xl hover:cursor-pointer;
+	}
+
+	button.muted,
+	select.muted {
+		@apply bg-forge-muted hover:bg-forge-surface;
+	}
+
+	a {
+		@apply text-forge-accent hover:text-forge-accent-hover;
+	}
+
+	a button {
+		@apply text-forge-text
+	}
+
+	p {
+		@apply text-lg text-forge-subtext
+	}
+}
+
+@layer utilities {
+	.hero button {
+		@apply hover:scale-105 w-64
+	}
+}

@@ -1,44 +1,34 @@
 {
   "name": "syntaxforge",
-  "version": "1.0.0",
-  "description": "",
-  "license": "MIT",
-  "author": "",
+  "private": true,
+  "version": "0.0.0",
   "type": "module",
-  "main": "main.js",
   "scripts": {
-    "serve": "webpack serve",
-    "build": "webpack",
-    "docs:copy-favicon": "node -e \"require('fs').copyFileSync('src/imgs/logo.png', 'docs/logo.png')\"",
-    "docs": "jsdoc -c jsdoc.json --readme README.md && npm run docs:copy-favicon"
+    "dev": "vite",
+    "build": "vite build",
+    "lint": "eslint .",
+    "preview": "vite preview"
   },
   "dependencies": {
-    "@codemirror/commands": "^6.8.1",
     "@codemirror/lang-javascript": "^6.2.4",
-    "@codemirror/next": "^0.16.0",
-    "@codemirror/view": "^6.38.0",
-    "@fsegurai/codemirror-theme-bundle": "^6.2.0",
-    "@tailwindcss/postcss": "^4.1.10",
-    "codemirror": "^6.0.2",
-    "css-loader": "^7.1.2",
-    "firebase": "^11.10.0",
-    "firebase-admin": "^13.4.0",
-    "highlight.js": "^11.11.1",
-    "jquery": "^3.7.1",
-    "marked": "^16.3.0",
-    "postcss": "^8.5.6",
-    "postcss-loader": "^8.1.1",
-    "style-loader": "^4.0.0",
-    "tailwindcss": "^4.1.10"
+    "@uiw/codemirror-theme-vscode": "^4.25.3",
+    "@uiw/react-codemirror": "^4.25.3",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1",
+    "react-router-dom": "^7.9.5"
   },
   "devDependencies": {
-    "clean-jsdoc-theme": "^4.3.0",
-    "copy-webpack-plugin": "^13.0.0",
-    "html-webpack-plugin": "^5.6.3",
-    "jsdoc": "^4.0.4",
-    "mini-css-extract-plugin": "^2.9.2",
-    "webpack": "^5.99.9",
-    "webpack-cli": "^6.0.1",
-    "webpack-dev-server": "^5.2.2"
+    "@eslint/js": "^9.36.0",
+    "@tailwindcss/vite": "^4.1.17",
+    "@types/react": "^19.1.16",
+    "@types/react-dom": "^19.1.9",
+    "@vitejs/plugin-react": "^5.0.4",
+    "babel-plugin-react-compiler": "^19.1.0-rc.3",
+    "eslint": "^9.36.0",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "eslint-plugin-react-refresh": "^0.4.22",
+    "globals": "^16.4.0",
+    "tailwindcss": "^4.1.17",
+    "vite": "^7.1.7"
   }
 }
