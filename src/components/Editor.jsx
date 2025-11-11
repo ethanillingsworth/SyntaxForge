@@ -3,17 +3,27 @@ import { javascript } from '@codemirror/lang-javascript';
 import Terminal from "./Terminal";
 import { useState } from "react";
 import { vscodeDark } from "@uiw/codemirror-theme-vscode";
+import { CodeRunner } from "../CodeRunner"
 
-export default function Editor({ className, windowed = false, windowTitle = "main.js", runBehavior = () => { } }) {
+export default function Editor({ className, windowed = false, windowTitle = "main.js", defaultCode = null, runBehavior = (setLines, code) => {
+    const res = CodeRunner.run(code)
+
+    setLines([])
+
+    console.log(res.logs)
+
+    for (const log of res.logs) {
+        setLines(prev => [
+            ...prev,
+            <span>{log}</span>
+        ]);
+    }
+} }) {
     const [lines, setLines] = useState([<span className="text-yellow-400">SyntaxForge Terminal v1</span>])
 
-    function addLine(line) {
-        lines.push(line)
-        setLines(line)
-    }
 
 
-    const def = `// Welcome to SyntaxForge!
+    const def = defaultCode || `// Welcome to SyntaxForge!
 const amICool = true
 
 if (amICool) {
@@ -28,6 +38,8 @@ console.log("My skills:", skills.join(", "))
 
 // Click "Run Code" to see the magic! ✨`
 
+
+    const [code, setCode] = useState(def);
 
     return (
         <div className={`col gap-0 w-full h-full ${className} rounded-2xl overflow-hidden`}>
@@ -48,9 +60,10 @@ console.log("My skills:", skills.join(", "))
                         value={def}
                         theme={vscodeDark}
                         extensions={[javascript()]}
+                        onChange={(value) => setCode(value)} // <— Capture content here
                     />
                     <div className="p-2 border-t border-forge-accent/20 bg-forge-surface flex">
-                        <button className="p-1 px-4 ml-auto" onClick={runBehavior}>
+                        <button className="p-1 px-4 ml-auto" onClick={() => runBehavior(setLines, code)}>
                             Run Code
                         </button>
                     </div>

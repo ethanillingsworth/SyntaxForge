@@ -41,7 +41,7 @@
 }
 
 @utility terminal {
-	@apply font-["Geist_Mono"] bg-zinc-950 h-full p-4 text-nowrap overflow-auto
+	@apply font-["Geist_Mono"] bg-zinc-950 h-full p-4 text-nowrap overflow-auto col gap-0
 }
 
 
