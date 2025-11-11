@@ -3,6 +3,7 @@ import './App.css'
 import Header from './components/Header'
 import Home from './pages/Home'
 import Playground from './pages/Playground'
+import Courses from './pages/Courses'
 
 
 function App() {
@@ -14,7 +15,7 @@ function App() {
                 <Routes>
                     <Route path='/' element={<Home />} />
                     <Route path='/playground' element={<Playground />} />
-                    
+                    <Route path='/courses' element={<Courses/>}/>
                 </Routes>
             </Router>
         </>
