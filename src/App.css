@@ -67,7 +67,7 @@
 
 
 	header {
-		@apply bg-forge-surface/90 backdrop-blur-md border-b border-forge-accent/20 p-4 text-base font-bold gap-3 fixed w-dvw top-0 h-auto flex flex-row flex-wrap md:text-2xl md:flex-nowrap md:gap-6 z-10 shadow-lg shadow-forge-background/50;
+		@apply bg-forge-surface/90 backdrop-blur-md border-b border-forge-accent/20 p-4 text-base font-bold gap-3 sticky w-dvw top-0 h-auto flex flex-row flex-wrap md:text-2xl md:flex-nowrap md:gap-6 z-10 shadow-lg shadow-forge-background/50;
 	}
 
 	header a {

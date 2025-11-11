@@ -5,7 +5,7 @@ import { useState } from "react";
 import { vscodeDark } from "@uiw/codemirror-theme-vscode";
 import { CodeRunner } from "../CodeRunner"
 
-export default function Editor({ className, windowed = false, windowTitle = "main.js", defaultCode = null, runBehavior = (setLines, code) => {
+export default function Editor({ className, windowed = false, playground = false, windowTitle = "main.js", defaultCode = null, runBehavior = (setLines, code) => {
     const res = CodeRunner.run(code)
 
     setLines([])
@@ -42,7 +42,7 @@ console.log("My skills:", skills.join(", "))
     const [code, setCode] = useState(def);
 
     return (
-        <div className={`col gap-0 w-full h-full ${className} rounded-2xl overflow-hidden`}>
+        <div className={`col gap-0 w-full h-full ${className} ${windowed ? "rounded-2xl overflow-hidden" : null}`}>
             {windowed ? <div className="row gap-2 p-3 place-items-center border-b border-forge-accent/20 bg-forge-surface">
                 <div className="rounded-full w-3 h-3 bg-red-500"></div>
                 <div className="rounded-full w-3 h-3 bg-yellow-500"></div>
@@ -60,7 +60,12 @@ console.log("My skills:", skills.join(", "))
                         value={def}
                         theme={vscodeDark}
                         extensions={[javascript()]}
-                        onChange={(value) => setCode(value)} // <— Capture content here
+                        onChange={(value) => {
+                            setCode(value)
+                            if (playground) {
+                                localStorage.setItem("playground", value)
+                            }
+                        }} // <— Capture content here
                     />
                     <div className="p-2 border-t border-forge-accent/20 bg-forge-surface flex">
                         <button className="p-1 px-4 ml-auto" onClick={() => runBehavior(setLines, code)}>
