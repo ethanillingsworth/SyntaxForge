@@ -2,19 +2,10 @@ import { useState, useEffect } from "react";
 
 export default function Header() {
 
-    const [scrolled, setScrolled] = useState(false);
 
-    useEffect(() => {
-        const handleScroll = () => {
-            setScrolled(window.scrollY > 1); // triggers when user scrolls down
-        };
-
-        window.addEventListener("scroll", handleScroll);
-        return () => window.removeEventListener("scroll", handleScroll);
-    }, []);
 
     return (
-        <header className={scrolled ? "p-4" : "p-6"}>
+        <header>
             <a className="gradient-text font-bold p-0 my-auto" href="/">SyntaxForge</a>
             <a href="/courses">Courses</a>
             <a href="/playground">Playground</a>

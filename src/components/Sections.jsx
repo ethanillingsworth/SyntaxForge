@@ -2,7 +2,7 @@
 
 export default function Sections({ children }) {
     return (
-        <div className="col gap-6 p-4 mx-20 place-self-center">
+        <div className="col gap-6 p-4 mx-5 place-self-center">
             {children}
         </div>
     );

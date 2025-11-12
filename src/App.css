@@ -37,7 +37,7 @@
 }
 
 @utility hero {
-	@apply relative top-0 min-h-dvh w-full col gap-6 place-content-center place-items-center
+	@apply relative min-h-8/10 w-full col gap-6 place-content-center place-items-center
 }
 
 @utility terminal {
@@ -51,7 +51,11 @@
 
 @layer base {
 	body {
-		@apply m-0 min-h-full flex flex-col font-["Geist"] bg-forge-background scheme-only-dark text-forge-text overflow-visible;
+		@apply m-0 h-dvh flex flex-col font-["Geist"] bg-forge-background scheme-only-dark text-forge-text overflow-visible;
+	}
+
+	#root {
+		@apply flex flex-col h-full overflow-auto
 	}
 
 	.cm-editor {
@@ -66,7 +70,7 @@
 
 
 	body * {
-		@apply transition-all;
+		@apply transition-transform;
 	}
 
 
@@ -102,7 +106,7 @@
 	}
 
 	section {
-		@apply p-16 place-content-center place-items-center col gap-6
+		@apply p-20 place-content-center place-items-center col gap-6
 	}
 
 	th {
