@@ -37,17 +37,21 @@
 }
 
 @utility hero {
-	@apply relative top-0 min-h-full w-full col gap-6 place-content-center place-items-center
+	@apply relative top-0 min-h-dvh w-full col gap-6 place-content-center place-items-center
 }
 
 @utility terminal {
 	@apply font-["Geist_Mono"] bg-zinc-950 h-full p-4 text-nowrap overflow-auto col gap-0
 }
 
+@utility course {
+	@apply col gap-0 rounded-2xl bg-forge-surface p-4 hover:scale-105 hover:cursor-pointer
+}
+
 
 @layer base {
 	body {
-		@apply m-0 h-dvh flex flex-col font-["Geist"] bg-forge-background scheme-only-dark text-forge-text;
+		@apply m-0 min-h-full flex flex-col font-["Geist"] bg-forge-background scheme-only-dark text-forge-text overflow-visible;
 	}
 
 	.cm-editor {

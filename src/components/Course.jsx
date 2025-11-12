@@ -1,24 +1,22 @@
 import { useEffect, useState } from "react";
-
+import courses from "../data/courses.json";
 export default function Course({ id }) {
 
     const [data, setData] = useState({})
 
     useEffect(() => {
-        const fetchData = async () => {
-            const response = await fetch("/data/courses.json"); // your server endpoint
-            const data = await response.json(); // parse JSON
-            setData(data);
-        }
+        setData(courses[id])
 
-        fetchData()
+        console.log(courses[id])
 
-    }, [])
+    }, [id])
 
 
     return (
-        <div className="course" id={id}>
-            
-        </div>
+        <a href={`/course/${id}`} className="course" id={id}>
+            <h3 className="text-forge-text">{data.name}</h3>
+            <p className="line-clamp-2">{data.desc}</p>
+            <progress value={0} className="mt-3"></progress>
+        </a>
     );
 }
