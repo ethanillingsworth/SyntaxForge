@@ -1,19 +1,35 @@
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import "./css/tailwind.css";
+import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import Sidebar from "./components/Sidebar";
 import MarkdownPage from "./components/MarkdownPage";
+import LoginPage from "./components/LoginPage";
+import "./css/tailwind.css"
 
-function App() {
+
+function Layout() {
+	const location = useLocation();
+	const hideSidebar = location.pathname === "/login";
+
 	return (
 		<>
-			<Router>
-				<Sidebar />
-				<Routes>
-					<Route path="/" element={<MarkdownPage />} />
-				</Routes>
-			</Router>
+			{!hideSidebar && (
+				<>
+					<Sidebar />
+					<hr className="border-none w-0.5 gradient-bg h-full" />
+				</>
+			)}
+
+			<Routes>
+				<Route path="/" element={<MarkdownPage />} />
+				<Route path="/login" element={<LoginPage />} />
+			</Routes>
 		</>
 	);
 }
 
-export default App;
+export default function App() {
+	return (
+		<Router>
+			<Layout />
+		</Router>
+	);
+}

@@ -15,6 +15,15 @@
 	--color-forge-gold: #f4c06d;
 }
 
+@utility gradient-text {
+	@apply bg-linear-to-r from-forge-accent to-forge-gold bg-clip-text text-transparent drop-shadow-sm;
+}
+
+@utility gradient-bg {
+	@apply bg-linear-to-b from-forge-accent to-forge-gold;
+}
+
+
 @layer base {
 	body {
 		@apply h-dvh text-white bg-zinc-900;
@@ -37,7 +46,7 @@
 	}
 
 	#root {
-		@apply flex flex-col h-full bg-zinc-800/30;
+		@apply flex flex-row h-full bg-zinc-800/30;
 	}
 
 	.sidebar {
@@ -80,7 +89,7 @@
 
 		a,
 		.menu {
-			@apply text-zinc-400 hover:text-forge-accent hover:cursor-pointer transition;
+			@apply text-zinc-400 hover:gradient-text hover:cursor-pointer transition;
 		}
 	}
 }
