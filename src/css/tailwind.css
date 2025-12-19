@@ -1,5 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&family=Geist:wght@100..900&display=swap");
 @import "tailwindcss";
-@import url('https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&family=Geist:wght@100..900&display=swap');
 
 @theme {
 	--color-forge-background: #0e0e11;
@@ -15,298 +15,72 @@
 	--color-forge-gold: #f4c06d;
 }
 
-@utility oauth {
-	@apply flex place-items-center hover:scale-105 gap-2 flex-row text-xl px-4 py-2 font-bold rounded-2xl h-fit hover:cursor-pointer;
-}
-
-@utility row {
-	@apply gap-3 flex flex-row place-items-center;
-}
-
-@utility col {
-	@apply gap-3 flex flex-col place-content-center place-items-center;
-}
-
-@utility gradient-bg {
-	@apply bg-gradient-to-r from-forge-accent to-forge-gold;
-}
-
-@utility gradient-text {
-	@apply leading-tight bg-gradient-to-r from-forge-accent to-forge-gold bg-clip-text text-transparent drop-shadow-sm;
-}
-
-@utility card {
-	@apply px-4 py-2 bg-forge-surface border-transparent rounded-2xl border-0 hover:scale-105 hover:cursor-pointer;
-}
-
-@utility nohover {
-	@apply hover:scale-100 hover:border-transparent hover:cursor-default;
-}
-
-@utility terminal {
-	@apply md:w-1/4 w-full md:h-full overflow-auto h-1/2 md:min-h-0 min-h-48 col bg-black place-content-start place-items-start font-["Geist_Mono"] p-4 gap-0.5 md:min-w-48 md:max-w-none;
-}
-
-@utility text-md {
-	@apply text-base;
-}
-
-@utility editor {
-	@apply h-full w-full flex flex-col md:flex-row;
-}
-
-@utility section {
-	@apply card select-none w-full hover:scale-100 border-b-2 border-forge-muted hover:bg-forge-muted p-4 flex flex-row place-items-center;
-}
-
-@utility lessonsContent {
-	@apply flex-col hidden overflow-auto rounded-b-2xl;
-}
-
-@utility lesson {
-	@apply section rounded-none;
-}
-
-@utility hero-section {
-	@apply bg-[url('../imgs/hero-bg.png')] bg-cover bg-center bg-no-repeat;
-}
-
 @layer base {
 	body {
-		@apply m-0 h-dvh flex flex-col font-["Geist"] bg-forge-background scheme-only-dark text-forge-text;
+		@apply h-dvh text-white bg-zinc-900;
+
+		h1 {
+			@apply font-bold;
+		}
+
+		h2 {
+			@apply font-semibold;
+		}
+
+		a {
+			@apply transition;
+		}
 	}
 
-	.oauth img {
-		@apply h-6;
+	* {
+		@apply font-["Geist"];
 	}
 
-	#resizer {
-		width: 5px;
-		cursor: col-resize;
+	#root {
+		@apply flex flex-col h-full bg-zinc-800/30;
 	}
 
-	.cm-editor {
-		@apply w-full h-full overflow-auto !font-["Geist_Mono"];
-		box-shadow: none !important;
-	}
+	.sidebar {
+		@apply flex flex-col w-fit h-full pl-20 pb-5 pr-10 bg-zinc-900 text-zinc-200;
 
-	.cm-scroller {
-		@apply overflow-auto;
-	}
+		.group {
+			@apply pt-2.5 pb-5 border-t border-t-zinc-700 capitalize;
+		}
 
-	.cm-content {
-		@apply hover:cursor-text overflow-auto;
-	}
+		h1 {
+			@apply text-base;
+		}
 
-	body * {
-		@apply transition;
-	}
+		h2 {
+			@apply font-bold;
+		}
 
-	header {
-		@apply bg-forge-surface/90 backdrop-blur-md border-b border-forge-accent/20 p-4 text-base font-bold gap-4 sticky top-0 h-auto flex flex-row flex-wrap place-items-center place-content-between md:text-2xl md:flex-nowrap md:gap-6 z-10 shadow-lg shadow-forge-background/50;
-	}
+		h2,
+		a,
+		span,
+		.menu {
+			@apply text-sm leading-6 py-1;
+		}
 
-	#head {
-		@apply w-auto text-left text-xl md:text-2xl font-extrabold tracking-tight hover:scale-105 transition-all duration-300;
-	}
+		.submenu {
+			@apply relative top-1 text-nowrap bg-zinc-800 hidden flex-col transition-all border-zinc-700 border px-2;
+		}
 
-	#head:hover {
-		filter: drop-shadow(0 0 8px rgba(252, 72, 63, 0.3));
-	}
+		.menu {
+			@apply text-zinc-400;
+		}
 
-	#back {
-		@apply lg:ml-auto;
-	}
+		.menu span {
+			@apply hover:cursor-pointer;
+		}
 
-	.logo-section {
-		@apply flex items-center;
-	}
+		.menu:hover .submenu {
+			@apply flex;
+		}
 
-	.nav-section {
-		@apply hidden md:flex items-center gap-2;
-	}
-
-	.mobile-nav {
-		@apply md:hidden absolute top-full left-0 right-0 bg-forge-surface/95 backdrop-blur-md border-b border-forge-accent/20 shadow-lg transform transition-all duration-300 ease-in-out;
-	}
-
-	.mobile-nav.hidden {
-		@apply opacity-0 -translate-y-2 pointer-events-none;
-	}
-
-	.mobile-nav.show {
-		@apply opacity-100 translate-y-0 pointer-events-auto;
-	}
-
-	.mobile-nav-menu {
-		@apply flex flex-col p-4 gap-3;
-	}
-
-	.mobile-nav-menu a {
-		@apply px-4 py-3 rounded-lg hover:bg-forge-muted/50 transition-all duration-300 font-medium text-white border-l-2 border-transparent hover:border-forge-accent;
-	}
-
-	.auth-section {
-		@apply flex items-center ml-auto;
-	}
-
-	.mobile-menu-button {
-		@apply p-2 text-forge-text hover:text-forge-accent transition-colors duration-300;
-	}
-
-	.mobile-menu-button svg {
-		@apply transition-transform duration-300;
-	}
-
-	.mobile-menu-button.active svg {
-		@apply rotate-90;
-	}
-
-	.mobile-menu {
-		@apply flex items-center;
-	}
-
-	header a {
-		@apply text-white transition-all duration-300 hover:text-forge-accent relative;
-	}
-
-	/* Add nav menu hover effects */
-	.nav-menu {
-		@apply px-3 py-2 rounded-lg hover:bg-forge-muted/50 transition-all duration-300 font-medium;
-	}
-
-	.nav-menu:hover {
-		@apply transform scale-105;
-	}
-
-	#login {
-		@apply px-4 py-2 bg-gradient-to-r from-forge-accent to-forge-gold text-white rounded-lg font-semibold hover:shadow-lg hover:shadow-forge-accent/25 transition-all duration-300 hover:scale-105;
-	}
-
-	progress {
-		@apply rounded-xl h-2 w-full bg-forge-muted;
-		@apply [&::-webkit-progress-bar]:rounded-xl [&::-webkit-progress-value]:rounded-xl [&::-webkit-progress-value]:gradient-bg [&::-webkit-progress-bar]:bg-forge-muted;
-		@apply [&::-moz-progress-bar]:gradient-bg;
-	}
-
-	h2 {
-		@apply text-xl md:text-2xl font-semibold;
-	}
-
-	h3 {
-		@apply font-semibold text-md;
-	}
-
-	#content h3 {
-		@apply text-lg;
-	}
-
-	#tasks h3 {
-		@apply text-sm md:text-md;
-	}
-
-	table {
-		@apply w-fit;
-	}
-
-	th {
-		@apply text-left border-b-2 border-forge-accent;
-	}
-
-	td,
-	th {
-		@apply p-2;
-	}
-
-	p {
-		@apply text-forge-subtext text-sm;
-	}
-
-	main {
-		@apply h-full col overflow-auto p-6 place-content-start md:p-12;
-	}
-
-	.card p {
-		@apply line-clamp-2;
-	}
-
-	.card h3 {
-		@apply text-white;
-	}
-
-	main>* {
-		@apply w-full;
-	}
-
-	main .row {
-		@apply place-content-center;
-	}
-
-	input,
-	textarea {
-		@apply bg-forge-muted p-1 placeholder:text-forge-subtext pt-1 pb-1 pl-2 pr-2 rounded-2xl;
-	}
-
-	textarea {
-		@apply bg-forge-surface;
-	}
-
-	#content p {
-		@apply md:text-lg text-md;
-	}
-
-	.md h1,
-	.md h2,
-	.md h3,
-	.md h4,
-	.md h5,
-	.md h6 {
-		@apply font-bold cursor-auto;
-	}
-
-	.md h1 {
-		@apply text-2xl;
-	}
-
-	.md h2 {
-		@apply text-xl;
-	}
-
-	.md h3 {
-		@apply text-lg;
-	}
-
-	.md p {
-		@apply cursor-auto;
-	}
-
-	code {
-		@apply text-forge-accent;
-	}
-
-	pre code {
-		@apply !bg-forge-surface w-full text-forge-text rounded-2xl px-4 py-2 text-sm md:text-md max-w-full text-wrap;
-	}
-
-	pre code {
-		@apply text-forge-text;
-	}
-
-	input[type="checkbox"] {
-		@apply min-w-5 min-h-5 rounded-2xl;
-	}
-
-	button,
-	select {
-		@apply bg-forge-accent px-4 py-2 text-nowrap hover:bg-forge-accent-hover font-semibold rounded-2xl hover:cursor-pointer;
-	}
-
-	button.muted,
-	select.muted {
-		@apply bg-forge-muted;
-	}
-
-	a {
-		@apply text-forge-accent hover:text-forge-accent-hover;
+		a,
+		.menu {
+			@apply text-zinc-400 hover:text-forge-accent hover:cursor-pointer transition;
+		}
 	}
 }

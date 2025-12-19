@@ -1,25 +1,19 @@
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
-import './App.css'
-import Header from './components/Header'
-import Home from './pages/Home'
-import Playground from './pages/Playground'
-import Courses from './pages/Courses'
-
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import "./css/tailwind.css";
+import Sidebar from "./components/Sidebar";
+import MarkdownPage from "./components/MarkdownPage";
 
 function App() {
-
-    return (
-        <>
-            <Router>
-                <Header />
-                <Routes>
-                    <Route path='/' element={<Home />} />
-                    <Route path='/playground' element={<Playground />} />
-                    <Route path='/courses' element={<Courses/>}/>
-                </Routes>
-            </Router>
-        </>
-    )
+	return (
+		<>
+			<Router>
+				<Sidebar />
+				<Routes>
+					<Route path="/" element={<MarkdownPage />} />
+				</Routes>
+			</Router>
+		</>
+	);
 }
 
-export default App
+export default App;
