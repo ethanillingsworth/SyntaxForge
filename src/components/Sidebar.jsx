@@ -1,14 +1,25 @@
-import { useEffect } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Firebase from "../firebase/Firebase";
 
 export default function Sidebar() {
-	const categorys = ["javascript", "advanced-placement"];
+	const categorys = useMemo(() => ["javascript", "advanced-placement"], []);
+
+	const [courses, setCourses] = useState({});
 
 	useEffect(() => {
-		Firebase.getAllCoursesFromCategory("javascript").then((data) => {
-			console.log(data);
-		});
-	}, []);
+		for (const cate of categorys) {
+			Firebase.getAllCoursesFromCategory(cate).then((data) => {
+				setCourses((prev) => ({
+					...prev,
+					[cate]: { ...data },
+				}));
+			});
+		}
+	}, [categorys]);
+
+	useEffect(() => {
+		console.log(courses);
+	}, [courses]);
 
 	return (
 		<div className="sidebar">
@@ -27,8 +38,21 @@ export default function Sidebar() {
 						<div className="menu">
 							<span>{category.replaceAll("-", " ")}</span>
 							<div className="submenu">
-								<a>AP CSP</a>
-								<a>Intro to JS</a>
+								{Object.entries(courses[category] ?? {}).map(
+									([id, data]) => (
+										<a
+											key={id}
+											href={``}
+											className={
+												data.nickname ? "uppercase" : ""
+											}
+										>
+											{data.nickname
+												? data.nickname
+												: id.replaceAll("-", " ")}
+										</a>
+									)
+								)}
 							</div>
 						</div>
 					);
