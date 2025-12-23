@@ -5,7 +5,7 @@ import {
 	useLocation,
 } from "react-router-dom";
 import Sidebar from "./components/Sidebar";
-import Article from "./pages/Article";
+import ArticlePage from "./pages/ArticlePage";
 import LoginPage from "./pages/LoginPage";
 import "./css/tailwind.css";
 import CoursePage from "./pages/CoursePage";
@@ -31,7 +31,7 @@ function Layout() {
 					<Route path="/:courseId/:unitName" element={<UnitPage />} />
 					<Route
 						path="/:courseId/article/:articleId"
-						element={<Article />}
+						element={<ArticlePage />}
 					/>
 				</Routes>
 			</div>

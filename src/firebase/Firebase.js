@@ -7,7 +7,9 @@ import {
 	doc,
 	addDoc,
 } from "firebase/firestore";
-import { db } from "./init";
+import { db, storage } from "./init";
+import { getBlob, ref, uploadBytes } from "firebase/storage";
+import { marked } from "marked";
 
 class DataObject {
 	static collectionPath = collection(db, "null");
@@ -161,5 +163,33 @@ export class Category extends DataObject {
 		}
 
 		return dataList;
+	}
+}
+
+export class Article extends DataObject {
+	static collectionPath = collection(db, "lessons");
+	static name = "Article";
+	constructor(id) {
+		super(id);
+	}
+
+	async getMarkdown() {
+		const blob = await getBlob(ref(storage, `articles/${this.id}.md`));
+
+		const text = await blob.text();
+
+		const md = await marked.parse(text);
+
+		return md;
+	}
+
+	async setDefault() {
+		fetch("/default.md")
+			.then((r) => {
+				return r.blob();
+			})
+			.then(async (blob) => {
+				await uploadBytes(ref(storage, `articles/${this.id}.md`), blob);
+			});
 	}
 }

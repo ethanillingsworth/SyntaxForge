@@ -1,4 +1,11 @@
 {
 	"css.lint.unknownAtRules": "ignore",
-	"cSpell.words": ["categorys"]
+	"cSpell.words": [
+		"categorys",
+		"FFOH",
+		"firebaseapp",
+		"firebasestorage",
+		"Firestore",
+		"syntaxforge"
+	]
 }
