@@ -23,6 +23,9 @@
 	@apply bg-linear-to-b from-forge-accent to-forge-gold;
 }
 
+@utility gradient-bg-r {
+	@apply bg-linear-to-r from-forge-accent to-forge-gold;
+}
 
 @layer base {
 	body {
@@ -32,7 +35,8 @@
 			@apply font-bold;
 		}
 
-		h2 {
+		h2,
+		h3 {
 			@apply font-semibold;
 		}
 
@@ -45,12 +49,76 @@
 		@apply font-["Geist"];
 	}
 
+	.content {
+		@apply w-full overflow-auto p-10 capitalize;
+
+		> * {
+			@apply my-2;
+		}
+
+		h1,
+		h2 {
+			@apply mb-3;
+		}
+
+		h1 {
+			@apply text-2xl;
+		}
+
+		h2 {
+			@apply text-xl pt-5 border-t border-t-zinc-700;
+		}
+
+		p {
+			@apply text-base text-zinc-400 normal-case;
+		}
+
+		progress::-webkit-progress-bar {
+			@apply bg-zinc-800 rounded-full;
+		}
+
+		progress::-webkit-progress-value {
+			@apply gradient-bg-r rounded-full;
+		}
+
+		progress {
+			@apply relative rounded overflow-hidden bg-zinc-800;
+		}
+
+		progress::-moz-progress-bar {
+			@apply gradient-bg-r rounded transition;
+		}
+	}
+
+	.popupMenu {
+		@apply absolute p-1 flex flex-col gap-1.5 rounded bg-zinc-800 border-zinc-700 border;
+	}
+
+	.unit {
+		--progress: 0%;
+
+		@apply p-2 place-content-center relative flex flex-row bg-zinc-800 rounded text-center hover:scale-95 hover:cursor-pointer transition;
+
+		> * {
+			@apply relative z-10;
+		}
+
+		img {
+			@apply h-6 w-auto;
+		}
+	}
+
+	.unit::after {
+		content: "";
+		@apply absolute inset-0 gradient-bg-r z-0 w-(--progress);
+	}
+
 	#root {
 		@apply flex flex-row h-full bg-zinc-800/30;
 	}
 
 	.sidebar {
-		@apply flex flex-col w-fit h-full pl-20 pb-5 pr-10 bg-zinc-900 text-zinc-200;
+		@apply flex flex-col min-w-fit overflow-auto text-nowrap pl-20 pb-5 pr-10 bg-zinc-900 text-zinc-200;
 
 		.group {
 			@apply pt-2.5 pb-5 border-t border-t-zinc-700 capitalize;

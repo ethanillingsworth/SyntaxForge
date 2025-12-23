@@ -1,9 +1,15 @@
-import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
+import {
+	BrowserRouter as Router,
+	Routes,
+	Route,
+	useLocation,
+} from "react-router-dom";
 import Sidebar from "./components/Sidebar";
-import MarkdownPage from "./components/MarkdownPage";
-import LoginPage from "./components/LoginPage";
-import "./css/tailwind.css"
-
+import Article from "./pages/Article";
+import LoginPage from "./pages/LoginPage";
+import "./css/tailwind.css";
+import CoursePage from "./pages/CoursePage";
+import UnitPage from "./pages/UnitPage";
 
 function Layout() {
 	const location = useLocation();
@@ -17,11 +23,18 @@ function Layout() {
 					<hr className="border-none w-0.5 gradient-bg h-full" />
 				</>
 			)}
-
-			<Routes>
-				<Route path="/" element={<MarkdownPage />} />
-				<Route path="/login" element={<LoginPage />} />
-			</Routes>
+			<div className="content">
+				<Routes>
+					<Route path="/" element={<null />} />
+					<Route path="/login" element={<LoginPage />} />
+					<Route path="/:courseId/" element={<CoursePage />} />
+					<Route path="/:courseId/:unitName" element={<UnitPage />} />
+					<Route
+						path="/:courseId/article/:articleId"
+						element={<Article />}
+					/>
+				</Routes>
+			</div>
 		</>
 	);
 }

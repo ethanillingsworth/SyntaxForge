@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import Firebase from "../firebase/Firebase";
+import { Category } from "../firebase/Firebase";
 
 export default function Sidebar() {
 	const categorys = useMemo(() => ["javascript", "advanced-placement"], []);
@@ -8,10 +8,11 @@ export default function Sidebar() {
 
 	useEffect(() => {
 		for (const cate of categorys) {
-			Firebase.getAllCoursesFromCategory(cate).then((data) => {
+			const category = new Category(cate);
+			category.getAllCourses(cate).then((data) => {
 				setCourses((prev) => ({
 					...prev,
-					[cate]: { ...data },
+					[cate]: [...data],
 				}));
 			});
 		}
@@ -23,7 +24,7 @@ export default function Sidebar() {
 
 	return (
 		<div className="sidebar">
-			<div className="flex flex-row gap-3 h-16 place-items-center">
+			<div className="flex flex-row gap-3 min-h-16 place-items-center">
 				<img className="h-6 rounded" src="/logo.png"></img>
 				<h1>SyntaxForge</h1>
 			</div>
@@ -38,18 +39,18 @@ export default function Sidebar() {
 						<div className="menu">
 							<span>{category.replaceAll("-", " ")}</span>
 							<div className="submenu">
-								{Object.entries(courses[category] ?? {}).map(
-									([id, data]) => (
+								{Object.values(courses[category] ?? {}).map(
+									(data) => (
 										<a
-											key={id}
-											href={``}
+											key={data.id}
+											href={`/${data.id}`}
 											className={
 												data.nickname ? "uppercase" : ""
 											}
 										>
 											{data.nickname
 												? data.nickname
-												: id.replaceAll("-", " ")}
+												: data.id.replaceAll("-", " ")}
 										</a>
 									)
 								)}
