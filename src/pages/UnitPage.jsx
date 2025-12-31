@@ -108,6 +108,7 @@ export default function UnitPage() {
 				{lessons.map((lesson) => {
 					return (
 						<Lesson
+							unit={lesson.unit}
 							index={lesson.index}
 							course={courseId}
 							id={lesson.id}

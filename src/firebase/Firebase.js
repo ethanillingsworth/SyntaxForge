@@ -12,7 +12,8 @@ import { getBlob, ref, uploadBytes } from "firebase/storage";
 import { marked } from "marked";
 
 class DataObject {
-	static collectionPath = collection(db, "null");
+	static collectionPath = collection(db, "none");
+	static path = "none";
 	static name = "DataObject";
 
 	constructor(id) {
@@ -33,7 +34,7 @@ class DataObject {
 	}
 
 	async get() {
-		const d = await getDoc(doc(db, "courses", this.id));
+		const d = await getDoc(doc(db, this.constructor.path, this.id));
 
 		if (!d.exists()) {
 			console.error(`${this.name} with id "${this.id}" does not exist`);
@@ -46,6 +47,7 @@ class DataObject {
 export class Course extends DataObject {
 	static collectionPath = collection(db, "courses");
 	static name = "Course";
+	static path = "courses";
 
 	constructor(id) {
 		super(id);
@@ -59,8 +61,6 @@ export class Course extends DataObject {
 		);
 
 		const docs = await getDocs(q);
-
-		console.log(docs.docs);
 
 		let data = {};
 
@@ -100,12 +100,58 @@ export class Course extends DataObject {
 	}
 }
 
+export class Lesson extends DataObject {
+	static collectionPath = collection(db, "lessons");
+	static path = "lessons";
+	static name = "Lesson";
+
+	constructor(id) {
+		super(id);
+	}
+}
+
 export class Unit extends DataObject {
 	static collectionPath = collection(db, "units");
 	static name = "Unit";
 
 	constructor(id) {
 		super(id);
+	}
+
+	async getNextLesson(lessonId) {
+		const lesson = new Lesson(lessonId);
+
+		const data = await lesson.get();
+
+		const nextIndex = data.index + 1;
+
+		const nextLessonData = await this.getLessonFromIndex(
+			nextIndex,
+			data.course,
+			data.unit
+		);
+
+		return nextLessonData;
+	}
+
+	async getLessonFromIndex(index, course, unit) {
+		const q = query(
+			collection(db, "lessons"),
+			where("course", "==", course),
+			where("unit", "==", unit),
+			where("index", "==", index)
+		);
+		const docs = await getDocs(q);
+
+		console.log(docs.docs);
+
+		let dataList = [];
+
+		for (const d of docs.docs) {
+			dataList.push({ ...d.data(), id: d.id });
+		}
+
+		return dataList[0];
 	}
 
 	async getAllLessons(course, unit) {
@@ -166,11 +212,18 @@ export class Category extends DataObject {
 	}
 }
 
-export class Article extends DataObject {
-	static collectionPath = collection(db, "lessons");
+export class Article extends Lesson {
 	static name = "Article";
 	constructor(id) {
 		super(id);
+	}
+
+	async setContent(content) {
+		const blob = new Blob([content], {
+			type: "text/markdown",
+		});
+
+		await uploadBytes(ref(storage, `articles/${this.id}.md`), blob);
 	}
 
 	async getMarkdown() {
@@ -180,7 +233,7 @@ export class Article extends DataObject {
 
 		const md = await marked.parse(text);
 
-		return md;
+		return { raw: text, parsed: md };
 	}
 
 	async setDefault() {

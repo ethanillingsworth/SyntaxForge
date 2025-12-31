@@ -27,6 +27,10 @@
 	@apply bg-linear-to-r from-forge-accent to-forge-gold;
 }
 
+@utility gradient-bg-r/25 {
+	@apply bg-linear-to-r from-forge-accent/25 to-forge-gold/25;
+}
+
 @layer base {
 	body {
 		@apply h-dvh text-white bg-zinc-900;
@@ -87,6 +91,51 @@
 
 		progress::-moz-progress-bar {
 			@apply gradient-bg-r rounded transition;
+		}
+
+		button {
+			@apply bg-zinc-800 rounded p-1 hover:cursor-pointer capitalize;
+		}
+	}
+
+	.md {
+		h1 {
+			@apply text-4xl;
+		}
+
+		h3 {
+			@apply mt-6;
+		}
+
+		* {
+			@apply my-2;
+		}
+
+		ul,
+		ol {
+			@apply list-inside;
+		}
+
+		ul {
+			@apply list-disc;
+		}
+
+		ol {
+			@apply list-decimal;
+		}
+
+		code {
+			@apply bg-forge-gold/25 text-forge-gold p-1 rounded;
+		}
+
+		table {
+			td,
+			th {
+				@apply p-2 border border-zinc-700;
+			}
+			tbody tr {
+				@apply bg-zinc-900;
+			}
 		}
 	}
 
