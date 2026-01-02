@@ -17,6 +17,7 @@ export default function UnitPage() {
 
 	const [lessons, setLessons] = useState([]);
 	const [isAdmin, setAdmin] = useState(false);
+	const [popupPos, setPopupPos] = useState(null);
 
 	let course = useRef();
 
@@ -64,7 +65,7 @@ export default function UnitPage() {
 		},
 		type: {
 			type: "select",
-			options: ["article"],
+			options: ["article", "mcq"],
 		},
 	};
 
@@ -87,6 +88,16 @@ export default function UnitPage() {
 		closePopup();
 	}
 
+	const openPopup = (e) => {
+		e.preventDefault();
+
+		setPopupPos({
+			x: e.clientX,
+			y: e.clientY,
+		});
+		createPopup(e);
+	};
+
 	return (
 		<>
 			{showPopup ? (
@@ -94,13 +105,14 @@ export default function UnitPage() {
 					dataTemplate={template}
 					closeAction={closePopup}
 					submitAction={submit}
+					position={popupPos}
 				/>
 			) : null}
 			<h1>{`Unit ${unitNumber} | ${data.name ?? "Loading..."}`}</h1>
 			<div className="flex flex-row w-full border-t border-t-zinc-700 pt-5 mb-5 gap-3">
 				<h2 className="border-none p-0 m-0">Lesson Overview</h2>
 				{isAdmin ? (
-					<img src={plus} className="h-7" onClick={createPopup} />
+					<img src={plus} className="h-7" onClick={openPopup} />
 				) : null}
 			</div>
 

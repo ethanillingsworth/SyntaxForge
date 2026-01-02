@@ -31,6 +31,10 @@
 	@apply bg-linear-to-r from-forge-accent/25 to-forge-gold/25;
 }
 
+@utility raised {
+	@apply bg-zinc-800 border-zinc-700 rounded p-1 border;
+}
+
 @layer base {
 	body {
 		@apply h-dvh text-white bg-zinc-900;
@@ -140,7 +144,7 @@
 	}
 
 	.popupMenu {
-		@apply absolute p-1 flex flex-col gap-1.5 rounded bg-zinc-800 border-zinc-700 border;
+		@apply fixed p-1 flex flex-col gap-1.5 raised z-50;
 	}
 
 	.unit {
@@ -189,7 +193,7 @@
 		}
 
 		.submenu {
-			@apply relative top-1 text-nowrap bg-zinc-800 hidden flex-col transition-all border-zinc-700 border px-2;
+			@apply relative top-1 text-nowrap hidden flex-col transition-all raised p-0 px-2;
 		}
 
 		.menu {

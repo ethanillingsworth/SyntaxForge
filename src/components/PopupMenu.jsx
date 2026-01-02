@@ -5,6 +5,8 @@ export default function PopupMenu({
 	className,
 	closeAction,
 	submitAction,
+	hideSubmit = false,
+	position,
 }) {
 	const [values, setValues] = useState({});
 
@@ -36,7 +38,13 @@ export default function PopupMenu({
 	};
 
 	return (
-		<div className={`popupMenu ${className ?? ""}`}>
+		<div
+			className={`popupMenu ${className ?? ""}`}
+			style={{
+				left: position?.x,
+				top: position?.y,
+			}}
+		>
 			{Object.keys(dataTemplate).map((title) => {
 				const data = dataTemplate[title];
 
@@ -56,6 +64,14 @@ export default function PopupMenu({
 					);
 				}
 
+				if (data.type == "button") {
+					return (
+						<button key={title} onClick={data.click}>
+							{title}
+						</button>
+					);
+				}
+
 				return (
 					<input
 						key={title}
@@ -69,7 +85,9 @@ export default function PopupMenu({
 
 			<div className="flex flex-row gap-1.5">
 				<button onClick={closeAction}>Cancel</button>
-				<button onClick={handleSubmit}>Submit</button>
+				{!hideSubmit ? (
+					<button onClick={handleSubmit}>Submit</button>
+				) : null}
 			</div>
 		</div>
 	);
