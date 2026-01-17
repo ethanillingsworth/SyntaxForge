@@ -10,6 +10,8 @@ import LoginPage from "./pages/LoginPage";
 import "./css/tailwind.css";
 import CoursePage from "./pages/CoursePage";
 import UnitPage from "./pages/UnitPage";
+import CoursesPage from "./pages/CoursesPage";
+import CategoryPage from "./pages/CategoryPage";
 
 function Layout() {
 	const location = useLocation();
@@ -27,6 +29,12 @@ function Layout() {
 				<Routes>
 					<Route path="/" element={<null />} />
 					<Route path="/login" element={<LoginPage />} />
+					<Route path="/courses" element={<CoursesPage />} />
+					<Route
+						path="/courses/:categoryId"
+						element={<CategoryPage />}
+					/>
+
 					<Route path="/:courseId/" element={<CoursePage />} />
 					<Route path="/:courseId/:unitName" element={<UnitPage />} />
 					<Route

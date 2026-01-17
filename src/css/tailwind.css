@@ -32,7 +32,7 @@
 }
 
 @utility raised {
-	@apply bg-zinc-800 border-zinc-700 rounded p-1 border;
+	@apply bg-zinc-800 border-zinc-700 rounded p-1 border px-2;
 }
 
 @layer base {
@@ -98,7 +98,7 @@
 		}
 
 		button {
-			@apply bg-zinc-800 rounded p-1 hover:cursor-pointer capitalize;
+			@apply raised hover:cursor-pointer capitalize;
 		}
 	}
 
@@ -176,11 +176,6 @@
 		.group {
 			@apply pt-2.5 pb-5 border-t border-t-zinc-700 capitalize;
 		}
-
-		h1 {
-			@apply text-base;
-		}
-
 		h2 {
 			@apply font-bold;
 		}
@@ -210,7 +205,7 @@
 
 		a,
 		.menu {
-			@apply text-zinc-400 hover:gradient-text hover:cursor-pointer transition;
+			@apply text-zinc-400 hover:gradient-text hover:cursor-pointer transition-none;
 		}
 	}
 }

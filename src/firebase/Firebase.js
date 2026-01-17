@@ -190,6 +190,8 @@ export class User {
 
 export class Category extends DataObject {
 	static name = "Category";
+	static path = "categorys";
+	static collectionPath = collection(db, "categorys");
 
 	constructor(id) {
 		super(id);
