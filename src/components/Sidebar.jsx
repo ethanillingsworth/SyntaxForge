@@ -1,7 +1,16 @@
 // import { useEffect, useMemo, useState } from "react";
 // import { Category } from "../firebase/Firebase";
 
+import { useState } from "react";
+import { useUser } from "../Global";
 export default function Sidebar() {
+	const [courses, setCourses] = useState({});
+	useUser((user) => {
+		user.get("public").then((data) => {
+			setCourses(data.courses);
+		});
+	});
+
 	return (
 		<div className="sidebar">
 			<a
@@ -13,6 +22,24 @@ export default function Sidebar() {
 			</a>
 			<div className="group">
 				<h2>Personal</h2>
+				<div className="menu">
+					<span>Your Courses</span>
+					<div className="submenu">
+						{Object.keys(courses).map((key) => {
+							const data = courses[key];
+							console.log(data);
+							if (data.added) {
+								return (
+									<a key={key} href={`/${key}`}>
+										{data.nickname
+											? data.nickname
+											: key.replaceAll("-", " ")}
+									</a>
+								);
+							}
+						})}
+					</div>
+				</div>
 			</div>
 
 			<div className="group">

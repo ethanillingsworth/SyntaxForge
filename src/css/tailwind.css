@@ -171,7 +171,7 @@
 	}
 
 	.sidebar {
-		@apply flex flex-col min-w-fit overflow-auto text-nowrap pl-20 pb-5 pr-10 bg-zinc-900 text-zinc-200;
+		@apply flex flex-col min-w-1/4 overflow-auto text-nowrap pl-20 pb-5 pr-10 bg-zinc-900 text-zinc-200 transition;
 
 		.group {
 			@apply pt-2.5 pb-5 border-t border-t-zinc-700 capitalize;
@@ -188,7 +188,7 @@
 		}
 
 		.submenu {
-			@apply relative top-1 text-nowrap hidden flex-col transition-all raised p-0 px-2;
+			@apply relative top-1 text-nowrap w-fit hidden flex-col transition-all raised p-0 px-2;
 		}
 
 		.menu {
