@@ -81,3 +81,17 @@ export function safeEval(input, test = null) {
 	// Return the eval'd result
 	return { res: a(), logs: logs };
 }
+export function useUser(callback) {
+	useEffect(() => {
+		const unsub = onAuthStateChanged(auth, (firebaseUser) => {
+			if (!firebaseUser) {
+				callback(null);
+				return;
+			}
+
+			callback(new User(firebaseUser.uid));
+		});
+
+		return unsub;
+	}, [callback]);
+}

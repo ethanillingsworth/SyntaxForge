@@ -108,7 +108,12 @@ export default function UnitPage() {
 					position={popupPos}
 				/>
 			) : null}
-			<h1>{`Unit ${unitNumber} | ${data.name ?? "Loading..."}`}</h1>
+			<div className="flex flex-row">
+				<h1>{`Unit ${unitNumber} | ${data.name ?? "Loading..."}`}</h1>
+				<a className="ml-auto" href="./">
+					<button>Course Overview</button>
+				</a>
+			</div>
 			<div className="flex flex-row w-full border-t border-t-zinc-700 pt-5 mb-5 gap-3">
 				<h2 className="border-none p-0 m-0">Lesson Overview</h2>
 				{isAdmin ? (

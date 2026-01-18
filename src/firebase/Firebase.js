@@ -6,6 +6,7 @@ import {
 	getDoc,
 	doc,
 	addDoc,
+	updateDoc,
 } from "firebase/firestore";
 import { db, storage } from "./init";
 import { getBlob, ref, uploadBytes } from "firebase/storage";
@@ -177,6 +178,22 @@ export class Unit extends DataObject {
 export class User {
 	constructor(id) {
 		this.id = id;
+	}
+
+	async get(type = "public") {
+		const d = await getDoc(doc(db, type, this.id));
+
+		if (!d.exists()) {
+			console.error(
+				`User with id "${this.id}" and type "${type}" does not exist`
+			);
+		}
+
+		return { ...d.data(), id: d.id };
+	}
+
+	async set(type = "public", data = {}) {
+		await updateDoc(doc(db, type, this.id), data);
 	}
 
 	async admin() {

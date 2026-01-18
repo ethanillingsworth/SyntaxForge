@@ -98,7 +98,7 @@
 		}
 
 		button {
-			@apply raised hover:cursor-pointer capitalize;
+			@apply raised hover:cursor-pointer capitalize h-fit hover:scale-95 transition;
 		}
 	}
 
