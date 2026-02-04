@@ -12,6 +12,7 @@ import CoursePage from "./pages/CoursePage";
 import UnitPage from "./pages/UnitPage";
 import CoursesPage from "./pages/CoursesPage";
 import CategoryPage from "./pages/CategoryPage";
+import MCQPage from "./pages/MCQPage";
 
 function Layout() {
 	const location = useLocation();
@@ -40,6 +41,10 @@ function Layout() {
 					<Route
 						path="/:courseId/:unitName/article/:articleId"
 						element={<ArticlePage />}
+					/>
+					<Route
+						path="/:courseId/:unitName/mcq/:mcqId"
+						element={<MCQPage />}
 					/>
 				</Routes>
 			</div>

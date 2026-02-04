@@ -2,8 +2,6 @@ import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Course, Unit, User } from "../firebase/Firebase";
 import Lesson from "../components/Lesson";
-
-import plus from "../imgs/icons/plus.svg";
 import PopupMenu from "../components/PopupMenu";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../firebase/init";
@@ -33,7 +31,7 @@ export default function UnitPage() {
 			unit.getAllLessons(courseId, parseInt(unitName.split("-")[1])).then(
 				(list) => {
 					setLessons(list);
-				}
+				},
 			);
 		});
 	}, [unitName, courseId, unitNumber]);
@@ -117,7 +115,7 @@ export default function UnitPage() {
 			<div className="flex flex-row w-full border-t border-t-zinc-700 pt-5 mb-5 gap-3">
 				<h2 className="border-none p-0 m-0">Lesson Overview</h2>
 				{isAdmin ? (
-					<img src={plus} className="h-7" onClick={openPopup} />
+					<button onClick={openPopup}>Add Lesson</button>
 				) : null}
 			</div>
 

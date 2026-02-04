@@ -60,7 +60,7 @@
 	.content {
 		@apply w-full overflow-auto p-10 capitalize;
 
-		> * {
+		& > * {
 			@apply my-2;
 		}
 
@@ -100,20 +100,6 @@
 		button {
 			@apply raised hover:cursor-pointer capitalize h-fit hover:scale-95 transition;
 		}
-	}
-
-	.md {
-		h1 {
-			@apply text-4xl;
-		}
-
-		h3 {
-			@apply mt-6;
-		}
-
-		* {
-			@apply my-2;
-		}
 
 		ul,
 		ol {
@@ -126,6 +112,14 @@
 
 		ol {
 			@apply list-decimal;
+		}
+
+		h1 {
+			@apply text-4xl;
+		}
+
+		h3 {
+			@apply mt-6;
 		}
 
 		code {
@@ -150,14 +144,39 @@
 	.unit {
 		--progress: 0%;
 
-		@apply p-2 place-content-center relative flex flex-row bg-zinc-800 rounded text-center hover:scale-95 hover:cursor-pointer transition;
+		@apply p-2 m-0 place-content-center relative flex flex-row bg-zinc-800 rounded text-center hover:scale-95 hover:cursor-pointer transition;
 
 		> * {
 			@apply relative z-10;
 		}
 
 		img {
-			@apply h-6 w-auto;
+			@apply h-6 w-auto m-0;
+		}
+
+		h3 {
+			@apply m-0;
+		}
+	}
+
+	.mcq {
+		li {
+			@apply hover:bg-forge-gold/25 my-1 hover:text-forge-gold p-1 rounded hover:cursor-pointer transition w-fit px-2 select-none;
+		}
+
+		li.selected {
+			@apply bg-forge-gold/25 text-forge-gold;
+		}
+
+		li.correct {
+			@apply bg-green-400/25 text-green-400;
+		}
+		li.incorrect {
+			@apply bg-red-400/25 text-red-400;
+		}
+
+		& > * {
+			@apply my-2;
 		}
 	}
 
