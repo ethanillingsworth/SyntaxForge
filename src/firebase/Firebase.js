@@ -43,6 +43,10 @@ class DataObject {
 
 		return { ...d.data(), id: d.id };
 	}
+
+	async set(data) {
+		await updateDoc(doc(db, this.constructor.path, this.id), data);
+	}
 }
 
 export class Course extends DataObject {
@@ -58,7 +62,7 @@ export class Course extends DataObject {
 		const q = query(
 			collection(db, "units"),
 			where("parent", "==", this.id),
-			where("number", "==", number)
+			where("number", "==", number),
 		);
 
 		const docs = await getDocs(q);
@@ -85,7 +89,7 @@ export class Course extends DataObject {
 	async getAllUnits() {
 		const q = query(
 			collection(db, "units"),
-			where("parent", "==", this.id)
+			where("parent", "==", this.id),
 		);
 		const docs = await getDocs(q);
 
@@ -129,7 +133,7 @@ export class Unit extends DataObject {
 		const nextLessonData = await this.getLessonFromIndex(
 			nextIndex,
 			data.course,
-			data.unit
+			data.unit,
 		);
 
 		return nextLessonData;
@@ -140,7 +144,7 @@ export class Unit extends DataObject {
 			collection(db, "lessons"),
 			where("course", "==", course),
 			where("unit", "==", unit),
-			where("index", "==", index)
+			where("index", "==", index),
 		);
 		const docs = await getDocs(q);
 
@@ -159,7 +163,7 @@ export class Unit extends DataObject {
 		const q = query(
 			collection(db, "lessons"),
 			where("course", "==", course),
-			where("unit", "==", unit)
+			where("unit", "==", unit),
 		);
 		const docs = await getDocs(q);
 
@@ -185,7 +189,7 @@ export class User {
 
 		if (!d.exists()) {
 			console.error(
-				`User with id "${this.id}" and type "${type}" does not exist`
+				`User with id "${this.id}" and type "${type}" does not exist`,
 			);
 		}
 
@@ -217,7 +221,7 @@ export class Category extends DataObject {
 	async getAllCourses() {
 		const q = query(
 			collection(db, "courses"),
-			where("categorys", "array-contains", this.id)
+			where("categorys", "array-contains", this.id),
 		);
 		const docs = await getDocs(q);
 

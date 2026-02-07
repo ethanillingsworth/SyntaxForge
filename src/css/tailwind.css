@@ -138,7 +138,16 @@
 	}
 
 	.popupMenu {
-		@apply fixed p-1 flex flex-col gap-1.5 raised z-50;
+		@apply absolute p-1 flex flex-col gap-1.5 raised z-50;
+
+		input,
+		textarea {
+			@apply w-full;
+		}
+
+		span {
+			@apply text-nowrap;
+		}
 	}
 
 	.unit {
@@ -207,7 +216,7 @@
 		}
 
 		.submenu {
-			@apply relative top-1 text-nowrap w-fit hidden flex-col transition-all raised p-0 px-2;
+			@apply relative top-1 text-nowrap border-0 flex overflow-hidden w-fit max-h-0 flex-col transition-all raised p-0 px-2;
 		}
 
 		.menu {
@@ -219,7 +228,7 @@
 		}
 
 		.menu:hover .submenu {
-			@apply flex;
+			@apply max-h-dvh border;
 		}
 
 		a,

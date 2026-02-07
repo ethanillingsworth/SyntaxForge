@@ -19,7 +19,7 @@ export default function PopupMenu({
 			if (field.type === "select") {
 				defaults[key] = field.options[0];
 			} else {
-				defaults[key] = "";
+				defaults[key] = field.value;
 			}
 		});
 
@@ -72,14 +72,37 @@ export default function PopupMenu({
 					);
 				}
 
+				if (data.type == "textbox") {
+					return (
+						<div className="flex flex-row gap-1.5">
+							<span>{data.label}</span>
+							<textarea
+								placeholder={title}
+								onChange={(e) =>
+									handleChange(title, e.target.value)
+								}
+								key={title}
+								rows={1}
+								className="min-h-6"
+								value={values[title] || ""}
+							></textarea>
+						</div>
+					);
+				}
+
 				return (
-					<input
-						key={title}
-						type={data.type}
-						placeholder={title}
-						value={values[title] || ""}
-						onChange={(e) => handleChange(title, e.target.value)}
-					/>
+					<div className="flex flex-row gap-1.5">
+						<span>{data.label}</span>
+						<input
+							key={title}
+							type={data.type}
+							placeholder={title}
+							value={values[title] || ""}
+							onChange={(e) =>
+								handleChange(title, e.target.value)
+							}
+						/>
+					</div>
 				);
 			})}
 
