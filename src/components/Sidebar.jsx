@@ -1,15 +1,35 @@
 // import { useEffect, useMemo, useState } from "react";
 // import { Category } from "../firebase/Firebase";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useUser } from "../Global";
+import { User } from "../firebase/Firebase";
 export default function Sidebar() {
 	const [courses, setCourses] = useState({});
-	useUser((user) => {
+
+	const user = useUser();
+
+	useEffect(() => {
+		if (!user) return;
+
 		user.get("public").then((data) => {
 			setCourses(data.courses);
 		});
-	});
+	}, [user]);
+
+	function createPlayground() {
+		const name = prompt("Playground Name:");
+		if (name) {
+			const id = name.replaceAll(" ", "-").toLowerCase();
+			user.set("private", {
+				playgrounds: {
+					[id]: {
+						name: name,
+					},
+				},
+			});
+		}
+	}
 
 	return (
 		<div className="sidebar">
@@ -43,32 +63,13 @@ export default function Sidebar() {
 			</div>
 
 			<div className="group">
+				<h2>Playgrounds</h2>
+				<a onClick={createPlayground}>New Playground</a>
+			</div>
+
+			<div className="group">
 				<h2>Quick Links</h2>
 				<a href="/courses">Available Courses</a>
-				{/* {categorys.map((category) => {
-					return (
-						<div className="menu">
-							<span>{category.replaceAll("-", " ")}</span>
-							<div className="submenu">
-								{Object.values(courses[category] ?? {}).map(
-									(data) => (
-										<a
-											key={data.id}
-											href={`/${data.id}`}
-											className={
-												data.nickname ? "uppercase" : ""
-											}
-										>
-											{data.nickname
-												? data.nickname
-												: data.id.replaceAll("-", " ")}
-										</a>
-									)
-								)}
-							</div>
-						</div>
-					);
-				})} */}
 			</div>
 		</div>
 	);

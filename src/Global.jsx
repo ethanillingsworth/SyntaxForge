@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Course, Unit, User } from "./firebase/Firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebase/init";
@@ -81,22 +81,21 @@ export function safeEval(input, test = null) {
 	// Return the eval'd result
 	return { res: a(), logs: logs };
 }
-export function useUser(callback) {
+export function useUser() {
+	const [user, setUser] = useState(null);
+
 	useEffect(() => {
 		const unsub = onAuthStateChanged(auth, (firebaseUser) => {
-			/** @type {User}  */
-			let u = null;
-
 			if (!firebaseUser) {
-				callback(u);
+				setUser(null);
 				return;
 			}
 
-			u = new User(firebaseUser.uid);
-
-			callback(u);
+			setUser(new User(firebaseUser.uid));
 		});
 
 		return unsub;
-	}, [callback]);
+	}, []);
+
+	return user;
 }

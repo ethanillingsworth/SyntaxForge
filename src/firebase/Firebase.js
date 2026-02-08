@@ -6,7 +6,7 @@ import {
 	getDoc,
 	doc,
 	addDoc,
-	updateDoc,
+	setDoc,
 } from "firebase/firestore";
 import { db, storage } from "./init";
 import { getBlob, ref, uploadBytes } from "firebase/storage";
@@ -45,7 +45,9 @@ class DataObject {
 	}
 
 	async set(data) {
-		await updateDoc(doc(db, this.constructor.path, this.id), data);
+		await setDoc(doc(db, this.constructor.path, this.id), data, {
+			merge: true,
+		});
 	}
 }
 
@@ -197,7 +199,7 @@ export class User {
 	}
 
 	async set(type = "public", data = {}) {
-		await updateDoc(doc(db, type, this.id), data);
+		await setDoc(doc(db, type, this.id), data, { merge: true });
 	}
 
 	async admin() {

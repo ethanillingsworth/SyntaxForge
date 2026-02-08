@@ -9,7 +9,7 @@ export default function CoursePage() {
 	const [data, setData] = useState({});
 
 	const [units, setUnits] = useState([]);
-	const [user, setUser] = useState(null);
+	const user = useUser();
 
 	const [courseAdded, setCourseAdded] = useState(false);
 
@@ -29,13 +29,13 @@ export default function CoursePage() {
 		console.log(data);
 	}, [data]);
 
-	useUser((u) => {
-		u.get().then((data) => {
+	useEffect(() => {
+		if (!user) return;
+
+		user.get().then((data) => {
 			setCourseAdded(!!data?.courses[courseId].added);
 		});
-
-		setUser(u);
-	});
+	}, [courseId, user]);
 
 	function addOrRemoveCourse() {
 		user.set("public", {
@@ -69,10 +69,14 @@ export default function CoursePage() {
 				})}
 			</div>
 
-			<div class="relative w-full flex flex-col place-content-center place-items-center mt-5">
-				<progress class="w-full h-8" value="60" max="100"></progress>
+			<div className="relative w-full flex flex-col place-content-center place-items-center mt-5">
+				<progress
+					className="w-full h-8"
+					value="60"
+					max="100"
+				></progress>
 
-				<span class="absolute h-full top-0 inset-0 flex items-center justify-center font-bold text-white text-shadow-black text-shadow-xs pointer-events-none">
+				<span className="absolute h-full top-0 inset-0 flex items-center justify-center font-bold text-white text-shadow-black text-shadow-xs pointer-events-none">
 					{`${data.percent}%`}
 				</span>
 			</div>
