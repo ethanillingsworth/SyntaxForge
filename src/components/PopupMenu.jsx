@@ -17,7 +17,11 @@ export default function PopupMenu({
 			const field = dataTemplate[key];
 
 			if (field.type === "select") {
-				defaults[key] = field.options[0];
+				if (field.value) {
+					defaults[key] = field.value;
+				} else {
+					defaults[key] = field.options[0];
+				}
 			} else {
 				defaults[key] = field.value;
 			}
@@ -50,17 +54,24 @@ export default function PopupMenu({
 
 				if (data.type == "select") {
 					return (
-						<select
-							key={title}
-							value={values[title]}
-							onChange={(e) =>
-								handleChange(title, e.target.value)
-							}
-						>
-							{data.options.map((option) => {
-								return <option>{option}</option>;
-							})}
-						</select>
+						<div className="flex flex-row gap-1.5">
+							<span>{data.label}</span>
+
+							<select
+								key={title}
+								value={values[title]}
+								onChange={(e) =>
+									handleChange(title, e.target.value)
+								}
+								className="w-full"
+							>
+								{data.options.map((option) => {
+									return (
+										<option value={option}>{option}</option>
+									);
+								})}
+							</select>
+						</div>
 					);
 				}
 
@@ -90,6 +101,10 @@ export default function PopupMenu({
 					);
 				}
 
+				if (data.type == "text") {
+					return <span className="font-semibold">{data.label}</span>;
+				}
+
 				return (
 					<div className="flex flex-row gap-1.5">
 						<span>{data.label}</span>
@@ -102,6 +117,11 @@ export default function PopupMenu({
 								handleChange(title, e.target.value)
 							}
 						/>
+						{data.units ? (
+							<span className="normal-case raised text-xs">
+								{data.units}
+							</span>
+						) : null}
 					</div>
 				);
 			})}

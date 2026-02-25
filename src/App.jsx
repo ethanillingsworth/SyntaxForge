@@ -13,6 +13,25 @@ import UnitPage from "./pages/UnitPage";
 import CoursesPage from "./pages/CoursesPage";
 import CategoryPage from "./pages/CategoryPage";
 import MCQPage from "./pages/MCQPage";
+import PlaygroundPage from "./pages/PlaygroundPage";
+
+import { Outlet } from "react-router-dom";
+
+function ContentLayout() {
+	return (
+		<div className="content">
+			<Outlet />
+		</div>
+	);
+}
+
+function ContentLayoutNoPadding() {
+	return (
+		<div className="content p-0">
+			<Outlet />
+		</div>
+	);
+}
 
 function Layout() {
 	const location = useLocation();
@@ -26,9 +45,16 @@ function Layout() {
 					<hr className="border-none w-0.5 gradient-bg h-full" />
 				</>
 			)}
-			<div className="content">
-				<Routes>
-					<Route path="/" element={<null />} />
+			<Routes>
+				<Route element={<ContentLayoutNoPadding />}>
+					<Route
+						path="/playgrounds/:playgroundId"
+						element={<PlaygroundPage />}
+					/>
+				</Route>
+
+				<Route element={<ContentLayout />}>
+					<Route path="/" element={null} />
 					<Route path="/login" element={<LoginPage />} />
 					<Route path="/courses" element={<CoursesPage />} />
 					<Route
@@ -36,7 +62,7 @@ function Layout() {
 						element={<CategoryPage />}
 					/>
 
-					<Route path="/:courseId/" element={<CoursePage />} />
+					<Route path="/:courseId" element={<CoursePage />} />
 					<Route path="/:courseId/:unitName" element={<UnitPage />} />
 					<Route
 						path="/:courseId/:unitName/article/:articleId"
@@ -46,8 +72,8 @@ function Layout() {
 						path="/:courseId/:unitName/mcq/:mcqId"
 						element={<MCQPage />}
 					/>
-				</Routes>
-			</div>
+				</Route>
+			</Routes>
 		</>
 	);
 }

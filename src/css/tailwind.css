@@ -54,7 +54,19 @@
 	}
 
 	* {
-		@apply font-["Geist"];
+		@apply font-["Geist"] scheme-dark;
+	}
+
+	.cm-editor * {
+		@apply font-["Geist_Mono"];
+	}
+
+	.terminal {
+		@apply h-full w-96 bg-black p-4 normal-case overflow-auto;
+
+		& > * {
+			@apply font-["Geist_Mono"];
+		}
 	}
 
 	.content {
@@ -99,6 +111,10 @@
 
 		button {
 			@apply raised hover:cursor-pointer capitalize h-fit hover:scale-95 transition;
+
+			&.accent-button {
+				@apply bg-forge-accent border-forge-accent/75;
+			}
 		}
 
 		ul,
@@ -138,7 +154,7 @@
 	}
 
 	.popupMenu {
-		@apply absolute p-1 flex flex-col gap-1.5 raised z-50;
+		@apply absolute p-2 flex flex-col gap-1.5 raised z-50;
 
 		input,
 		textarea {
@@ -202,8 +218,9 @@
 		@apply flex flex-col min-w-1/4 overflow-auto text-nowrap pl-20 pb-5 pr-10 bg-zinc-900 text-zinc-200 transition;
 
 		.group {
-			@apply pt-2.5 pb-5 border-t border-t-zinc-700 capitalize;
+			@apply pt-2.5 pb-5 border-t border-t-zinc-700 capitalize flex flex-col gap-0;
 		}
+
 		h2 {
 			@apply font-bold;
 		}
@@ -216,7 +233,7 @@
 		}
 
 		.submenu {
-			@apply relative top-1 text-nowrap border-0 flex overflow-hidden w-fit max-h-0 flex-col transition-all raised p-0 px-2;
+			@apply relative top-1 text-nowrap border-0 flex overflow-hidden w-fit max-h-0 flex-col raised p-0 px-2;
 		}
 
 		.menu {

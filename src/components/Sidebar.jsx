@@ -3,9 +3,10 @@
 
 import { useEffect, useState } from "react";
 import { useUser } from "../Global";
-import { User } from "../firebase/Firebase";
+
 export default function Sidebar() {
 	const [courses, setCourses] = useState({});
+	const [playgrounds, setPlaygrounds] = useState({});
 
 	const user = useUser();
 
@@ -14,6 +15,10 @@ export default function Sidebar() {
 
 		user.get("public").then((data) => {
 			setCourses(data.courses);
+		});
+
+		user.get("private").then((data) => {
+			setPlaygrounds(data.playgrounds);
 		});
 	}, [user]);
 
@@ -27,6 +32,8 @@ export default function Sidebar() {
 						name: name,
 					},
 				},
+			}).then(() => {
+				window.location.href = "/playgrounds/" + id;
 			});
 		}
 	}
@@ -47,7 +54,6 @@ export default function Sidebar() {
 					<div className="submenu">
 						{Object.keys(courses).map((key) => {
 							const data = courses[key];
-							console.log(data);
 							if (data.added) {
 								return (
 									<a key={key} href={`/${key}`}>
@@ -60,11 +66,20 @@ export default function Sidebar() {
 						})}
 					</div>
 				</div>
-			</div>
-
-			<div className="group">
-				<h2>Playgrounds</h2>
-				<a onClick={createPlayground}>New Playground</a>
+				<div className="menu">
+					<span>Playgrounds</span>
+					<div className="submenu">
+						{Object.keys(playgrounds || {}).map((key) => {
+							const data = playgrounds[key];
+							return (
+								<a href={`/playgrounds/${key}`} key={key}>
+									{data.name}
+								</a>
+							);
+						})}
+						<a onClick={createPlayground}>New Playground</a>
+					</div>
+				</div>
 			</div>
 
 			<div className="group">

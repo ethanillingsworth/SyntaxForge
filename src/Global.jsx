@@ -82,6 +82,7 @@ export function safeEval(input, test = null) {
 	return { res: a(), logs: logs };
 }
 export function useUser() {
+	/** @type {[User, Function]} */
 	const [user, setUser] = useState(null);
 
 	useEffect(() => {
@@ -98,4 +99,10 @@ export function useUser() {
 	}, []);
 
 	return user;
+}
+
+export function useTitle(title) {
+	useEffect(() => {
+		document.title = title;
+	}, [title]);
 }
