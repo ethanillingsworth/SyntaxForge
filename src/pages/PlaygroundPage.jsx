@@ -32,6 +32,11 @@ export default function PlaygroundPage() {
 				label: "Playground Settings",
 			},
 
+			playgroundName: {
+				label: "Display Name: ",
+				value: title,
+			},
+
 			lang: {
 				type: "select",
 				label: "Language: ",
@@ -53,16 +58,18 @@ export default function PlaygroundPage() {
 				},
 			},
 		}),
-		[lang, playgroundId, user],
+		[lang, playgroundId, title, user],
 	);
 
 	function onSettingsSubmit(values) {
 		setLang(values.lang);
+		setTitle(values.playgroundName);
 
 		user.set("private", {
 			playgrounds: {
 				[playgroundId]: {
 					lang: values.lang,
+					name: values.playgroundName,
 				},
 			},
 		});
