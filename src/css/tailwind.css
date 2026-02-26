@@ -62,7 +62,7 @@
 	}
 
 	.terminal {
-		@apply h-full w-96 bg-black p-4 normal-case overflow-auto;
+		@apply h-full w-96 bg-black p-4 normal-case flex flex-col overflow-auto;
 
 		& > * {
 			@apply font-["Geist_Mono"];

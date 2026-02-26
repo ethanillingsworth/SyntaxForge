@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import Editor from "../components/Editor";
 import { useShortcut, useUser } from "../Global";
 import { useParams } from "react-router-dom";
+import { deleteField } from "firebase/firestore";
 
 export default function PlaygroundPage() {
 	const { playgroundId } = useParams();
@@ -37,8 +38,22 @@ export default function PlaygroundPage() {
 				options: ["JavaScript", "Python"],
 				value: lang,
 			},
+
+			delete: {
+				type: "button",
+				label: "Delete Playground",
+				click: () => {
+					user.set("private", {
+						playgrounds: {
+							[playgroundId]: deleteField(),
+						},
+					}).then(() => {
+						window.location.href = "/";
+					});
+				},
+			},
 		}),
-		[lang],
+		[lang, playgroundId, user],
 	);
 
 	function onSettingsSubmit(values) {
@@ -78,7 +93,7 @@ export default function PlaygroundPage() {
 			<Editor
 				title={title}
 				extraSettings={extraSettings}
-				language={lang}
+				language={lang.toLowerCase()}
 				value={content}
 				onChange={updateContent}
 				onSettingsSubmit={onSettingsSubmit}

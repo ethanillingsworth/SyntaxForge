@@ -78,7 +78,7 @@ export default function PopupMenu({
 				if (data.type == "button") {
 					return (
 						<button key={title} onClick={data.click}>
-							{title}
+							{data.label || title}
 						</button>
 					);
 				}

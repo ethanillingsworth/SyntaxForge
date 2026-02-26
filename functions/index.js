@@ -1,32 +1,35 @@
-/**
- * Import function triggers from their respective submodules:
- *
- * const {onCall} = require("firebase-functions/v2/https");
- * const {onDocumentWritten} = require("firebase-functions/v2/firestore");
- *
- * See a full list of supported triggers at https://firebase.google.com/docs/functions
- */
+import * as functions from "firebase-functions";
+import { GoogleAuth } from "google-auth-library";
+import cors from "cors";
 
-const {setGlobalOptions} = require("firebase-functions");
-const {onRequest} = require("firebase-functions/https");
-const logger = require("firebase-functions/logger");
+// Allow requests from localhost (React dev server)
+const corsHandler = cors({
+	origin: ["http://localhost:5173", "https://syntaxforge.dev"],
+});
 
-// For cost control, you can set the maximum number of containers that can be
-// running at the same time. This helps mitigate the impact of unexpected
-// traffic spikes by instead downgrading performance. This limit is a
-// per-function limit. You can override the limit for each function using the
-// `maxInstances` option in the function's options, e.g.
-// `onRequest({ maxInstances: 5 }, (req, res) => { ... })`.
-// NOTE: setGlobalOptions does not apply to functions using the v1 API. V1
-// functions should each use functions.runWith({ maxInstances: 10 }) instead.
-// In the v1 API, each function can only serve one request per container, so
-// this will be the maximum concurrent request count.
-setGlobalOptions({ maxInstances: 10 });
+export const runCode = functions.https.onRequest(async (req, res) => {
+	// Wrap your code inside corsHandler
+	corsHandler(req, res, async () => {
+		const { code, lang } = req.body;
+		const RUNNER_URL =
+			"https://code-runner-874960583919.us-central1.run.app/run";
 
-// Create and deploy your first functions
-// https://firebase.google.com/docs/functions/get-started
+		try {
+			const auth = new GoogleAuth();
+			const client = await auth.getIdTokenClient(RUNNER_URL);
 
-// exports.helloWorld = onRequest((request, response) => {
-//   logger.info("Hello logs!", {structuredData: true});
-//   response.send("Hello from Firebase!");
-// });
+			const response = await client.request({
+				url: RUNNER_URL,
+				method: "POST",
+				data: { code, lang },
+				headers: { "Content-Type": "application/json" },
+				validateStatus: () => true,
+			});
+
+			res.status(response.status).json(response.data);
+		} catch (err) {
+			console.error("Error calling runner:", err);
+			res.status(500).json({ error: err.message });
+		}
+	});
+});

@@ -6,6 +6,8 @@ import PopupMenu from "./PopupMenu";
 import { useEffect, useMemo, useState } from "react";
 import { useShortcut, useUser } from "../Global";
 
+import axios from "axios";
+
 export default function Editor({
 	title,
 	language = "javascript",
@@ -21,6 +23,12 @@ export default function Editor({
 	const [popupPos, setPopupPos] = useState(null);
 
 	const [fontSize, setFontSize] = useState(14);
+
+	const [content, setContent] = useState(value);
+
+	const [terminalLines, setTerminalLines] = useState([
+		"SyntaxForge Terminal v1",
+	]);
 
 	useEffect(() => {
 		user?.get("private").then((data) => {
@@ -54,6 +62,37 @@ export default function Editor({
 	function closePopup() {
 		setPopup(false);
 	}
+
+	function runCode() {
+		console.log(content);
+		setTerminalLines(["Running Code..."]);
+		axios
+			.post(" https://runcode-qjvn4b2nya-uc.a.run.app ", {
+				code: content,
+				lang: language,
+			})
+			.then((res) => {
+				setTerminalLines((v) => {
+					return [...v, ...res.data.logs];
+				});
+			})
+			.catch((e) => {
+				console.error(e);
+				if (e.status === 504) {
+					setTerminalLines((v) => {
+						return [...v, "ERROR: Timed Out"];
+					});
+				} else {
+					setTerminalLines((v) => {
+						return [...v, e.response.data.error];
+					});
+				}
+			});
+	}
+
+	useEffect(() => {
+		setContent(value);
+	}, [value]);
 
 	const template = useMemo(
 		() => ({
@@ -117,7 +156,9 @@ export default function Editor({
 						}
 					})}
 
-					<button className="ml-auto accent-button">Run</button>
+					<button className="ml-auto accent-button" onClick={runCode}>
+						Run
+					</button>
 				</div>
 				<div
 					className={`flex flex-row w-full h-full`}
@@ -126,10 +167,11 @@ export default function Editor({
 					<div className="flex-1 min-h-0 overflow-auto">
 						<CodeMirror
 							className="normal-case w-full h-full"
-							extensions={[
-								languageLookup[language.toLowerCase()],
-							]}
-							onChange={onChange}
+							extensions={[languageLookup[language]]}
+							onChange={(v, update) => {
+								onChange(v, update);
+								setContent(v);
+							}}
 							value={value}
 							height="100%"
 							theme="dark"
@@ -137,7 +179,9 @@ export default function Editor({
 					</div>
 
 					<div className="terminal">
-						<span>SyntaxForge Terminal v1</span>
+						{terminalLines.map((line) => {
+							return <span>{line}</span>;
+						})}
 					</div>
 				</div>
 			</div>
