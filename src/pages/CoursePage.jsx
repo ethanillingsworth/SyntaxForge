@@ -33,7 +33,9 @@ export default function CoursePage() {
 		if (!user) return;
 
 		user.get().then((data) => {
-			setCourseAdded(!!data?.courses[courseId].added);
+			if (data?.courses?.[courseId]) {
+				setCourseAdded(!!data?.courses[courseId].added);
+			}
 		});
 	}, [courseId, user]);
 

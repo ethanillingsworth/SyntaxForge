@@ -14,11 +14,11 @@ export default function Sidebar() {
 		if (!user) return;
 
 		user.get("public").then((data) => {
-			setCourses(data.courses);
+			setCourses(data.courses || {});
 		});
 
 		user.get("private").then((data) => {
-			setPlaygrounds(data.playgrounds);
+			setPlaygrounds(data.playgrounds || {});
 		});
 	}, [user]);
 
@@ -41,7 +41,7 @@ export default function Sidebar() {
 	return (
 		<div className="sidebar">
 			<a
-				href="/"
+				href="/home"
 				className="flex flex-row gap-3 min-h-16 place-items-center text-white hover:gradient-text"
 			>
 				<img className="h-6 rounded" src="/logo.png"></img>

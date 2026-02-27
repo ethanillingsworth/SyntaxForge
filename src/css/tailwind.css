@@ -69,6 +69,16 @@
 		}
 	}
 
+	.md {
+		@apply gap-3 flex flex-col;
+
+		h1,
+		h2,
+		h3 {
+			@apply m-0!;
+		}
+	}
+
 	.content {
 		@apply w-full overflow-auto p-10 capitalize;
 
@@ -131,7 +141,7 @@
 		}
 
 		h1 {
-			@apply text-4xl;
+			@apply text-3xl;
 		}
 
 		h3 {

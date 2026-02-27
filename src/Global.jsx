@@ -37,6 +37,16 @@ export function useAdmin(callback) {
 	}, [callback]);
 }
 
+export function useForceLogin() {
+	useEffect(() => {
+		return onAuthStateChanged(auth, (user) => {
+			if (!user) {
+				window.location.href = "/login";
+			}
+		});
+	}, []);
+}
+
 export function useNextLesson(courseId, unitNumber, lessonId, callback) {
 	useEffect(() => {
 		const course = new Course(courseId);

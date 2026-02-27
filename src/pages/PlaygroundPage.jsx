@@ -53,7 +53,7 @@ export default function PlaygroundPage() {
 							[playgroundId]: deleteField(),
 						},
 					}).then(() => {
-						window.location.href = "/";
+						window.location.href = "/home";
 					});
 				},
 			},

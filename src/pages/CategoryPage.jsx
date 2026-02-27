@@ -24,24 +24,28 @@ export default function CategoryPage() {
 			<h1>{data.name} Courses</h1>
 			<div className="grid grid-cols-3 gap-3 mt-5">
 				{courses.map((course) => {
-					return (
-						<a
-							className={`unit`}
-							style={{
-								"background-color": course.color,
-								color: course.textColor,
-							}}
-							key={course.id}
-							href={`/${course.id}`}
-						>
-							<h3>
-								{course.id.replaceAll("-", " ")}{" "}
-								{course.nickname
-									? `(${course.nickname})`.toUpperCase()
-									: ""}
-							</h3>
-						</a>
-					);
+					if (!course.hidden) {
+						return (
+							<a
+								className={`unit`}
+								style={{
+									backgroundColor: course.color,
+									color: course.textColor,
+								}}
+								key={course.id}
+								href={`/${course.id}`}
+							>
+								<h3>
+									{course.id.replaceAll("-", " ")}{" "}
+									<span className="normal-case">
+										{course.nickname
+											? `(${course.nickname})`
+											: ""}
+									</span>
+								</h3>
+							</a>
+						);
+					}
 				})}
 			</div>
 		</>

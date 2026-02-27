@@ -368,7 +368,9 @@ export default function MCQPage() {
 				) : (
 					<button onClick={submit}>Submit Answers</button>
 				)}
-				<button onClick={addQuestion}>Add Question</button>
+				{isAdmin ? (
+					<button onClick={addQuestion}>Add Question</button>
+				) : null}
 			</div>
 		</div>
 	);

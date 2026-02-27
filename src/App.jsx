@@ -16,6 +16,7 @@ import MCQPage from "./pages/MCQPage";
 import PlaygroundPage from "./pages/PlaygroundPage";
 
 import { Outlet } from "react-router-dom";
+import LandingPage from "./pages/LandingPage";
 
 function ContentLayout() {
 	return (
@@ -35,7 +36,8 @@ function ContentLayoutNoPadding() {
 
 function Layout() {
 	const location = useLocation();
-	const hideSidebar = location.pathname === "/login";
+	const hideSidebar =
+		location.pathname === "/login" || location.pathname === "/";
 
 	return (
 		<>
@@ -51,11 +53,13 @@ function Layout() {
 						path="/playgrounds/:playgroundId"
 						element={<PlaygroundPage />}
 					/>
+					<Route path="/" element={<LandingPage />} />
+					<Route path="/login" element={<LoginPage />} />
 				</Route>
 
 				<Route element={<ContentLayout />}>
-					<Route path="/" element={null} />
-					<Route path="/login" element={<LoginPage />} />
+					<Route path="/home" element={null} />
+
 					<Route path="/courses" element={<CoursesPage />} />
 					<Route
 						path="/courses/:categoryId"
@@ -68,10 +72,11 @@ function Layout() {
 						path="/:courseId/:unitName/article/:articleId"
 						element={<ArticlePage />}
 					/>
-					<Route
+
+					{/* <Route
 						path="/:courseId/:unitName/mcq/:mcqId"
 						element={<MCQPage />}
-					/>
+					/> */}
 				</Route>
 			</Routes>
 		</>
