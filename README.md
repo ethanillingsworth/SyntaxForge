@@ -7,7 +7,6 @@
   
   [![Website](https://img.shields.io/badge/Website-syntaxforge.dev-blue?style=for-the-badge)](https://syntaxforge.dev)
   [![Documentation](https://img.shields.io/badge/Documentation-docs.syntaxforge.dev-green?style=for-the-badge)](https://docs.syntaxforge.dev)
-  [![Hacktoberfest](https://img.shields.io/badge/Hacktoberfest-Accepted-orange?style=for-the-badge)](https://hacktoberfest.digitalocean.com/)
   [![License](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)](LICENSE)
 </div>
 
@@ -104,9 +103,9 @@ SyntaxForge is an innovative interactive coding education platform designed to h
 
 ### Tech Stack
 
-- **Frontend**: Vanilla JavaScript, HTML5, CSS3
+- **Frontend**: React
 - **Styling**: Tailwind CSS
-- **Build Tool**: Webpack 5
+- **Build Tool**: Vite
 - **Code Editor**: CodeMirror 6
 - **Backend**: Firebase (Authentication, Firestore)
 - **Documentation**: JSDoc with Clean Theme
@@ -136,16 +135,20 @@ SyntaxForge is an innovative interactive coding education platform designed to h
 
 ```
 SyntaxForge/
+├── functions/         # Firebase functions
+├── runner/            # Code Runner
+├── public/            # Static Files
 ├── src/
 │   ├── css/           # Tailwind CSS styles
-│   ├── data/          # Course content (JSON)
+│   ├── components/    # Reuseable React Components
 │   ├── imgs/          # Images and icons
-│   ├── js/            # JavaScript modules
-│   ├── markdown/      # Lesson content
-│   └── pages/         # HTML pages
-├── webpack.config.js  # Build configuration
+│   ├── firebase/      # Firebase imports
+│   ├── pages/         # React Pages
+│   └── App.jsx        # Router
+│   └── Global.jsx     # Custom use functions
+├── vite.config.js  # Build configuration
 ├── package.json       # Dependencies and scripts
-└── README.md         # This file
+└── README.md          # This file
 ```
 
 ### Contributing Workflow
@@ -157,49 +160,6 @@ SyntaxForge/
 5. Commit with descriptive messages: `git commit -m "Add amazing feature"`
 6. Push to your branch: `git push origin feature/amazing-feature`
 7. Open a Pull Request
-
-## 🎃 Hacktoberfest 2025
-
-SyntaxForge is officially participating in **Hacktoberfest**! 🎉
-
-### How to Contribute
-
-1. **Find Issues**: Look for issues labeled with:
-   - `hacktoberfest` - General Hacktoberfest contributions
-   - `good first issue` - Perfect for newcomers
-   - `bug` - Help fix bugs
-   - `enhancement` - Improve existing features
-   - `documentation` - Help improve docs
-
-2. **Contribution Ideas**:
-   - Add new JavaScript lessons and challenges
-   - Improve the code editor functionality
-   - Enhance the UI/UX design
-   - Write better documentation
-   - Add new course tracks (Python, HTML/CSS, etc.)
-   - Fix bugs and improve performance
-   - Add accessibility improvements
-
-3. **Getting Started**:
-   - Read our [Developer Documentation](https://docs.syntaxforge.dev)
-   - Set up your development environment
-   - Pick an issue that interests you
-   - Comment on the issue to let us know you're working on it
-   - Submit your PR with a clear description
-
-### Hacktoberfest Guidelines
-
-- **Quality over Quantity**: Focus on meaningful contributions
-- **Follow our Code of Conduct**: Be respectful and inclusive
-- **Test Your Changes**: Ensure everything works before submitting
-- **Documentation**: Update docs for new features
-- **Responsive Design**: Ensure changes work on mobile devices
-
-Ready to contribute? **[Check out our open issues!](https://github.com/your-username/SyntaxForge/issues)**
-
-**New to contributing?** Check out our comprehensive [Contributing Guide](CONTRIBUTING.md) for detailed setup instructions and guidelines.
-
----
 
 ## 📄 License
 
