@@ -64,6 +64,7 @@ export default function Sidebar() {
 								);
 							}
 						})}
+						<a href="/courses">Find Courses</a>
 					</div>
 				</div>
 				<div className="menu">

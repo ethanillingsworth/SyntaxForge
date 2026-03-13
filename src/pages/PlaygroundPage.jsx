@@ -62,17 +62,19 @@ export default function PlaygroundPage() {
 	);
 
 	function onSettingsSubmit(values) {
-		setLang(values.lang);
-		setTitle(values.playgroundName);
+		if (values.lang && values.playgroundName) {
+			setLang(values.lang);
+			setTitle(values.playgroundName);
 
-		user.set("private", {
-			playgrounds: {
-				[playgroundId]: {
-					lang: values.lang,
-					name: values.playgroundName,
+			user.set("private", {
+				playgrounds: {
+					[playgroundId]: {
+						lang: values.lang,
+						name: values.playgroundName,
+					},
 				},
-			},
-		});
+			});
+		}
 	}
 
 	function updateContent(value) {

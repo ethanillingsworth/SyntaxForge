@@ -11,6 +11,8 @@ import axios from "axios";
 export default function Editor({
 	title,
 	language = "javascript",
+	hideSettings = false,
+	showDecorativeButtons = false,
 	topBarItems = [],
 	extraSettings = {},
 	onChange = () => {},
@@ -141,9 +143,18 @@ export default function Editor({
 				/>
 			) : null}
 			<div className="flex flex-col m-0 h-full">
-				<div className="flex flex-row p-2 place-items-center gap-3">
+				<div className="flex flex-row p-2 place-items-center gap-3 bg-zinc-950/50">
+					{showDecorativeButtons ? (
+						<div className="flex flex-row gap-2">
+							<span className="w-3 h-3 bg-red-400 rounded-full"></span>
+							<span className="w-3 h-3 bg-yellow-400 rounded-full"></span>
+							<span className="w-3 h-3 bg-green-400 rounded-full"></span>
+						</div>
+					) : null}
 					<span>{title}</span>
-					<button onClick={openPopup}>Settings</button>
+					{!hideSettings ? (
+						<button onClick={openPopup}>Settings</button>
+					) : null}
 					{topBarItems.map((item) => {
 						if (item.type === "button") {
 							return (
@@ -161,7 +172,7 @@ export default function Editor({
 					</button>
 				</div>
 				<div
-					className={`flex flex-row w-full h-full`}
+					className={`flex flex-row w-full h-full overflow-hidden	`}
 					style={{ fontSize: fontSize + "px" }}
 				>
 					<div className="flex-1 min-h-0 overflow-auto">
