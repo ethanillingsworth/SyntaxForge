@@ -41,7 +41,7 @@
 
 @layer base {
 	body {
-		@apply h-dvh text-white bg-zinc-900;
+		@apply h-dvh bg-zinc-900;
 
 		h1 {
 			@apply font-bold;

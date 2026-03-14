@@ -5,6 +5,15 @@ import { python } from "@codemirror/lang-python";
 import PopupMenu from "./PopupMenu";
 import { useEffect, useMemo, useState } from "react";
 import { useShortcut, useUser } from "../Global";
+import {
+	githubDark,
+	consoleDark,
+	xcodeDark,
+	vscodeDark,
+} from "@uiw/codemirror-themes-all";
+
+import { hyperLink } from "@uiw/codemirror-extensions-hyper-link";
+import { color } from "@uiw/codemirror-extensions-color";
 
 import axios from "axios";
 
@@ -33,18 +42,30 @@ export default function Editor({
 		"SyntaxForge Terminal v1",
 	]);
 
+	const [theme, setTheme] = useState("Dark");
+
 	useEffect(() => {
 		user?.get("private").then((data) => {
 			setFontSize(data.editorSettings?.textSize || 14);
+			setTheme(data.editorSettings?.theme || "Dark");
 		});
 	}, [user]);
+
+	useEffect(() => {
+		setContent(value);
+	}, [value]);
 
 	function updateSettings(values) {
 		setFontSize(values.textSize);
 
-		user.set("private", {
+		if (values.theme) {
+			setTheme(values.theme);
+		}
+
+		user?.set("private", {
 			editorSettings: {
 				textSize: values.textSize,
+				theme: values.theme,
 			},
 		});
 
@@ -99,9 +120,25 @@ export default function Editor({
 		}
 	}
 
-	useEffect(() => {
-		setContent(value);
-	}, [value]);
+	useShortcut({ key: "=", ctrl: true }, () => {
+		updateSettings({
+			textSize: fontSize + 2,
+		});
+	});
+
+	useShortcut({ key: "-", ctrl: true }, () => {
+		updateSettings({
+			textSize: fontSize - 2,
+		});
+	});
+
+	const [themes] = useState({
+		Dark: "dark",
+		"Github Dark": githubDark,
+		"Console Dark": consoleDark,
+		"VSCode Dark": vscodeDark,
+		"XCode Dark": xcodeDark,
+	});
 
 	const template = useMemo(
 		() => ({
@@ -117,27 +154,22 @@ export default function Editor({
 				units: "px",
 			},
 
+			theme: {
+				type: "select",
+				options: Object.keys(themes),
+				label: "Theme: ",
+				value: theme,
+			},
+
 			...extraSettings,
 		}),
-		[fontSize, extraSettings],
+		[fontSize, themes, theme, extraSettings],
 	);
 
 	const languageLookup = {
 		javascript: javascript(),
 		python: python(),
 	};
-
-	useShortcut({ key: "=", ctrl: true }, () => {
-		updateSettings({
-			textSize: fontSize + 2,
-		});
-	});
-
-	useShortcut({ key: "-", ctrl: true }, () => {
-		updateSettings({
-			textSize: fontSize - 2,
-		});
-	});
 
 	return (
 		<>
@@ -185,14 +217,18 @@ export default function Editor({
 					<div className="flex-1 min-h-0 overflow-auto">
 						<CodeMirror
 							className="normal-case w-full h-full"
-							extensions={[languageLookup[language]]}
+							extensions={[
+								languageLookup[language],
+								hyperLink,
+								color,
+							]}
 							onChange={(v, update) => {
 								onChange(v, update);
 								setContent(v);
 							}}
 							value={value}
 							height="100%"
-							theme="dark"
+							theme={themes[theme]}
 						/>
 					</div>
 
