@@ -13,6 +13,7 @@ export default function Editor({
 	language = "javascript",
 	hideSettings = false,
 	showDecorativeButtons = false,
+	noLoginRequired = false,
 	topBarItems = [],
 	extraSettings = {},
 	onChange = () => {},
@@ -68,28 +69,34 @@ export default function Editor({
 	function runCode() {
 		console.log(content);
 		setTerminalLines(["Running Code..."]);
-		axios
-			.post(" https://runcode-qjvn4b2nya-uc.a.run.app ", {
-				code: content,
-				lang: language,
-			})
-			.then((res) => {
-				setTerminalLines((v) => {
-					return [...v, ...res.data.logs];
+		if (user || noLoginRequired) {
+			axios
+				.post("https://runcode-qjvn4b2nya-uc.a.run.app", {
+					code: content,
+					lang: language,
+				})
+				.then((res) => {
+					setTerminalLines((v) => {
+						return [...v, ...res.data.logs];
+					});
+				})
+				.catch((e) => {
+					console.error(e);
+					if (e.status === 504) {
+						setTerminalLines((v) => {
+							return [...v, "ERROR: Timed Out"];
+						});
+					} else {
+						setTerminalLines((v) => {
+							return [...v, e.response.data.error];
+						});
+					}
 				});
-			})
-			.catch((e) => {
-				console.error(e);
-				if (e.status === 504) {
-					setTerminalLines((v) => {
-						return [...v, "ERROR: Timed Out"];
-					});
-				} else {
-					setTerminalLines((v) => {
-						return [...v, e.response.data.error];
-					});
-				}
+		} else {
+			setTerminalLines((v) => {
+				return [...v, "ERROR: User not logged in"];
 			});
+		}
 	}
 
 	useEffect(() => {

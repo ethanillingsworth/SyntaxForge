@@ -32,7 +32,11 @@
 }
 
 @utility raised {
-	@apply bg-zinc-800 border-zinc-700 rounded p-1 border-2 px-4 font-semibold;
+	@apply bg-zinc-800 border-zinc-700 rounded p-1 border-2 px-4;
+
+	button {
+		@apply font-semibold;
+	}
 }
 
 @layer base {
@@ -91,10 +95,6 @@
 			@apply mb-3;
 		}
 
-		h1 {
-			@apply text-2xl;
-		}
-
 		h2 {
 			@apply text-xl pt-5 border-t border-t-zinc-700;
 		}
@@ -123,7 +123,7 @@
 			@apply raised hover:cursor-pointer capitalize h-fit hover:scale-95 transition;
 
 			&.accent-button {
-				@apply bg-forge-accent border-forge-accent/50;
+				@apply bg-forge-accent border-red-400;
 			}
 		}
 

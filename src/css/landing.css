@@ -1,0 +1,45 @@
+@import "tailwindcss";
+
+@theme {
+	--color-forge-background: #0e0e11;
+	--color-forge-surface: #1a1a1f;
+	--color-forge-muted: #2a2a30;
+	--color-forge-text: #ffffff;
+	--color-forge-subtext: #b0b0b0;
+
+	/* Keep one strong accent and one optional secondary */
+	--color-forge-accent: #fc483f;
+	/* primary accent (warm, stands out) */
+	--color-forge-accent-hover: #e5443b;
+	--color-forge-gold: #f4c06d;
+}
+
+.landing {
+	.header-wrapper {
+		@apply sticky top-0 m-0 z-1000;
+	}
+
+	.header {
+		@apply w-full flex flex-row text-xl font-bold place-items-center bg-forge-surface m-0 p-4;
+	}
+
+	main {
+		@apply min-h-full py-4 flex flex-col place-items-center pt-0 mt-0;
+	}
+
+	.hero {
+		@apply w-full flex flex-col place-content-center place-items-center h-dvh m-0;
+	}
+
+	h2 {
+		@apply p-0 border-none text-3xl mt-20 mb-4;
+	}
+
+	h3 {
+		@apply mb-4 text-2xl mt-20;
+	}
+
+	h1 {
+		@apply text-4xl;
+	}
+}

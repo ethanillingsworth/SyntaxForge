@@ -12,7 +12,6 @@ import CoursePage from "./pages/CoursePage";
 import UnitPage from "./pages/UnitPage";
 import CoursesPage from "./pages/CoursesPage";
 import CategoryPage from "./pages/CategoryPage";
-import MCQPage from "./pages/MCQPage";
 import PlaygroundPage from "./pages/PlaygroundPage";
 
 import { Outlet } from "react-router-dom";
