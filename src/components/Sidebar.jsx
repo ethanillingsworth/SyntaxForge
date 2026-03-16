@@ -7,6 +7,7 @@ import { useUser } from "../Global";
 export default function Sidebar() {
 	const [courses, setCourses] = useState({});
 	const [playgrounds, setPlaygrounds] = useState({});
+	const [username, setUsername] = useState("");
 
 	const user = useUser();
 
@@ -15,6 +16,7 @@ export default function Sidebar() {
 
 		user.get("public").then((data) => {
 			setCourses(data.courses || {});
+			setUsername(data.username);
 		});
 
 		user.get("private").then((data) => {
@@ -49,6 +51,7 @@ export default function Sidebar() {
 			</a>
 			<div className="group">
 				<h2>Personal</h2>
+				<a href={`/user/@${username}`}>Your Profile</a>
 				<div className="menu">
 					<span>Your Courses</span>
 					<div className="submenu">

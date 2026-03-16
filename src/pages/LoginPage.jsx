@@ -3,6 +3,7 @@ import {
 	GithubLoginButton,
 } from "react-social-login-buttons";
 import {
+	getAdditionalUserInfo,
 	GithubAuthProvider,
 	GoogleAuthProvider,
 	onAuthStateChanged,
@@ -10,48 +11,68 @@ import {
 } from "firebase/auth";
 import { auth } from "../firebase/init";
 import { User } from "../firebase/Firebase";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const githubProvider = new GithubAuthProvider();
 const googleProvider = new GoogleAuthProvider();
 
 githubProvider.addScope("user:email");
+googleProvider.addScope("email");
 
 export default function LoginPage() {
+	const [signUpDone, setSignUpDone] = useState(false);
+
 	useEffect(() => {
 		return onAuthStateChanged(auth, (user) => {
-			if (user) {
+			if (user && signUpDone) {
 				window.location.href = "/home";
 			}
 		});
-	}, []);
+	}, [signUpDone]);
 
-	function createNewUser(result) {
-		if (result._tokenResponse.isNewUser) {
+	function generateUsername(email) {
+		// 1. Take the part before the @
+		const namePart = email.split("@")[0];
+
+		// 2. Clean up non-alphanumeric characters
+		const cleanName = namePart.replace(/[^a-zA-Z0-9]/g, "");
+
+		// 3. Add a small random "Forge ID"
+		const randomId = Math.floor(Math.random() * 9000) + 1000;
+
+		return `${cleanName}${randomId}`;
+	}
+
+	async function createNewUser(result) {
+		if (
+			result._tokenResponse.isNewUser ||
+			getAdditionalUserInfo(result).isNewUser
+		) {
 			const user = new User(result.user.uid);
-
-			user.set("private", {});
-			user.set("public", {});
+			await user.set("public", {
+				username: generateUsername(result.user.providerData[0].email),
+			});
+			await user.set("private", {});
+			setSignUpDone(true);
 		}
 	}
 
-	function githubLogin() {
+	async function githubLogin() {
 		try {
-			signInWithPopup(auth, githubProvider).then((result) => {
-				console.log(result);
-				createNewUser(result);
-
-				// window.location.href = "/home";
+			signInWithPopup(auth, githubProvider).then(async (result) => {
+				await createNewUser(result);
+				setSignUpDone(true);
 			});
 		} catch (error) {
 			console.log(error);
 		}
 	}
 
-	function googleLogin() {
+	async function googleLogin() {
 		try {
-			signInWithPopup(auth, googleProvider).then(() => {
-				window.location.href = "/home";
+			signInWithPopup(auth, googleProvider).then(async (result) => {
+				await createNewUser(result);
+				setSignUpDone(true);
 			});
 		} catch (error) {
 			console.log(error);

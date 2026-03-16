@@ -12,6 +12,69 @@ import { db, storage } from "./init";
 import { getBlob, ref, uploadBytes } from "firebase/storage";
 import { marked } from "marked";
 
+const RANKS = [
+	{
+		name: "Initiate",
+		minXp: 0,
+		color: "#94a3b8",
+		description: "The journey begins.",
+	},
+	{
+		name: "Acolyte",
+		minXp: 500,
+		color: "#4ade80",
+		description: "Learning the rituals of logic.",
+	},
+	{
+		name: "Scribe",
+		minXp: 1500,
+		color: "#38bdf8",
+		description: "Translating thought into script.",
+	},
+	{
+		name: "Artisan",
+		minXp: 3000,
+		color: "#818cf8",
+		description: "Crafting code with style.",
+	},
+	{
+		name: "Adept",
+		minXp: 6000,
+		color: "#c084fc",
+		description: "Intuitive mastery of core syntax.",
+	},
+	{
+		name: "Scholar",
+		minXp: 10000,
+		color: "#fb923c",
+		description: "Master of theory and documentation.",
+	},
+	{
+		name: "Veteran",
+		minXp: 20000,
+		color: "#f87171",
+		description: "Survivor of complex debug cycles.",
+	},
+	{
+		name: "Titan",
+		minXp: 40000,
+		color: "#f472b6",
+		description: "A powerhouse of high-performance code.",
+	},
+	{
+		name: "Oracle",
+		minXp: 75000,
+		color: "#2dd4bf",
+		description: "Predicts errors before execution.",
+	},
+	{
+		name: "Architect",
+		minXp: 150000,
+		color: "#fbbf24",
+		description: "Designer of digital ecosystems.",
+	},
+];
+
 class DataObject {
 	static collectionPath = collection(db, "none");
 	static path = "none";
@@ -184,6 +247,61 @@ export class Unit extends DataObject {
 export class User {
 	constructor(id) {
 		this.id = id;
+	}
+
+	static async getFromUsername(username) {
+		const c = await getDocs(
+			query(collection(db, "public"), where("username", "==", username)),
+		);
+		if (c.docs[0]) {
+			const u = new User(c.docs[0].id);
+
+			return u;
+		}
+
+		return null;
+	}
+
+	getCurrentRank(userXp) {
+		return (
+			[...RANKS].reverse().find((rank) => userXp >= rank.minXp) ||
+			RANKS[0]
+		);
+	}
+
+	getNextRank(userXp) {
+		let currentRankIndex = -1;
+
+		// 1. Find where the user currently sits in the hierarchy
+		for (let i = 0; i < RANKS.length; i++) {
+			const rank = RANKS[i];
+			const nextRank = RANKS[i + 1];
+
+			if (
+				userXp >= rank.minXp &&
+				(!nextRank || userXp < nextRank.minXp)
+			) {
+				currentRankIndex = i;
+				break;
+			}
+		}
+
+		// 2. Check if they have reached the final rank (Architect)
+		if (currentRankIndex === -1 || currentRankIndex === RANKS.length - 1) {
+			return null;
+		}
+
+		// 3. Identify the next rank and calculate the remaining XP
+		const nextRank = RANKS[currentRankIndex + 1];
+		const xpNeeded = nextRank.minXp - userXp;
+
+		return {
+			name: nextRank.name,
+			minXp: nextRank.minXp,
+			color: nextRank.color,
+			description: nextRank.description,
+			xpNeeded: xpNeeded,
+		};
 	}
 
 	async get(type = "public") {

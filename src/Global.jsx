@@ -116,3 +116,30 @@ export function useTitle(title) {
 		document.title = title;
 	}, [title]);
 }
+
+export function formatNumber(num) {
+	if (num >= 1000000000) {
+		// Divide by 1B and fix to 1 decimal place if it's not a whole number
+		const formatted = (num / 1000000000).toFixed(1);
+		return formatted.endsWith(".0")
+			? formatted.slice(0, -2) + "B"
+			: formatted + "B";
+	}
+	if (num >= 1000000) {
+		// Divide by 1M and fix to 1 decimal place if it's not a whole number
+		const formatted = (num / 1000000).toFixed(1);
+		return formatted.endsWith(".0")
+			? formatted.slice(0, -2) + "M"
+			: formatted + "M";
+	}
+
+	if (num >= 1000) {
+		// Divide by 1K and fix to 1 decimal place
+		const formatted = (num / 1000).toFixed(1);
+		return formatted.endsWith(".0")
+			? formatted.slice(0, -2) + "K"
+			: formatted + "K";
+	}
+
+	return num.toString();
+}

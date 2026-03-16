@@ -16,6 +16,7 @@ import PlaygroundPage from "./pages/PlaygroundPage";
 
 import { Outlet } from "react-router-dom";
 import LandingPage from "./pages/LandingPage";
+import UserPage from "./pages/UserPage";
 
 function ContentLayout() {
 	return (
@@ -64,6 +65,7 @@ function Layout() {
 						path="/courses/:categoryId"
 						element={<CategoryPage />}
 					/>
+					<Route path="/user/:username" element={<UserPage />} />
 
 					<Route path="/:courseId" element={<CoursePage />} />
 					<Route path="/:courseId/:unitName" element={<UnitPage />} />
