@@ -70,7 +70,7 @@ function Layout() {
 					<Route path="/:courseId" element={<CoursePage />} />
 					<Route path="/:courseId/:unitName" element={<UnitPage />} />
 					<Route
-						path="/:courseId/:unitName/article/:articleId"
+						path="/:courseId/:unitName/article/:articleIndex"
 						element={<ArticlePage />}
 					/>
 

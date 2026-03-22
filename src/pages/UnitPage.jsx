@@ -5,19 +5,28 @@ import Lesson from "../components/Lesson";
 import PopupMenu from "../components/PopupMenu";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../firebase/init";
+import { useUser } from "../Global";
 
 export default function UnitPage() {
 	const { courseId, unitName } = useParams();
 	const [data, setData] = useState({});
 
-	const [unitNumber, setUnitNumber] = useState();
-	const [showPopup, setShowPopup] = useState(false);
+	const [userData, setUserData] = useState({});
+	const user = useUser();
 
-	const [lessons, setLessons] = useState([]);
+	const [unitNumber, setUnitNumber] = useState();
+
 	const [isAdmin, setAdmin] = useState(false);
-	const [popupPos, setPopupPos] = useState(null);
+
+	const [addPopupPos, setAddPopupPos] = useState(null);
+	const [showAddPopup, setShowAddPopup] = useState(false);
+
+	// const [deletePopupPos, setDeletePopupPos] = useState(null);
+	// const [showDeletePopup, setShowDeletePopup] = useState(false);
+	// const [recentLessonId, setRecentLessonId] = useState(null);
 
 	let course = useRef();
+	let unit = useRef();
 
 	useEffect(() => {
 		course.current = new Course(courseId);
@@ -25,20 +34,11 @@ export default function UnitPage() {
 		course.current.getUnitFromNumber(unitNumber).then((unitData) => {
 			let unitId = unitData.id;
 			setData(unitData);
+			console.log(unitData);
 
-			const unit = new Unit(unitId);
-
-			unit.getAllLessons(courseId, parseInt(unitName.split("-")[1])).then(
-				(list) => {
-					setLessons(list);
-				},
-			);
+			unit.current = new Unit(unitId);
 		});
 	}, [unitName, courseId, unitNumber]);
-
-	useEffect(() => {
-		console.log(data);
-	}, [data]);
 
 	useEffect(() => {
 		onAuthStateChanged(auth, (user) => {
@@ -49,47 +49,38 @@ export default function UnitPage() {
 			});
 		});
 	}, [isAdmin]);
+
+	useEffect(() => {
+		user?.get().then((d) => {
+			setUserData(d);
+		});
+	}, [user]);
+
 	function createPopup() {
-		setShowPopup(true);
+		setShowAddPopup(true);
 	}
 
-	function closePopup() {
-		setShowPopup(false);
+	function closeAddPopup() {
+		setShowAddPopup(false);
 	}
 
-	const template = {
-		title: {
-			type: "text",
-		},
+	const addTemplate = {
+		title: { label: "Title: " },
 		type: {
 			type: "select",
 			options: ["article", "mcq"],
 		},
 	};
 
-	function submit(data) {
-		console.log(data);
-		course.current
-			.createLesson(unitNumber, data.title, data.type, lessons.length)
-			.then(() => {
-				setLessons((prev) => [
-					...prev,
-					{
-						course: course.current.id,
-						unit: unitNumber,
-						title: data.title,
-						type: data.type,
-						index: lessons.length,
-					},
-				]);
-			});
-		closePopup();
+	function submitAddPopup(data) {
+		unit.current.createLesson(data.title, data.type);
+		closeAddPopup();
 	}
 
 	const openPopup = (e) => {
 		e.preventDefault();
 
-		setPopupPos({
+		setAddPopupPos({
 			x: e.clientX,
 			y: e.clientY,
 		});
@@ -98,14 +89,32 @@ export default function UnitPage() {
 
 	return (
 		<>
-			{showPopup ? (
+			{showAddPopup ? (
 				<PopupMenu
-					dataTemplate={template}
-					closeAction={closePopup}
-					submitAction={submit}
-					position={popupPos}
+					dataTemplate={addTemplate}
+					closeAction={closeAddPopup}
+					submitAction={submitAddPopup}
+					position={addPopupPos}
 				/>
 			) : null}
+
+			{/* {showDeletePopup ? (
+				<PopupMenu
+					dataTemplate={{
+						delete: {
+							type: "button",
+							click: () => {
+								course.current.removeLesson(recentLessonId);
+							},
+						},
+					}}
+					closeAction={() => {
+						setShowDeletePopup(false);
+					}}
+					position={deletePopupPos}
+				/>
+			) : null} */}
+
 			<div className="flex flex-row">
 				<h1>{`Unit ${unitNumber} | ${data.name ?? "Loading..."}`}</h1>
 				<a className="ml-auto" href="./">
@@ -120,14 +129,31 @@ export default function UnitPage() {
 			</div>
 
 			<div className="grid grid-cols-4 gap-3">
-				{lessons.map((lesson) => {
+				{data.lessons?.map((lesson, index) => {
 					return (
 						<Lesson
-							unit={lesson.unit}
-							index={lesson.index}
+							unit={unitNumber}
+							index={index}
 							course={courseId}
-							id={lesson.id}
+							id={index}
 							type={lesson.type}
+							progress={
+								userData.courses?.[courseId]?.[unitNumber]?.[
+									lesson.id
+								]?.percent || 0
+							}
+							// onContextMenu={(e) => {
+							// 	e.preventDefault();
+
+							// 	setDeletePopupPos({
+							// 		x: e.clientX,
+							// 		y: e.clientY,
+							// 	});
+
+							// 	setRecentLessonId(lesson.id);
+
+							// 	setShowDeletePopup(true);
+							// }}
 						>
 							{lesson.title}
 						</Lesson>

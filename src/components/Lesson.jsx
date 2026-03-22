@@ -1,7 +1,16 @@
 import articleIcon from "../imgs/icons/article.svg";
 import mcqIcon from "../imgs/icons/mcq.svg";
 
-export default function Lesson({ course, unit, type, id, index, children }) {
+export default function Lesson({
+	course,
+	unit,
+	type,
+	id,
+	index,
+	children,
+	progress = 0,
+	onContextMenu = () => {},
+}) {
 	function getIcon() {
 		if (type == "article") {
 			return <img src={articleIcon} />;
@@ -13,11 +22,16 @@ export default function Lesson({ course, unit, type, id, index, children }) {
 
 	return (
 		<a
-			href={`/${course}/unit-${unit}/${type}/${id}`}
-			className="unit gap-1.5"
+			href={`/${course}/unit-${unit}/${type}/${index}`}
+			className="unit gap-2 overflow-hidden"
+			style={{
+				"--progress": progress,
+			}}
+			id={id}
+			onContextMenu={onContextMenu}
 		>
 			{getIcon()}
-			<h3>{`Lesson ${index} | ${children}`}</h3>
+			<h3>{`Lesson ${unit}.${index + 1} | ${children}`}</h3>
 		</a>
 	);
 }

@@ -5,8 +5,8 @@ import {
 	getDocs,
 	getDoc,
 	doc,
-	addDoc,
 	setDoc,
+	arrayUnion,
 } from "firebase/firestore";
 import { db, storage } from "./init";
 import { getBlob, ref, uploadBytes } from "firebase/storage";
@@ -141,16 +141,6 @@ export class Course extends DataObject {
 		return data;
 	}
 
-	async createLesson(unit, title, type, index) {
-		await addDoc(collection(db, "lessons"), {
-			course: this.id,
-			unit,
-			title,
-			type,
-			index,
-		});
-	}
-
 	async getAllUnits() {
 		const q = query(
 			collection(db, "units"),
@@ -170,77 +160,22 @@ export class Course extends DataObject {
 	}
 }
 
-export class Lesson extends DataObject {
-	static collectionPath = collection(db, "lessons");
-	static path = "lessons";
-	static name = "Lesson";
-
-	constructor(id) {
-		super(id);
-	}
-}
-
 export class Unit extends DataObject {
 	static collectionPath = collection(db, "units");
 	static name = "Unit";
+	static path = "units";
 
 	constructor(id) {
 		super(id);
 	}
 
-	async getNextLesson(lessonId) {
-		const lesson = new Lesson(lessonId);
-
-		const data = await lesson.get();
-
-		const nextIndex = data.index + 1;
-
-		const nextLessonData = await this.getLessonFromIndex(
-			nextIndex,
-			data.course,
-			data.unit,
-		);
-
-		return nextLessonData;
-	}
-
-	async getLessonFromIndex(index, course, unit) {
-		const q = query(
-			collection(db, "lessons"),
-			where("course", "==", course),
-			where("unit", "==", unit),
-			where("index", "==", index),
-		);
-		const docs = await getDocs(q);
-
-		console.log(docs.docs);
-
-		let dataList = [];
-
-		for (const d of docs.docs) {
-			dataList.push({ ...d.data(), id: d.id });
-		}
-
-		return dataList[0];
-	}
-
-	async getAllLessons(course, unit) {
-		const q = query(
-			collection(db, "lessons"),
-			where("course", "==", course),
-			where("unit", "==", unit),
-		);
-		const docs = await getDocs(q);
-
-		let dataList = [];
-
-		for (const d of docs.docs) {
-			dataList.push({ ...d.data(), id: d.id });
-		}
-
-		dataList = dataList.sort((a, b) => a.index - b.index);
-
-		return dataList;
+	async createLesson(title, type) {
+		this.set({
+			lessons: arrayUnion({
+				title,
+				type,
+			}),
+		});
 	}
 }
 
@@ -355,10 +290,12 @@ export class Category extends DataObject {
 	}
 }
 
-export class Article extends Lesson {
+export class Article {
 	static name = "Article";
-	constructor(id) {
-		super(id);
+	constructor(course, unitNumber, index) {
+		this.course = course;
+		this.unitNumber = unitNumber;
+		this.index = index;
 	}
 
 	async setContent(content) {
@@ -366,11 +303,22 @@ export class Article extends Lesson {
 			type: "text/markdown",
 		});
 
-		await uploadBytes(ref(storage, `articles/${this.id}.md`), blob);
+		await uploadBytes(
+			ref(
+				storage,
+				`courses/${this.course}/unit-${this.unitNumber}/articles/${this.index}.md`,
+			),
+			blob,
+		);
 	}
 
 	async getMarkdown() {
-		const blob = await getBlob(ref(storage, `articles/${this.id}.md`));
+		const blob = await getBlob(
+			ref(
+				storage,
+				`courses/${this.course}/unit-${this.unitNumber}/articles/${this.index}.md`,
+			),
+		);
 
 		const text = await blob.text();
 
@@ -385,7 +333,13 @@ export class Article extends Lesson {
 				return r.blob();
 			})
 			.then(async (blob) => {
-				await uploadBytes(ref(storage, `articles/${this.id}.md`), blob);
+				await uploadBytes(
+					ref(
+						storage,
+						`courses/${this.course}/unit-${this.unitNumber}/articles/${this.index}.md`,
+					),
+					blob,
+				);
 			});
 	}
 }

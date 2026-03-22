@@ -2,16 +2,12 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Course } from "../firebase/Firebase";
 import Unit from "../components/Unit";
-import { useUser } from "../Global";
 
 export default function CoursePage() {
 	const { courseId } = useParams();
 	const [data, setData] = useState({});
 
 	const [units, setUnits] = useState([]);
-	const user = useUser();
-
-	const [courseAdded, setCourseAdded] = useState(false);
 
 	useEffect(() => {
 		window.course = courseId;
@@ -25,41 +21,10 @@ export default function CoursePage() {
 		});
 	}, [courseId]);
 
-	useEffect(() => {
-		console.log(data);
-	}, [data]);
-
-	useEffect(() => {
-		if (!user) return;
-
-		user.get().then((data) => {
-			if (data?.courses?.[courseId]) {
-				setCourseAdded(!!data?.courses[courseId].added);
-			}
-		});
-	}, [courseId, user]);
-
-	function addOrRemoveCourse() {
-		user.set("public", {
-			courses: {
-				[courseId]: {
-					added: !courseAdded,
-				},
-			},
-		});
-
-		setCourseAdded((v) => {
-			return !v;
-		});
-	}
-
 	return (
 		<>
 			<div className="flex flex-row">
 				<h1>{data.id?.replaceAll("-", " ")}</h1>
-				<button className="ml-auto" onClick={addOrRemoveCourse}>
-					{courseAdded ? "Remove Course" : "Add Course"}
-				</button>
 			</div>
 			<h2>Course Description</h2>
 			<p>{data.desc}</p>

@@ -74,7 +74,7 @@
 	}
 
 	.md {
-		@apply gap-3 flex flex-col;
+		@apply gap-4 flex flex-col;
 
 		h1,
 		h2,
@@ -190,7 +190,7 @@
 		}
 
 		h3 {
-			@apply m-0;
+			@apply m-0 text-shadow-xs text-shadow-black;
 		}
 	}
 

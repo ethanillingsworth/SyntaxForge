@@ -15,10 +15,14 @@ export function CourseCard({ id }) {
 		return <div className="animate-pulse bg-gray-700 h-10 w-24 rounded" />;
 
 	return (
-		<div className="raised flex flex-col gap-2">
-			<h3 className="mt-0">
-				{id.replaceAll("-", " ")} ({courseData.nickname})
+		<a
+			href={`/${id}`}
+			className="raised flex flex-col gap-2 hover:scale-95 normal-case"
+		>
+			<h3 className="mt-0 text-center">
+				{courseData.name}{" "}
+				{courseData.nickname ? `(${courseData.nickname})` : null}
 			</h3>
-		</div>
+		</a>
 	);
 }
