@@ -10,6 +10,7 @@ import { useUser } from "../Global";
 export default function UnitPage() {
 	const { courseId, unitName } = useParams();
 	const [data, setData] = useState({});
+	const [lessons, setLessons] = useState([]);
 
 	const [userData, setUserData] = useState({});
 	const user = useUser();
@@ -21,20 +22,19 @@ export default function UnitPage() {
 	const [addPopupPos, setAddPopupPos] = useState(null);
 	const [showAddPopup, setShowAddPopup] = useState(false);
 
-	// const [deletePopupPos, setDeletePopupPos] = useState(null);
-	// const [showDeletePopup, setShowDeletePopup] = useState(false);
-	// const [recentLessonId, setRecentLessonId] = useState(null);
+	const [deletePopupPos, setDeletePopupPos] = useState(null);
+	const [showDeletePopup, setShowDeletePopup] = useState(false);
+	const [recentLessonIndex, setRecentLessonIndex] = useState(null);
 
-	let course = useRef();
 	let unit = useRef();
 
 	useEffect(() => {
-		course.current = new Course(courseId);
+		const course = new Course(courseId);
 		setUnitNumber(parseInt(unitName.split("-")[1]));
-		course.current.getUnitFromNumber(unitNumber).then((unitData) => {
+		course.getUnitFromNumber(unitNumber).then((unitData) => {
 			let unitId = unitData.id;
 			setData(unitData);
-			console.log(unitData);
+			setLessons(unitData.lessons || []);
 
 			unit.current = new Unit(unitId);
 		});
@@ -74,6 +74,10 @@ export default function UnitPage() {
 
 	function submitAddPopup(data) {
 		unit.current.createLesson(data.title, data.type);
+
+		setLessons((v) => {
+			return [...v, { title: data.title, type: data.type }];
+		});
 		closeAddPopup();
 	}
 
@@ -98,13 +102,22 @@ export default function UnitPage() {
 				/>
 			) : null}
 
-			{/* {showDeletePopup ? (
+			{showDeletePopup ? (
 				<PopupMenu
 					dataTemplate={{
 						delete: {
 							type: "button",
 							click: () => {
-								course.current.removeLesson(recentLessonId);
+								unit.current.removeLesson(recentLessonIndex);
+
+								setLessons((value) => {
+									const copy = [...value];
+									copy.splice(recentLessonIndex, 1);
+
+									return copy;
+								});
+								setShowDeletePopup(false);
+								console.log(lessons);
 							},
 						},
 					}}
@@ -113,7 +126,7 @@ export default function UnitPage() {
 					}}
 					position={deletePopupPos}
 				/>
-			) : null} */}
+			) : null}
 
 			<div className="flex flex-row">
 				<h1>{`Unit ${unitNumber} | ${data.name ?? "Loading..."}`}</h1>
@@ -129,7 +142,7 @@ export default function UnitPage() {
 			</div>
 
 			<div className="grid grid-cols-4 gap-3">
-				{data.lessons?.map((lesson, index) => {
+				{lessons.map((lesson, index) => {
 					return (
 						<Lesson
 							unit={unitNumber}
@@ -139,21 +152,23 @@ export default function UnitPage() {
 							type={lesson.type}
 							progress={
 								userData.courses?.[courseId]?.[unitNumber]?.[
-									lesson.id
+									index
 								]?.percent || 0
 							}
-							// onContextMenu={(e) => {
-							// 	e.preventDefault();
+							onContextMenu={(e) => {
+								if (isAdmin) {
+									e.preventDefault();
 
-							// 	setDeletePopupPos({
-							// 		x: e.clientX,
-							// 		y: e.clientY,
-							// 	});
+									setDeletePopupPos({
+										x: e.clientX,
+										y: e.clientY,
+									});
 
-							// 	setRecentLessonId(lesson.id);
+									setRecentLessonIndex(index);
 
-							// 	setShowDeletePopup(true);
-							// }}
+									setShowDeletePopup(true);
+								}
+							}}
 						>
 							{lesson.title}
 						</Lesson>

@@ -7,6 +7,7 @@ import {
 	doc,
 	setDoc,
 	arrayUnion,
+	arrayRemove,
 } from "firebase/firestore";
 import { db, storage } from "./init";
 import { getBlob, ref, uploadBytes } from "firebase/storage";
@@ -170,11 +171,24 @@ export class Unit extends DataObject {
 	}
 
 	async createLesson(title, type) {
-		this.set({
+		await this.set({
 			lessons: arrayUnion({
 				title,
 				type,
 			}),
+		});
+	}
+
+	async removeLesson(index) {
+		const data = await this.get();
+		const lessons = data.lessons;
+
+		const lessonToRemove = lessons.find((_, i) => {
+			return i === index;
+		});
+
+		await this.set({
+			lessons: arrayRemove(lessonToRemove),
 		});
 	}
 }
