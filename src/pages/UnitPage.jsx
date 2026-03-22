@@ -104,6 +104,7 @@ export default function UnitPage() {
 
 			{showDeletePopup ? (
 				<PopupMenu
+					hideSubmit
 					dataTemplate={{
 						delete: {
 							type: "button",
@@ -118,6 +119,56 @@ export default function UnitPage() {
 								});
 								setShowDeletePopup(false);
 								console.log(lessons);
+							},
+						},
+						left: {
+							type: "button",
+							click: () => {
+								setLessons((value) => {
+									const copy = [...value];
+									const element = copy.splice(
+										recentLessonIndex,
+										1,
+									)[0];
+
+									copy.splice(
+										recentLessonIndex - 1,
+										0,
+										element,
+									);
+									unit.current.set({
+										lessons: copy,
+									});
+
+									return copy;
+								});
+
+								setShowDeletePopup(false);
+							},
+						},
+						right: {
+							type: "button",
+							click: () => {
+								setLessons((value) => {
+									const copy = [...value];
+									const element = copy.splice(
+										recentLessonIndex,
+										1,
+									)[0];
+
+									copy.splice(
+										recentLessonIndex + 1,
+										0,
+										element,
+									);
+									unit.current.set({
+										lessons: copy,
+									});
+
+									return copy;
+								});
+
+								setShowDeletePopup(false);
 							},
 						},
 					}}
