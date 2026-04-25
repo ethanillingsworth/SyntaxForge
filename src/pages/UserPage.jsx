@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Course, User } from "../firebase/Firebase";
+import { User } from "../firebase/Firebase";
 import { formatNumber, useUser } from "../Global";
-import { CourseCard } from "../components/CourseCard";
 
 export default function UserPage() {
 	const { username } = useParams();
@@ -36,7 +35,10 @@ export default function UserPage() {
 	return (
 		<>
 			<div className="top flex flex-row mt-0 gap-4">
-				<img src="https://placehold.co/150x150" className="rounded" />
+				<img
+					src="https://placehold.co/150x150"
+					className="rounded overflow-hidden h-fit w-[150px]"
+				/>
 
 				<div className="flex flex-col gap-4">
 					<div className="flex flex-row gap-2 place-items-center">

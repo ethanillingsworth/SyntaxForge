@@ -1,4 +1,3 @@
-@import url("https://fonts.googleapis.com/css2?family=Geist+Mono:wght@100..900&family=Geist:wght@100..900&display=swap");
 @import "tailwindcss";
 
 @theme {
@@ -32,10 +31,20 @@
 }
 
 @utility raised {
-	@apply bg-zinc-800 border-zinc-700 rounded p-1 border-2 px-4;
+	@apply p-1 px-4 bg-forge-surface rounded hover:cursor-pointer border border-zinc-800 transition hover:border-zinc-600;
 
 	button {
 		@apply font-semibold;
+	}
+}
+
+@layer components {
+	.card {
+		@apply raised flex flex-row gap-2 h-10 normal-case text-white;
+
+		img {
+			@apply w-7 h-7 drop-shadow-black drop-shadow-sm;
+		}
 	}
 }
 
@@ -81,6 +90,10 @@
 		h3 {
 			@apply m-0!;
 		}
+
+		a {
+			@apply text-forge-accent hover:text-forge-accent-hover underline;
+		}
 	}
 
 	.content {
@@ -100,7 +113,7 @@
 		}
 
 		p {
-			@apply text-base text-zinc-400 normal-case;
+			@apply text-base text-zinc-300 normal-case;
 		}
 
 		progress::-webkit-progress-bar {
@@ -120,7 +133,7 @@
 		}
 
 		button {
-			@apply raised hover:cursor-pointer capitalize h-fit hover:scale-95 transition;
+			@apply raised hover:cursor-pointer capitalize h-fit transition;
 
 			&.accent-button {
 				@apply bg-forge-accent border-red-400;
@@ -133,7 +146,7 @@
 		}
 
 		ul {
-			@apply list-disc;
+			@apply list-disc gap-2 flex flex-col;
 		}
 
 		ol {
@@ -149,7 +162,11 @@
 		}
 
 		code {
-			@apply bg-forge-gold/25 text-forge-gold p-1 rounded;
+			@apply bg-forge-accent/25 text-forge-accent p-1 rounded font-["Geist_Mono"]! normal-case;
+		}
+
+		pre code {
+			@apply font-["Geist_Mono"] normal-case;
 		}
 
 		table {
@@ -179,7 +196,7 @@
 	.unit {
 		--progress: 0%;
 
-		@apply p-2 m-0 place-content-center relative flex flex-row bg-zinc-800 rounded text-center hover:scale-95 hover:cursor-pointer transition;
+		@apply p-2 m-0 place-content-center relative flex flex-row raised;
 
 		> * {
 			@apply relative z-10;
@@ -262,5 +279,192 @@
 		.menu {
 			@apply text-zinc-400 hover:gradient-text hover:cursor-pointer transition-none;
 		}
+	}
+}
+
+.landing {
+	.header-wrapper {
+		@apply sticky top-0 m-0 z-1000;
+	}
+
+	.header {
+		@apply w-full flex flex-row text-xl font-bold place-items-center bg-forge-surface m-0 p-4;
+	}
+
+	main {
+		@apply min-h-full flex flex-col place-items-center pt-0 mt-0;
+	}
+
+	/* Hero */
+	.hero {
+		@apply w-full flex flex-col place-content-center place-items-center h-dvh m-0 relative overflow-hidden;
+	}
+
+	.hero-glow {
+		@apply absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-160 h-160 rounded-full opacity-8 blur-3xl pointer-events-none;
+		background: radial-gradient(
+			circle,
+			var(--color-forge-accent) 0%,
+			var(--color-forge-gold) 50%,
+			transparent 70%
+		);
+	}
+
+	.hero h1 {
+		@apply text-5xl text-center relative z-10;
+	}
+
+	.hero h2 {
+		@apply p-0 border-none mt-4 mb-0;
+	}
+
+	.hero .raised-button {
+		@apply bg-zinc-800 border-2 border-zinc-600 rounded px-6 py-2 font-semibold hover:bg-zinc-700 hover:cursor-pointer transition hover:scale-95;
+	}
+
+	.hero .accent-button {
+		@apply px-6 py-2 rounded font-semibold;
+	}
+
+	/* Editor Showcase */
+	.editor-showcase {
+		@apply w-full flex flex-col place-items-center py-20 px-4;
+	}
+
+	.editor-showcase h2 {
+		@apply text-3xl p-0 border-none mb-2;
+	}
+
+	.editor-frame {
+		@apply w-full max-w-280 h-100 border border-zinc-700 rounded-lg overflow-hidden shadow-2xl;
+		box-shadow:
+			0 0 60px rgba(252, 72, 63, 0.06),
+			0 25px 50px rgba(0, 0, 0, 0.4);
+	}
+
+	/* Features Section */
+	.features-section {
+		@apply w-full flex flex-col place-items-center py-20 px-4;
+	}
+
+	.features-section h2 {
+		@apply text-3xl p-0 border-none mb-2;
+	}
+
+	.features-grid {
+		@apply grid grid-cols-1 gap-6 max-w-280 w-full;
+	}
+
+	@media (min-width: 640px) {
+		.features-grid {
+			@apply grid-cols-2;
+		}
+	}
+
+	.feature-card {
+		@apply bg-forge-surface border border-zinc-800 rounded-xl p-6 transition hover:border-zinc-600;
+	}
+
+	.feature-icon {
+		@apply w-10 h-10 rounded-lg flex place-items-center place-content-center mb-4;
+		background: linear-gradient(
+			135deg,
+			rgba(252, 72, 63, 0.15),
+			rgba(244, 192, 109, 0.15)
+		);
+	}
+
+	.feature-icon svg {
+		@apply w-5 h-5 text-forge-gold;
+	}
+
+	.feature-card h3 {
+		@apply text-lg font-semibold text-white m-0 mb-2;
+	}
+
+	.feature-card p {
+		@apply text-sm text-forge-subtext leading-relaxed m-0;
+	}
+
+	/* Practice Section */
+	.practice-section {
+		@apply w-full flex flex-col place-items-center py-20 px-4;
+	}
+
+	.practice-section h2 {
+		@apply text-3xl p-0 border-none mb-2;
+	}
+
+	.practice-grid {
+		@apply flex flex-col gap-4 max-w-200 w-full;
+	}
+
+	.practice-card {
+		@apply flex flex-row gap-6 items-start bg-forge-surface border border-zinc-800 rounded-xl p-6 transition hover:border-zinc-600;
+	}
+
+	.practice-number {
+		@apply text-3xl font-bold shrink-0;
+	}
+
+	.practice-card h3 {
+		@apply text-lg font-semibold text-white m-0 mb-1;
+	}
+
+	.practice-card p {
+		@apply text-sm text-forge-subtext leading-relaxed m-0;
+	}
+
+	/* CTA Section */
+	.cta-section {
+		@apply w-full flex flex-col place-items-center py-24 px-4 relative overflow-hidden;
+	}
+
+	.cta-glow {
+		@apply absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-120 h-60 rounded-full opacity-6 blur-3xl pointer-events-none;
+		background: radial-gradient(
+			circle,
+			var(--color-forge-accent) 0%,
+			var(--color-forge-gold) 50%,
+			transparent 70%
+		);
+	}
+
+	.cta-section h2 {
+		@apply text-3xl p-0 border-none mb-2 relative z-10;
+	}
+
+	.cta-section p {
+		@apply relative z-10;
+	}
+
+	.cta-section a {
+		@apply relative z-10;
+	}
+
+	.cta-section .accent-button {
+		@apply px-8 py-3 rounded font-semibold;
+	}
+
+	/* Footer */
+	.landing-footer {
+		@apply w-full mt-auto;
+	}
+
+	.footer-content {
+		@apply flex flex-row place-items-center justify-between px-6 py-6;
+	}
+
+	/* General heading defaults for landing */
+	h2 {
+		@apply p-0 border-none text-3xl mt-0 mb-4;
+	}
+
+	h3 {
+		@apply mb-4 text-2xl mt-0;
+	}
+
+	h1 {
+		@apply text-4xl;
 	}
 }

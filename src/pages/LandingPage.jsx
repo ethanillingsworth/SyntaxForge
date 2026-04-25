@@ -1,5 +1,4 @@
 import Editor from "../components/Editor";
-import "../css/landing.css";
 export default function LandingPage() {
 	const sampleCode = `const projectTitle = "Mastering JavaScript: The Forge Way!";
 
@@ -21,7 +20,7 @@ console.log(\`Forged Slug: "\${slug}"\`);
 // Returns: "mastering-javascript-the-forge-way"`;
 
 	return (
-		<div className="landing">
+		<div className="landing m-0">
 			<div className="header-wrapper">
 				<div className="header">
 					<a href="/" className="gradient-text">
@@ -84,8 +83,7 @@ console.log(\`Forged Slug: "\${slug}"\`);
 				{/* Features Section */}
 				<section id="features" className="features-section">
 					<h2>
-						Why{" "}
-						<span className="gradient-text">SyntaxForge</span>?
+						Why <span className="gradient-text">SyntaxForge</span>?
 					</h2>
 					<p className="text-forge-subtext text-center max-w-140 mb-12">
 						Everything you need to go from beginner to confident
@@ -95,7 +93,14 @@ console.log(\`Forged Slug: "\${slug}"\`);
 					<div className="features-grid">
 						<div className="feature-card">
 							<div className="feature-icon">
-								<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+								<svg
+									viewBox="0 0 24 24"
+									fill="none"
+									stroke="currentColor"
+									strokeWidth="2"
+									strokeLinecap="round"
+									strokeLinejoin="round"
+								>
 									<path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
 									<path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
 								</svg>
@@ -110,7 +115,14 @@ console.log(\`Forged Slug: "\${slug}"\`);
 
 						<div className="feature-card">
 							<div className="feature-icon">
-								<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+								<svg
+									viewBox="0 0 24 24"
+									fill="none"
+									stroke="currentColor"
+									strokeWidth="2"
+									strokeLinecap="round"
+									strokeLinejoin="round"
+								>
 									<path d="M9 11l3 3L22 4" />
 									<path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
 								</svg>
@@ -125,7 +137,14 @@ console.log(\`Forged Slug: "\${slug}"\`);
 
 						<div className="feature-card">
 							<div className="feature-icon">
-								<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+								<svg
+									viewBox="0 0 24 24"
+									fill="none"
+									stroke="currentColor"
+									strokeWidth="2"
+									strokeLinecap="round"
+									strokeLinejoin="round"
+								>
 									<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
 								</svg>
 							</div>
@@ -139,7 +158,14 @@ console.log(\`Forged Slug: "\${slug}"\`);
 
 						<div className="feature-card">
 							<div className="feature-icon">
-								<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+								<svg
+									viewBox="0 0 24 24"
+									fill="none"
+									stroke="currentColor"
+									strokeWidth="2"
+									strokeLinecap="round"
+									strokeLinejoin="round"
+								>
 									<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
 									<polyline points="14 2 14 8 20 8" />
 									<line x1="16" y1="13" x2="8" y2="13" />
@@ -160,8 +186,7 @@ console.log(\`Forged Slug: "\${slug}"\`);
 				{/* Practice Section */}
 				<section className="practice-section">
 					<h2>
-						Practice &{" "}
-						<span className="gradient-text">Play</span>
+						Practice & <span className="gradient-text">Play</span>
 					</h2>
 					<p className="text-forge-subtext text-center max-w-140 mb-12">
 						A zero-setup environment to experiment, break things,
@@ -239,7 +264,8 @@ console.log(\`Forged Slug: "\${slug}"\`);
 							SyntaxForge
 						</span>
 						<span className="text-zinc-500 text-sm">
-							&copy; {new Date().getFullYear()} SyntaxForge. Built for learners.
+							&copy; {new Date().getFullYear()} SyntaxForge. Built
+							for learners.
 						</span>
 					</div>
 				</footer>

@@ -68,7 +68,7 @@ export default function UnitPage() {
 		title: { label: "Title: " },
 		type: {
 			type: "select",
-			options: ["article", "mcq"],
+			options: ["article", "mcq", "frq"],
 		},
 	};
 
@@ -192,7 +192,7 @@ export default function UnitPage() {
 				) : null}
 			</div>
 
-			<div className="grid grid-cols-4 gap-3">
+			<div className="grid grid-cols-2 gap-4">
 				{lessons.map((lesson, index) => {
 					return (
 						<Lesson

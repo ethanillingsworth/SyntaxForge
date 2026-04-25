@@ -46,5 +46,6 @@ app.post("/run", async (req, res) => {
 
 app.get("/", (req, res) => res.send("OK"));
 
+// eslint-disable-next-line no-undef
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => console.log(`Runner ready on port ${PORT}`));

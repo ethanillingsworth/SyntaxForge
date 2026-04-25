@@ -9,6 +9,14 @@ import { languages } from "@codemirror/language-data";
 import { marked } from "marked";
 import { useAdmin, useShortcut, useUser } from "../Global";
 
+import hljs from "highlight.js";
+import javascript from "highlight.js/lib/languages/javascript";
+import python from "highlight.js/lib/languages/python";
+import "highlight.js/styles/atom-one-dark.css";
+
+hljs.registerLanguage("javascript", javascript);
+hljs.registerLanguage("python", python);
+
 export default function ArticlePage() {
 	const { articleIndex, unitName, courseId } = useParams();
 
@@ -76,6 +84,10 @@ export default function ArticlePage() {
 			});
 		}
 	}, [articleIndex, courseId, rawContent, unitName, user]);
+
+	useEffect(() => {
+		hljs.highlightAll();
+	}, [rawContent, articleContent, isAdmin]);
 
 	const onChange = (val) => {
 		console.log(val);

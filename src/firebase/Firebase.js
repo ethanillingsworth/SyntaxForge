@@ -21,12 +21,6 @@ const RANKS = [
 		description: "The journey begins.",
 	},
 	{
-		name: "Acolyte",
-		minXp: 500,
-		color: "#4ade80",
-		description: "Learning the rituals of logic.",
-	},
-	{
 		name: "Scribe",
 		minXp: 1500,
 		color: "#38bdf8",
@@ -76,7 +70,7 @@ const RANKS = [
 	},
 ];
 
-class DataObject {
+export class DataObject {
 	static collectionPath = collection(db, "none");
 	static path = "none";
 	static name = "DataObject";
@@ -137,6 +131,24 @@ export class Course extends DataObject {
 
 		for (const d of docs.docs) {
 			data = { ...d.data(), id: d.id };
+		}
+
+		return data;
+	}
+
+	async getCategorysData() {
+		const d = await this.get();
+		const q = query(
+			collection(db, "categorys"),
+			where("__name__", "in", d.categorys),
+		);
+
+		const docs = await getDocs(q);
+
+		let data = [];
+
+		for (const d of docs.docs) {
+			data.push({ ...d.data(), id: d.id });
 		}
 
 		return data;

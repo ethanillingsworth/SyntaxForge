@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Category } from "../firebase/Firebase";
-import { CourseCard } from "../components/CourseCard";
+import { Category, Course } from "../firebase/Firebase";
+import { Card } from "../components/Card";
 
 export default function CategoryPage() {
 	let [data, setData] = useState({});
@@ -23,10 +23,16 @@ export default function CategoryPage() {
 	return (
 		<>
 			<h1>{data.name} Courses</h1>
-			<div className="grid grid-cols-3 gap-3 mt-5">
+			<div className="grid grid-cols-2 gap-4 mt-4">
 				{courses.map((course) => {
 					if (!course.hidden) {
-						return <CourseCard id={course.id}></CourseCard>;
+						return (
+							<Card
+								link={`/${course.id}`}
+								id={course.id}
+								type={Course}
+							></Card>
+						);
 					}
 				})}
 			</div>
