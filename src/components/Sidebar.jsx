@@ -46,7 +46,11 @@ export default function Sidebar() {
 				href="/home"
 				className="flex flex-row gap-3 min-h-16 place-items-center text-white hover:gradient-text"
 			>
-				<img className="h-6 rounded" src="/logo.png"></img>
+				<img
+					className="h-6 rounded"
+					src="/logo.png"
+					alt="SyntaxForge"
+				/>
 				<h2 className="text-base">SyntaxForge</h2>
 			</a>
 			<div className="group">

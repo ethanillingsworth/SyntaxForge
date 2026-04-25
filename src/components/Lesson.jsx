@@ -15,13 +15,13 @@ export default function Lesson({
 }) {
 	function getIcon() {
 		if (type == "article") {
-			return <img src={articleIcon} />;
+			return <img alt="article" src={articleIcon} />;
 		}
 		if (type == "mcq") {
-			return <img src={mcqIcon} />;
+			return <img alt="mcq" src={mcqIcon} />;
 		}
 		if (type == "frq") {
-			return <img src={frqIcon} />;
+			return <img alr="frq" src={frqIcon} />;
 		}
 	}
 

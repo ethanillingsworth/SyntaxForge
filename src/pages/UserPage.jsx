@@ -37,6 +37,7 @@ export default function UserPage() {
 			<div className="top flex flex-row mt-0 gap-4">
 				<img
 					src="https://placehold.co/150x150"
+					alt={username}
 					className="rounded overflow-hidden h-fit w-[150px]"
 				/>
 

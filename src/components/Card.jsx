@@ -55,7 +55,7 @@ export function Card({ id, link, type }) {
 			}}
 		>
 			{Object.values(images[data?.id] || {}).map((i) => {
-				return <img src={lookup[i]} />;
+				return <img alt={data?.name} src={lookup[i]} />;
 			})}
 			<h3 className="mt-0 text-center text-shadow-sm text-lg text-shadow-black">
 				{data?.name
