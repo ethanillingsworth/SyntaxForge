@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { User } from "../firebase/Firebase";
-import { formatNumber, useUser } from "../Global";
+import { useUser } from "../Global";
+import Rank from "../components/Rank";
 
 export default function UserPage() {
 	const { username } = useParams();
@@ -60,34 +61,12 @@ export default function UserPage() {
 						</span>
 					</div>
 
-					<div
-						style={{ color: rank.color }}
-						className=" flex flex-row gap-2 place-items-center"
-					>
-						<span
-							className="px-2 p-1 text-black h-fit rounded"
-							style={{ backgroundColor: rank.color }}
-						>
-							{rank.name}
-						</span>
-						<hr
-							className="w-0.5 h-full"
-							style={{ backgroundColor: rank.color }}
-						/>
-						<div className="w-60 h-6 bg-gray-700 rounded-full overflow-hidden relative my-1">
-							<div
-								style={{
-									width: `${(pageData.xp / nextRank?.minXp) * 100}%`,
-									backgroundColor: rank.color,
-								}}
-								className="h-full transition-all duration-500"
-							/>
-							<span className="absolute top-0 w-full text-md text-center text-white text-shadow-xs text-shadow-black font-bold">
-								{formatNumber(pageData.xp || 0)} /{" "}
-								{formatNumber(nextRank?.minXp || "")} XP
-							</span>
-						</div>
-					</div>
+					<Rank
+						name={rank.name || "Loading..."}
+						color={rank.color || "#999999"}
+						xp={pageData.xp}
+						minXp={nextRank?.minXp}
+					></Rank>
 
 					<p className="text-zinc-400 text-lg">
 						{pageData.desc || "No Description"}

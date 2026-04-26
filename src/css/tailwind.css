@@ -47,7 +47,7 @@
 
 @layer components {
 	.card {
-		@apply raised flex flex-row gap-2 h-10 normal-case text-white;
+		@apply raised flex flex-row gap-2 h-10 normal-case drop-shadow-sm hover:drop-shadow-black text-white;
 
 		img {
 			@apply w-7 h-7 drop-shadow-black drop-shadow-sm;
