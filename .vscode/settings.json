@@ -6,6 +6,8 @@
 		"firebaseapp",
 		"firebasestorage",
 		"Firestore",
+		"nowrap",
+		"rgba",
 		"syntaxforge"
 	]
 }
