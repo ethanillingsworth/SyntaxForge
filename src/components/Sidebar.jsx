@@ -85,7 +85,7 @@ export default function Sidebar() {
 								</a>
 							);
 						})}
-						<a onClick={createPlayground}>New Playground</a>
+						<span onClick={createPlayground}>New Playground</span>
 					</div>
 				</div>
 			</div>

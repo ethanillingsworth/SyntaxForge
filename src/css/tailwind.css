@@ -12,6 +12,9 @@
 	/* primary accent (warm, stands out) */
 	--color-forge-accent-hover: #e5443b;
 	--color-forge-gold: #f4c06d;
+
+	--font-sans: "Geist", ui-sans-serif, system-ui, sans-serif;
+	--font-mono: "Geist Mono", ui-monospace, monospace;
 }
 
 @utility gradient-text {
@@ -67,18 +70,18 @@
 	}
 
 	* {
-		@apply font-["Geist"] scheme-dark;
+		@apply scheme-dark;
 	}
 
 	.cm-editor * {
-		@apply font-["Geist_Mono"];
+		@apply font-mono;
 	}
 
 	.terminal {
 		@apply h-full w-96 bg-black p-4 normal-case flex flex-col overflow-auto;
 
 		& > * {
-			@apply font-["Geist_Mono"];
+			@apply font-mono;
 		}
 	}
 
@@ -162,11 +165,11 @@
 		}
 
 		code {
-			@apply bg-forge-accent/25 text-forge-accent p-1 rounded font-["Geist_Mono"]! normal-case;
+			@apply bg-forge-accent/25 text-forge-accent p-1 rounded font-mono! normal-case;
 		}
 
 		pre code {
-			@apply font-["Geist_Mono"] normal-case;
+			@apply font-mono normal-case;
 		}
 
 		table {
@@ -261,6 +264,10 @@
 
 		.submenu {
 			@apply relative top-1 text-nowrap border-0 flex overflow-hidden w-fit max-h-0 flex-col raised p-0 px-2;
+
+			span {
+				@apply text-zinc-400 hover:gradient-text hover:cursor-pointer transition-none;
+			}
 		}
 
 		.menu {
