@@ -33,6 +33,10 @@
 	@apply bg-linear-to-r from-forge-accent/25 to-forge-gold/25;
 }
 
+@utility sidebar-hover {
+	@apply bg-linear-to-r from-[#2a7b9b00] from-0% to-[#fc483f4d] to-100% border-r-forge-accent/75 border-r;
+}
+
 @utility raised {
 	@apply p-1 px-4 bg-forge-surface rounded hover:cursor-pointer border border-zinc-800 transition hover:border-zinc-600;
 
@@ -245,46 +249,35 @@
 	}
 
 	.sidebar {
-		@apply flex flex-col min-w-1/4 overflow-auto text-nowrap pl-20 pb-5 pr-10 bg-zinc-900 text-zinc-200 transition;
+		@apply flex flex-col min-w-1/4 overflow-auto text-nowrap pl-20 pb-5 pr-10 bg-zinc-900 text-zinc-100 transition;
 
 		.group {
 			@apply pt-2.5 pb-5 border-t border-t-zinc-700 capitalize flex flex-col gap-0;
 		}
 
-		h2 {
-			@apply font-bold;
+		h2 li {
+			@apply font-bold text-zinc-100 hover:bg-none border-none hover:cursor-default;
 		}
 
-		h2,
-		a,
-		span,
-		.menu {
-			@apply text-sm leading-6 py-1;
+		a {
+			@apply transition-none w-full;
+		}
+
+		ul.menu ul {
+			@apply ml-4;
+		}
+
+		li {
+			@apply w-full text-sm leading-6 py-1;
+			@apply text-zinc-300 hover:sidebar-hover hover:cursor-pointer transition-none;
 		}
 
 		.submenu {
-			@apply relative top-1 text-nowrap border-0 flex overflow-hidden w-fit max-h-0 flex-col raised p-0 px-2;
-
-			span {
-				@apply text-zinc-400 hover:gradient-text hover:cursor-pointer transition-none;
-			}
-		}
-
-		.menu {
-			@apply text-zinc-400;
-		}
-
-		.menu span {
-			@apply hover:cursor-pointer;
+			@apply relative top-1 text-nowrap border-0 flex overflow-hidden w-full max-h-0 flex-col p-0 px-2;
 		}
 
 		.menu:hover .submenu {
-			@apply max-h-dvh border;
-		}
-
-		a,
-		.menu {
-			@apply text-zinc-400 hover:gradient-text hover:cursor-pointer transition-none;
+			@apply max-h-dvh;
 		}
 	}
 }

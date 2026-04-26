@@ -53,47 +53,62 @@ export default function Sidebar() {
 				/>
 				<h2 className="text-base">SyntaxForge</h2>
 			</a>
-			<div className="group">
-				<h2>Personal</h2>
-				<a href={`/user/@${username}`}>Your Profile</a>
-				<div className="menu">
-					<span>Your Courses</span>
-					<div className="submenu">
+			<ul className="group">
+				<h2>
+					<li>Personal</li>
+				</h2>
+
+				<a href={`/user/@${username}`}>
+					<li>Your Profile</li>
+				</a>
+
+				<ul className="menu">
+					<li>Your Courses</li>
+					<ul className="submenu">
 						{Object.keys(courses).map((key) => {
 							const data = courses[key];
 							if (data.added) {
 								return (
 									<a key={key} href={`/${key}`}>
-										{data.nickname
-											? data.nickname
-											: key.replaceAll("-", " ")}
+										<li>
+											{data.nickname
+												? data.nickname
+												: key.replaceAll("-", " ")}
+										</li>
 									</a>
 								);
 							}
 						})}
-						<a href="/courses">Find Courses</a>
-					</div>
-				</div>
-				<div className="menu">
-					<span>Playgrounds</span>
-					<div className="submenu">
+						<a href="/courses">
+							<li>Find Courses</li>
+						</a>
+					</ul>
+				</ul>
+
+				<ul className="menu">
+					<li>Playgrounds</li>
+					<ul className="submenu">
 						{Object.keys(playgrounds || {}).map((key) => {
 							const data = playgrounds[key];
 							return (
 								<a href={`/playgrounds/${key}`} key={key}>
-									{data.name}
+									<li>{data.name}</li>
 								</a>
 							);
 						})}
-						<span onClick={createPlayground}>New Playground</span>
-					</div>
-				</div>
-			</div>
+						<li onClick={createPlayground}>New Playground</li>
+					</ul>
+				</ul>
+			</ul>
 
-			<div className="group">
-				<h2>Quick Links</h2>
-				<a href="/courses">Available Courses</a>
-			</div>
+			<ul className="group">
+				<h2>
+					<li>Quick Links</li>
+				</h2>
+				<a href="/courses">
+					<li>Available Courses</li>
+				</a>
+			</ul>
 		</div>
 	);
 }
