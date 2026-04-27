@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Course } from "../firebase/Firebase";
-import Unit from "../components/Unit";
 import Lesson from "../components/Lesson";
 
 export default function CoursePage() {
