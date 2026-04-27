@@ -1,13 +1,13 @@
 import { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Article } from "../firebase/Firebase";
+import { Article, Course } from "../firebase/Firebase";
 
 import Editor from "@uiw/react-codemirror";
 import { markdown, markdownLanguage } from "@codemirror/lang-markdown";
 import { materialDark } from "@uiw/codemirror-theme-material";
 import { languages } from "@codemirror/language-data";
 import { marked } from "marked";
-import { useAdmin, useShortcut, useUser } from "../Global";
+import { capitalize, useAdmin, useShortcut, useUser } from "../Global";
 
 import hljs from "highlight.js";
 import javascript from "highlight.js/lib/languages/javascript";
@@ -18,148 +18,148 @@ hljs.registerLanguage("javascript", javascript);
 hljs.registerLanguage("python", python);
 
 export default function ArticlePage() {
-	const { articleIndex, unitName, courseId } = useParams();
+    const { articleIndex, unitName, courseId } = useParams();
 
-	const [articleContent, setArticleContent] = useState();
-	const [rawContent, setRawContent] = useState("");
-	const [isAdminAtStart, setAdminAtStart] = useState(false);
-	const [isAdmin, setAdmin] = useState(false);
+    const [articleContent, setArticleContent] = useState();
+    const [rawContent, setRawContent] = useState("");
+    const [isAdminAtStart, setAdminAtStart] = useState(false);
+    const [isAdmin, setAdmin] = useState(false);
 
-	const user = useUser();
+    const courseName = capitalize(courseId.replaceAll("-", " "));
 
-	useAdmin(
-		useCallback((status) => {
-			setAdmin(status);
-			setAdminAtStart(true);
-		}, []),
-	);
+    const user = useUser();
 
-	useEffect(() => {
-		const article = new Article(
-			courseId,
-			unitName.split("-")[1],
-			articleIndex,
-		);
+    useAdmin(
+        useCallback((status) => {
+            setAdmin(status);
+            setAdminAtStart(true);
+        }, []),
+    );
 
-		article
-			.getMarkdown()
-			.then((content) => {
-				setRawContent(content.raw);
-				setArticleContent(content.parsed);
-			})
-			.catch(() => {
-				article.setDefault();
-			});
-	}, [articleIndex, courseId, unitName]);
+    useEffect(() => {
+        const article = new Article(
+            courseId,
+            unitName.split("-")[1],
+            articleIndex,
+        );
 
-	useEffect(() => {
-		const xp = Math.floor(rawContent.length / 200) * 5;
+        article
+            .getMarkdown()
+            .then((content) => {
+                setRawContent(content.raw);
+                setArticleContent(content.parsed);
+            })
+            .catch(() => {
+                article.setDefault();
+            });
+    }, [articleIndex, courseId, unitName]);
 
-		if (xp > 0) {
-			user?.get().then((d) => {
-				const firstView =
-					!d.courses?.[courseId]?.[
-						parseInt(unitName.split("-")[1])
-					]?.[articleIndex];
+    // XP on load
+    useEffect(() => {
+        const xp = Math.floor(rawContent.length / 200) * 5;
 
-				if (firstView) {
-					const updatedData = {
-						courses: {
-							[courseId]: {
-								[parseInt(unitName.split("-")[1])]: {
-									[articleIndex]: {
-										percent: 100,
-										xpEarned:
-											Math.floor(
-												rawContent.length / 200,
-											) * 5,
-									},
-								},
-							},
-						},
-					};
+        if (xp > 0) {
+            user?.get().then((d) => {
+                const firstView =
+                    !d.courses?.[courseId]?.[
+                        parseInt(unitName.split("-")[1])
+                    ]?.[articleIndex];
 
-					user?.set("public", updatedData);
-				}
-			});
-		}
-	}, [articleIndex, courseId, rawContent, unitName, user]);
+                if (firstView) {
+                    const updatedData = {
+                        courses: {
+                            [courseId]: {
+                                [parseInt(unitName.split("-")[1])]: {
+                                    [articleIndex]: {
+                                        percent: 100,
+                                        xpEarned:
+                                            Math.floor(
+                                                rawContent.length / 200,
+                                            ) * 5,
+                                    },
+                                },
+                            },
+                        },
+                    };
 
-	useEffect(() => {
-		hljs.highlightAll();
-	}, [rawContent, articleContent, isAdmin]);
+                    user?.set("public", updatedData);
+                }
+            });
+        }
+    }, [articleIndex, courseId, rawContent, unitName, user]);
 
-	const onChange = (val) => {
-		console.log(val);
-		setArticleContent(marked.parse(val));
-		setRawContent(val);
-	};
+    useEffect(() => {
+        hljs.highlightAll();
+    }, [rawContent, articleContent, isAdmin]);
 
-	function submit() {
-		const article = new Article(
-			courseId,
-			unitName.split("-")[1],
-			articleIndex,
-		);
+    const onChange = (val) => {
+        console.log(val);
+        setArticleContent(marked.parse(val));
+        setRawContent(val);
+    };
 
-		article.setContent(rawContent);
+    function submit() {
+        const article = new Article(
+            courseId,
+            unitName.split("-")[1],
+            articleIndex,
+        );
 
-		alert("Saved!");
-	}
+        article.setContent(rawContent);
 
-	useShortcut({ key: "s", ctrl: true }, () => {
-		submit();
-	});
+        alert("Saved!");
+    }
 
-	useShortcut({ key: "a", ctrl: true }, () => {
-		if (isAdminAtStart) setAdmin(!isAdmin);
-	});
+    useShortcut({ key: "s", ctrl: true }, () => {
+        submit();
+    });
 
-	return (
-		<div
-			className={`flex flex-row gap-3 w-full ${isAdmin ? "h-full" : ""}`}
-		>
-			{isAdmin ? (
-				<div className="flex flex-col h-full">
-					<Editor
-						className="rounded overflow-auto h-full normal-case"
-						height="100%"
-						width="700px"
-						indentWithTab
-						theme={materialDark}
-						extensions={[
-							markdown({
-								base: markdownLanguage,
-								codeLanguages: languages,
-							}),
-						]}
-						value={rawContent}
-						onChange={onChange}
-						tabsize={4}
-					/>
-					<div className="flex flex-row">
-						<button onClick={submit}>Submit</button>
-					</div>
-				</div>
-			) : null}
-			<div
-				className={`w-full flex flex-col ${
-					isAdmin ? "overflow-auto" : ""
-				}`}
-			>
-				<div
-					dangerouslySetInnerHTML={{ __html: articleContent }}
-					className="md"
-				></div>
-				<div className="flex flex-row gap-4 capitalize mt-8">
-					<a href="../">
-						<button>{`Back to ${unitName}`}</button>
-					</a>
-					{/* <a href={nextLesson}>
-						<button>Next Lesson</button>
-					</a> */}
-				</div>
-			</div>
-		</div>
-	);
+    useShortcut({ key: "a", ctrl: true }, () => {
+        if (isAdminAtStart) setAdmin(!isAdmin);
+    });
+
+    return (
+        <div
+            className={`flex flex-row gap-3 w-full ${isAdmin ? "h-full" : ""}`}
+        >
+            {isAdmin ? (
+                <div className="flex flex-col h-full">
+                    <Editor
+                        className="rounded overflow-auto h-full normal-case"
+                        height="100%"
+                        width="700px"
+                        indentWithTab
+                        theme={materialDark}
+                        extensions={[
+                            markdown({
+                                base: markdownLanguage,
+                                codeLanguages: languages,
+                            }),
+                        ]}
+                        value={rawContent}
+                        onChange={onChange}
+                        tabsize={4}
+                    />
+                    <div className="flex flex-row">
+                        <button onClick={submit}>Submit</button>
+                    </div>
+                </div>
+            ) : null}
+            <div
+                className={`w-full flex flex-col ${
+                    isAdmin ? "overflow-auto" : ""
+                }`}
+            >
+                <div
+                    dangerouslySetInnerHTML={{ __html: articleContent }}
+                    className="md"
+                ></div>
+                <div className="flex flex-row gap-4 capitalize mt-8">
+                    <a href={`/${courseId}#unit-1`}>
+                        <button>{`Back to ${courseName}`}</button>
+                    </a>
+                </div>
+            </div>
+        </div>
+    );
 }

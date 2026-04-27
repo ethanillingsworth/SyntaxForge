@@ -4,142 +4,150 @@ import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebase/init";
 
 export function useShortcut({ key, ctrl, shift, alt, meta }, callback) {
-	useEffect(() => {
-		const handler = (e) => {
-			if (
-				e.key.toLowerCase() === key.toLowerCase() &&
-				(!ctrl || e.ctrlKey) &&
-				(!shift || e.shiftKey) &&
-				(!alt || e.altKey) &&
-				(!meta || e.metaKey)
-			) {
-				e.preventDefault();
-				callback(e);
-			}
-		};
+    useEffect(() => {
+        const handler = (e) => {
+            if (
+                e.key.toLowerCase() === key.toLowerCase() &&
+                (!ctrl || e.ctrlKey) &&
+                (!shift || e.shiftKey) &&
+                (!alt || e.altKey) &&
+                (!meta || e.metaKey)
+            ) {
+                e.preventDefault();
+                callback(e);
+            }
+        };
 
-		window.addEventListener("keydown", handler);
-		return () => window.removeEventListener("keydown", handler);
-	}, [key, ctrl, shift, alt, meta, callback]);
+        window.addEventListener("keydown", handler);
+        return () => window.removeEventListener("keydown", handler);
+    }, [key, ctrl, shift, alt, meta, callback]);
 }
 
 export function useAdmin(callback) {
-	useEffect(() => {
-		const unsub = onAuthStateChanged(auth, (user) => {
-			if (!user) return;
-			const u = new User(user.uid);
-			return u.admin().then((status) => {
-				callback(status);
-			});
-		});
+    useEffect(() => {
+        const unsub = onAuthStateChanged(auth, (user) => {
+            if (!user) return;
+            const u = new User(user.uid);
+            return u.admin().then((status) => {
+                callback(status);
+            });
+        });
 
-		return unsub;
-	}, [callback]);
+        return unsub;
+    }, [callback]);
 }
 
 export function useForceLogin() {
-	useEffect(() => {
-		return onAuthStateChanged(auth, (user) => {
-			if (!user) {
-				window.location.href = "/login";
-			}
-		});
-	}, []);
+    useEffect(() => {
+        return onAuthStateChanged(auth, (user) => {
+            if (!user) {
+                window.location.href = "/login";
+            }
+        });
+    }, []);
 }
 
 export function useNextLesson(courseId, unitNumber, lessonId, callback) {
-	useEffect(() => {
-		const course = new Course(courseId);
+    useEffect(() => {
+        const course = new Course(courseId);
 
-		course.getUnitFromNumber(unitNumber).then((v) => {
-			const unit = new Unit(v.id);
-			unit.getNextLesson(lessonId).then((data) => {
-				callback(data);
-			});
-		});
-	}, [callback, courseId, lessonId, unitNumber]);
+        course.getUnitFromNumber(unitNumber).then((v) => {
+            const unit = new Unit(v.id);
+            unit.getNextLesson(lessonId).then((data) => {
+                callback(data);
+            });
+        });
+    }, [callback, courseId, lessonId, unitNumber]);
 }
 
 export function safeEval(input, test = null) {
-	var logs = [];
+    var logs = [];
 
-	// eslint-disable-next-line no-unused-vars
-	var console = {
-		log: function () {
-			for (const arg of arguments) {
-				logs.push(arg);
-			}
-		},
-	};
-	// eslint-disable-next-line no-unused-vars
-	var window = function () {};
-	// eslint-disable-next-line no-unused-vars
-	var document = function () {};
-	// eslint-disable-next-line no-unused-vars
-	var editor = function () {};
-	// eslint-disable-next-line no-unused-vars
-	var print = function () {};
+    // eslint-disable-next-line no-unused-vars
+    var console = {
+        log: function () {
+            for (const arg of arguments) {
+                logs.push(arg);
+            }
+        },
+    };
+    // eslint-disable-next-line no-unused-vars
+    var window = function () {};
+    // eslint-disable-next-line no-unused-vars
+    var document = function () {};
+    // eslint-disable-next-line no-unused-vars
+    var editor = function () {};
+    // eslint-disable-next-line no-unused-vars
+    var print = function () {};
 
-	const a = function () {
-		try {
-			return eval(input + (test || ""));
-		} catch (error) {
-			logs.push(error.toString());
-		}
-	};
+    const a = function () {
+        try {
+            return eval(input + (test || ""));
+        } catch (error) {
+            logs.push(error.toString());
+        }
+    };
 
-	// Return the eval'd result
-	return { res: a(), logs: logs };
+    // Return the eval'd result
+    return { res: a(), logs: logs };
 }
 export function useUser() {
-	/** @type {[User, Function]} */
-	const [user, setUser] = useState(null);
+    /** @type {[User, Function]} */
+    const [user, setUser] = useState(null);
 
-	useEffect(() => {
-		const unsub = onAuthStateChanged(auth, (firebaseUser) => {
-			if (!firebaseUser) {
-				setUser(null);
-				return;
-			}
+    useEffect(() => {
+        const unsub = onAuthStateChanged(auth, (firebaseUser) => {
+            if (!firebaseUser) {
+                setUser(null);
+                return;
+            }
 
-			setUser(new User(firebaseUser.uid));
-		});
+            setUser(new User(firebaseUser.uid));
+        });
 
-		return unsub;
-	}, []);
+        return unsub;
+    }, []);
 
-	return user;
+    return user;
 }
 
 export function useTitle(title) {
-	useEffect(() => {
-		document.title = title;
-	}, [title]);
+    useEffect(() => {
+        document.title = title;
+    }, [title]);
 }
 
 export function formatNumber(num) {
-	if (num >= 1000000000) {
-		// Divide by 1B and fix to 1 decimal place if it's not a whole number
-		const formatted = (num / 1000000000).toFixed(1);
-		return formatted.endsWith(".0")
-			? formatted.slice(0, -2) + "B"
-			: formatted + "B";
-	}
-	if (num >= 1000000) {
-		// Divide by 1M and fix to 1 decimal place if it's not a whole number
-		const formatted = (num / 1000000).toFixed(1);
-		return formatted.endsWith(".0")
-			? formatted.slice(0, -2) + "M"
-			: formatted + "M";
-	}
+    if (num >= 1000000000) {
+        // Divide by 1B and fix to 1 decimal place if it's not a whole number
+        const formatted = (num / 1000000000).toFixed(1);
+        return formatted.endsWith(".0")
+            ? formatted.slice(0, -2) + "B"
+            : formatted + "B";
+    }
+    if (num >= 1000000) {
+        // Divide by 1M and fix to 1 decimal place if it's not a whole number
+        const formatted = (num / 1000000).toFixed(1);
+        return formatted.endsWith(".0")
+            ? formatted.slice(0, -2) + "M"
+            : formatted + "M";
+    }
 
-	if (num >= 1000) {
-		// Divide by 1K and fix to 1 decimal place
-		const formatted = (num / 1000).toFixed(1);
-		return formatted.endsWith(".0")
-			? formatted.slice(0, -2) + "K"
-			: formatted + "K";
-	}
+    if (num >= 1000) {
+        // Divide by 1K and fix to 1 decimal place
+        const formatted = (num / 1000).toFixed(1);
+        return formatted.endsWith(".0")
+            ? formatted.slice(0, -2) + "K"
+            : formatted + "K";
+    }
 
-	return num.toString();
+    return num.toString();
 }
+
+export const capitalize = (str) => {
+    return str
+        .toLowerCase()
+        .split(" ")
+        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(" ");
+};
