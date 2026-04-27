@@ -9,7 +9,6 @@ import ArticlePage from "./pages/ArticlePage";
 import LoginPage from "./pages/LoginPage";
 import "./css/tailwind.css";
 import CoursePage from "./pages/CoursePage";
-import UnitPage from "./pages/UnitPage";
 import CoursesPage from "./pages/CoursesPage";
 import CategoryPage from "./pages/CategoryPage";
 import PlaygroundPage from "./pages/PlaygroundPage";
