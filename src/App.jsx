@@ -1,8 +1,8 @@
 import {
-    BrowserRouter as Router,
-    Routes,
-    Route,
-    useLocation,
+	BrowserRouter as Router,
+	Routes,
+	Route,
+	useLocation,
 } from "react-router-dom";
 import Sidebar from "./components/Sidebar";
 import ArticlePage from "./pages/ArticlePage";
@@ -18,83 +18,74 @@ import LandingPage from "./pages/LandingPage";
 import UserPage from "./pages/UserPage";
 
 function ContentLayout() {
-    return (
-        <div className="content">
-            <Outlet />
-        </div>
-    );
+	return (
+		<div className="content">
+			<Outlet />
+		</div>
+	);
 }
 
 function ContentLayoutNoPadding() {
-    return (
-        <div className="content p-0">
-            <Outlet />
-        </div>
-    );
+	return (
+		<div className="content p-0">
+			<Outlet />
+		</div>
+	);
 }
 
 function Layout() {
-    const location = useLocation();
-    const hideSidebar =
-        location.pathname === "/login" || location.pathname === "/";
+	const location = useLocation();
+	const hideSidebar =
+		location.pathname === "/login" || location.pathname === "/";
 
-    return (
-        <>
-            {!hideSidebar && (
-                <>
-                    <Sidebar />
-                    <hr className="border-none w-0.5 gradient-bg h-full" />
-                </>
-            )}
-            <Routes>
-                <Route element={<ContentLayoutNoPadding />}>
-                    <Route
-                        path="/playgrounds/:playgroundId"
-                        element={<PlaygroundPage />}
-                    />
-                    <Route path="/" element={<LandingPage />} />
-                    <Route path="/login" element={<LoginPage />} />
-                </Route>
+	return (
+		<>
+			{!hideSidebar && (
+				<>
+					<Sidebar />
+					<hr className="border-none w-0.5 gradient-bg h-full" />
+				</>
+			)}
+			<Routes>
+				<Route element={<ContentLayoutNoPadding />}>
+					<Route
+						path="/playgrounds/:playgroundId"
+						element={<PlaygroundPage />}
+					/>
+					<Route path="/" element={<LandingPage />} />
+					<Route path="/login" element={<LoginPage />} />
+				</Route>
 
-                <Route element={<ContentLayout />}>
-                    <Route path="/home" element={null} />
+				<Route element={<ContentLayout />}>
+					<Route path="/home" element={null} />
 
-                    <Route path="/courses" element={<CoursesPage />} />
-                    <Route
-                        path="/courses/:categoryId"
-                        element={<CategoryPage />}
-                    />
-                    <Route path="/user/:username" element={<UserPage />} />
+					<Route path="/courses" element={<CoursesPage />} />
+					<Route
+						path="/courses/:categoryId"
+						element={<CategoryPage />}
+					/>
+					<Route path="/user/:username" element={<UserPage />} />
 
-<<<<<<< Updated upstream
-                    <Route path="/:courseId" element={<CoursePage />} />
-                    <Route
-                        path="/:courseId/:unitName/article/:articleIndex"
-                        element={<ArticlePage />}
-                    />
-=======
 					<Route path="/:courseId" element={<CoursePage />} />
-					<Route path="/:courseId/:unitName" element={<UnitPage />} />
 					<Route
 						path="/:courseId/:unitName/article/:articleName"
 						element={<ArticlePage />}
 					/>
->>>>>>> Stashed changes
 
-                    {/* <Route
+					{/* <Route
 						path="/:courseId/:unitName/mcq/:mcqId"
 						element={<MCQPage />}
 					/> */}
-                </Route>
-            </Routes>
-        </>
-    );
+				</Route>
+			</Routes>
+		</>
+	);
 }
 
 export default function App() {
-    return (
-        <Router>
-            <Layout />
-        </Router>
-    );
+	return (
+		<Router>
+			<Layout />
+		</Router>
+	);
 }

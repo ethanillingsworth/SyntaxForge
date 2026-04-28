@@ -154,15 +154,18 @@ export default function ArticlePage() {
 					isAdmin ? "overflow-auto" : ""
 				}`}
 			>
-				<div className="md flex flex-row">
+				<div className="md flex flex-row w-full">
 					<h1>{title}</h1>
-					<time className="mx-auto ml-auto text-sm" dateTime={date}>
+					<time
+						className="my-auto ml-auto text-lg font-semibold"
+						dateTime={date}
+					>
 						{date}
 					</time>
 				</div>
 				<div
 					dangerouslySetInnerHTML={{ __html: articleContent }}
-					className="md mt-5"
+					className="md mt-4"
 				></div>
 				<div className="flex flex-row gap-4 capitalize mt-8">
 					<a href={`/${courseId}#unit-1`}>
