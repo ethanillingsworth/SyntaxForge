@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { Lesson } from "../firebase/Firebase";
 import { useAdmin } from "../Global";
 import PopupMenu from "../components/PopupMenu";
-import { deleteField, FieldValue } from "firebase/firestore";
+import { deleteField } from "firebase/firestore";
 
 export default function MCQPage() {
 	const { mcqId } = useParams();
