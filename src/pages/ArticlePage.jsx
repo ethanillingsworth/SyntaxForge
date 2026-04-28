@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Article } from "../firebase/Firebase";
+import { Article, Course } from "../firebase/Firebase";
 
 import Editor from "@uiw/react-codemirror";
 import { markdown, markdownLanguage } from "@codemirror/lang-markdown";
@@ -18,148 +18,158 @@ hljs.registerLanguage("javascript", javascript);
 hljs.registerLanguage("python", python);
 
 export default function ArticlePage() {
-    const { articleIndex, unitName, courseId } = useParams();
+	const { articleName, unitName, courseId } = useParams();
 
-    const [articleContent, setArticleContent] = useState();
-    const [rawContent, setRawContent] = useState("");
-    const [isAdminAtStart, setAdminAtStart] = useState(false);
-    const [isAdmin, setAdmin] = useState(false);
+	const [articleContent, setArticleContent] = useState();
+	const [rawContent, setRawContent] = useState("");
+	const [isAdminAtStart, setAdminAtStart] = useState(false);
+	const [isAdmin, setAdmin] = useState(false);
+	const courseName = capitalize(courseId.replaceAll("-", " "));
+	const [title, setTitle] = useState("Loading...");
+	const [date, setDate] = useState("Loading...");
+	const user = useUser();
 
-    const courseName = capitalize(courseId.replaceAll("-", " "));
+	const unit = unitName.split("-")[1];
+	const articleIndex = articleName.split("-")[0];
 
-    const user = useUser();
+	useAdmin(
+		useCallback((status) => {
+			setAdmin(status);
+			setAdminAtStart(true);
+		}, []),
+	);
 
-    useAdmin(
-        useCallback((status) => {
-            setAdmin(status);
-            setAdminAtStart(true);
-        }, []),
-    );
+	useEffect(() => {
+		const article = new Article(courseId, unit, articleIndex);
 
-    useEffect(() => {
-        const article = new Article(
-            courseId,
-            unitName.split("-")[1],
-            articleIndex,
-        );
+		article
+			.getMarkdown()
+			.then((content) => {
+				setRawContent(content.raw);
+				setArticleContent(content.parsed);
+			})
+			.catch(() => {
+				article.setDefault();
+			});
 
-        article
-            .getMarkdown()
-            .then((content) => {
-                setRawContent(content.raw);
-                setArticleContent(content.parsed);
-            })
-            .catch(() => {
-                article.setDefault();
-            });
-    }, [articleIndex, courseId, unitName]);
+		const course = new Course(courseId);
 
-    // XP on load
-    useEffect(() => {
-        const xp = Math.floor(rawContent.length / 200) * 5;
+		course.getUnitFromNumber(parseInt(unit)).then((data) => {
+			const lData = data.lessons[articleIndex];
 
-        if (xp > 0) {
-            user?.get().then((d) => {
-                const firstView =
-                    !d.courses?.[courseId]?.[
-                        parseInt(unitName.split("-")[1])
-                    ]?.[articleIndex];
+			setTitle(lData.title);
+			setDate(lData.date);
+		});
+	}, [articleIndex, courseId, unit]);
 
-                if (firstView) {
-                    const updatedData = {
-                        courses: {
-                            [courseId]: {
-                                [parseInt(unitName.split("-")[1])]: {
-                                    [articleIndex]: {
-                                        percent: 100,
-                                        xpEarned:
-                                            Math.floor(
-                                                rawContent.length / 200,
-                                            ) * 5,
-                                    },
-                                },
-                            },
-                        },
-                    };
+	// XP on load
+	useEffect(() => {
+		const xp = Math.floor(rawContent.length / 200) * 5;
 
-                    user?.set("public", updatedData);
-                }
-            });
-        }
-    }, [articleIndex, courseId, rawContent, unitName, user]);
+		if (xp > 0) {
+			user?.get().then((d) => {
+				const firstView =
+					!d.courses?.[courseId]?.[
+						parseInt(unitName.split("-")[1])
+					]?.[articleIndex];
 
-    useEffect(() => {
-        hljs.highlightAll();
-    }, [rawContent, articleContent, isAdmin]);
+				if (firstView) {
+					const updatedData = {
+						courses: {
+							[courseId]: {
+								[parseInt(unitName.split("-")[1])]: {
+									[articleIndex]: {
+										percent: 100,
+										xpEarned:
+											Math.floor(
+												rawContent.length / 200,
+											) * 5,
+									},
+								},
+							},
+						},
+					};
 
-    const onChange = (val) => {
-        console.log(val);
-        setArticleContent(marked.parse(val));
-        setRawContent(val);
-    };
+					user?.set("public", updatedData);
+				}
+			});
+		}
+	}, [articleIndex, courseId, rawContent, unitName, user]);
 
-    function submit() {
-        const article = new Article(
-            courseId,
-            unitName.split("-")[1],
-            articleIndex,
-        );
+	useEffect(() => {
+		hljs.highlightAll();
+	}, [rawContent, articleContent, isAdmin]);
 
-        article.setContent(rawContent);
+	const onChange = (val) => {
+		console.log(val);
+		setArticleContent(marked.parse(val));
+		setRawContent(val);
+	};
 
-        alert("Saved!");
-    }
+	function submit() {
+		const article = new Article(courseId, unit, articleIndex);
 
-    useShortcut({ key: "s", ctrl: true }, () => {
-        submit();
-    });
+		article.setContent(rawContent);
 
-    useShortcut({ key: "a", ctrl: true }, () => {
-        if (isAdminAtStart) setAdmin(!isAdmin);
-    });
+		alert("Saved!");
+	}
 
-    return (
-        <div
-            className={`flex flex-row gap-3 w-full ${isAdmin ? "h-full" : ""}`}
-        >
-            {isAdmin ? (
-                <div className="flex flex-col h-full">
-                    <Editor
-                        className="rounded overflow-auto h-full normal-case"
-                        height="100%"
-                        width="700px"
-                        indentWithTab
-                        theme={materialDark}
-                        extensions={[
-                            markdown({
-                                base: markdownLanguage,
-                                codeLanguages: languages,
-                            }),
-                        ]}
-                        value={rawContent}
-                        onChange={onChange}
-                        tabsize={4}
-                    />
-                    <div className="flex flex-row">
-                        <button onClick={submit}>Submit</button>
-                    </div>
-                </div>
-            ) : null}
-            <div
-                className={`w-full flex flex-col ${
-                    isAdmin ? "overflow-auto" : ""
-                }`}
-            >
-                <div
-                    dangerouslySetInnerHTML={{ __html: articleContent }}
-                    className="md"
-                ></div>
-                <div className="flex flex-row gap-4 capitalize mt-8">
-                    <a href={`/${courseId}#unit-1`}>
-                        <button>{`Back to ${courseName}`}</button>
-                    </a>
-                </div>
-            </div>
-        </div>
-    );
+	useShortcut({ key: "s", ctrl: true }, () => {
+		submit();
+	});
+
+	useShortcut({ key: "a", ctrl: true }, () => {
+		if (isAdminAtStart) setAdmin(!isAdmin);
+	});
+
+	return (
+		<div
+			className={`flex flex-row gap-3 w-full ${isAdmin ? "h-full" : ""}`}
+		>
+			{isAdmin ? (
+				<div className="flex flex-col h-full">
+					<Editor
+						className="rounded overflow-auto h-full normal-case"
+						height="100%"
+						width="700px"
+						indentWithTab
+						theme={materialDark}
+						extensions={[
+							markdown({
+								base: markdownLanguage,
+								codeLanguages: languages,
+							}),
+						]}
+						value={rawContent}
+						onChange={onChange}
+						tabsize={4}
+					/>
+					<div className="flex flex-row">
+						<button onClick={submit}>Submit</button>
+					</div>
+				</div>
+			) : null}
+			<div
+				className={`w-full flex flex-col ${
+					isAdmin ? "overflow-auto" : ""
+				}`}
+			>
+				<div className="md flex flex-row">
+					<h1>{title}</h1>
+					<time className="mx-auto ml-auto text-sm" dateTime={date}>
+						{date}
+					</time>
+				</div>
+				<div
+					dangerouslySetInnerHTML={{ __html: articleContent }}
+					className="md mt-5"
+				></div>
+				<div className="flex flex-row gap-4 capitalize mt-8">
+					<a href={`/${courseId}#unit-1`}>
+						<button>{`Back to ${courseName}`}</button>
+					</a>
+				</div>
+			</div>
+		</div>
+	);
 }

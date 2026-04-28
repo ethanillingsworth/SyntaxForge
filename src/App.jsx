@@ -66,11 +66,20 @@ function Layout() {
                     />
                     <Route path="/user/:username" element={<UserPage />} />
 
+<<<<<<< Updated upstream
                     <Route path="/:courseId" element={<CoursePage />} />
                     <Route
                         path="/:courseId/:unitName/article/:articleIndex"
                         element={<ArticlePage />}
                     />
+=======
+					<Route path="/:courseId" element={<CoursePage />} />
+					<Route path="/:courseId/:unitName" element={<UnitPage />} />
+					<Route
+						path="/:courseId/:unitName/article/:articleName"
+						element={<ArticlePage />}
+					/>
+>>>>>>> Stashed changes
 
                     {/* <Route
 						path="/:courseId/:unitName/mcq/:mcqId"
