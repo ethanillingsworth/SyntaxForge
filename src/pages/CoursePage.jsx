@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Course } from "../firebase/Firebase";
 import Lesson from "../components/Lesson";
+import { stringToId } from "../Global";
 
 export default function CoursePage() {
 	const { courseId } = useParams();
@@ -36,7 +37,7 @@ export default function CoursePage() {
 						<ul>
 							<li
 								id={`unit-${unit.number}`}
-								className="hover:bg-none hover:border-none"
+								className="hover:bg-none hover:border-none font-semibold"
 							>
 								Unit {unit.number} | {unit.name}
 							</li>
@@ -47,7 +48,8 @@ export default function CoursePage() {
 											course={courseId}
 											unit={unit.number}
 											type={lesson.type}
-											id={index}
+											id={stringToId(lesson.title)}
+											key={index}
 											index={index}
 										>
 											{lesson.title}

@@ -3,11 +3,13 @@
 
 import { useEffect, useState } from "react";
 import { useUser } from "../Global";
+import { Category, Course } from "../firebase/Firebase";
 
 export default function Sidebar() {
 	const [courses, setCourses] = useState({});
 	const [playgrounds, setPlaygrounds] = useState({});
 	const [username, setUsername] = useState("");
+	const [cates, setCates] = useState([]);
 
 	const user = useUser();
 
@@ -21,6 +23,10 @@ export default function Sidebar() {
 
 		user.get("private").then((data) => {
 			setPlaygrounds(data.playgrounds || {});
+		});
+
+		Category.getAll().then((l) => {
+			setCates(l);
 		});
 	}, [user]);
 
@@ -105,9 +111,31 @@ export default function Sidebar() {
 				<h2>
 					<li>Quick Links</li>
 				</h2>
-				<a href="/courses">
-					<li>Available Courses</li>
-				</a>
+				<ul className="menu">
+					<a href="/courses">
+						<li>Available Courses</li>
+					</a>
+					<ul className="submenu">
+						{cates.map((category) => {
+							if (!category.hidden) {
+								return (
+									<a
+										href={`/courses/${category.id}`}
+										key={category.id}
+									>
+										<li
+											style={{
+												"--color": `${category.color || "#fc483f"}4d`,
+											}}
+										>
+											{category.name}
+										</li>
+									</a>
+								);
+							}
+						})}
+					</ul>
+				</ul>
 			</ul>
 		</div>
 	);
