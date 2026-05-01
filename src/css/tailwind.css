@@ -41,7 +41,7 @@
 }
 
 @utility raised {
-	@apply p-1 px-4 bg-forge-surface rounded hover:cursor-pointer border border-zinc-800 transition hover:border-zinc-600;
+	@apply p-1 px-4 bg-forge-surface rounded border border-zinc-800 transition hover:border-zinc-600;
 
 	button {
 		@apply font-semibold;
@@ -50,10 +50,10 @@
 
 @layer components {
 	.card {
-		@apply raised flex flex-row gap-2 h-10 normal-case drop-shadow-sm hover:drop-shadow-black text-white;
+		@apply raised flex flex-row gap-2 place-items-center font-semibold h-full normal-case drop-shadow-sm hover:drop-shadow-black text-white;
 
 		img {
-			@apply w-7 h-7 drop-shadow-black drop-shadow-sm;
+			@apply h-6 drop-shadow-black drop-shadow-sm;
 		}
 	}
 
@@ -73,6 +73,11 @@
 
 		h1 {
 			@apply font-bold;
+		}
+
+		input,
+		select {
+			@apply raised p-1 accent-forge-accent;
 		}
 
 		h2,

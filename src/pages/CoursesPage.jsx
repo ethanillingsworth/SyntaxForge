@@ -14,7 +14,7 @@ export default function CoursesPage() {
 	return (
 		<>
 			<h1>Select a course category to browse</h1>
-			<div className="grid grid-cols-2 gap-4 mt-4">
+			<div className="grid grid-cols-3 gap-4 mt-4">
 				{categorys.map((category) => {
 					if (!category.hidden) {
 						return (

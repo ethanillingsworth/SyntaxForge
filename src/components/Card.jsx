@@ -7,7 +7,7 @@ import introLogo from "../imgs/icons/intro.svg";
 
 extend([namesPlugin]);
 
-export function Card({ id, link, type }) {
+export function Card({ id, link, type, className }) {
 	const [data, setData] = useState({});
 	const [images, setImages] = useState({});
 
@@ -48,7 +48,8 @@ export function Card({ id, link, type }) {
 	return (
 		<a
 			href={link}
-			className="card"
+			className={`card ${className}`}
+			key={id}
 			style={{
 				backgroundColor: data.color,
 				borderColor: colord(data.color).darken(0.1).toHex(),
@@ -57,11 +58,11 @@ export function Card({ id, link, type }) {
 			{Object.values(images[data?.id] || {}).map((i) => {
 				return <img alt={data?.name} src={lookup[i]} />;
 			})}
-			<h3 className="mt-0 text-center text-shadow-sm text-lg text-shadow-black">
+			<span className="mt-0 text-center text-shadow-sm h-fit text-shadow-black">
 				{data?.name
 					? `${data?.name} ${data?.nickname ? `(${data?.nickname})` : ""}`
 					: "Loading..."}
-			</h3>
+			</span>
 		</a>
 	);
 }

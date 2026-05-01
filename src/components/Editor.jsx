@@ -16,6 +16,8 @@ import { hyperLink } from "@uiw/codemirror-extensions-hyper-link";
 import { color } from "@uiw/codemirror-extensions-color";
 
 import axios from "axios";
+import { Card } from "./Card";
+import { Category } from "../firebase/Firebase";
 
 export default function Editor({
 	title,
@@ -46,7 +48,7 @@ export default function Editor({
 
 	useEffect(() => {
 		user?.get("private").then((data) => {
-			setFontSize(data.editorSettings?.textSize || 14);
+			setFontSize(parseInt(data.editorSettings?.textSize) || 14);
 			setTheme(data.editorSettings?.theme || "Dark");
 		});
 	}, [user]);
@@ -206,7 +208,13 @@ export default function Editor({
 						}
 					})}
 
-					<button className="ml-auto accent-button" onClick={runCode}>
+					<Card
+						id={language}
+						type={Category}
+						className={"ml-auto"}
+					></Card>
+
+					<button className="accent-button" onClick={runCode}>
 						Run
 					</button>
 				</div>
@@ -233,8 +241,8 @@ export default function Editor({
 					</div>
 
 					<div className="terminal">
-						{terminalLines.map((line) => {
-							return <span>{line}</span>;
+						{terminalLines.map((line, index) => {
+							return <span key={index}>{line}</span>;
 						})}
 					</div>
 				</div>
