@@ -3,12 +3,15 @@ import { useParams } from "react-router-dom";
 import { Course } from "../firebase/Firebase";
 import Lesson from "../components/Lesson";
 import { stringToId } from "../Global";
+import PopupMenu from "../components/PopupMenu";
 
 export default function CoursePage() {
 	const { courseId } = useParams();
 	const [data, setData] = useState({});
-
 	const [units, setUnits] = useState([]);
+
+	const [showUnitMenu, setShowUnitMenu] = useState(false)
+	const [unitMenuPos, setUnitMenuPos] = useState()
 
 	useEffect(() => {
 		window.course = courseId;
@@ -22,8 +25,16 @@ export default function CoursePage() {
 		});
 	}, [courseId]);
 
+	const unitTemplate = {
+		"name": {
+			"type": "text"
+		}
+	}
+
 	return (
 		<>
+			{showUnitMenu ? <PopupMenu closeAction={() => {setShowUnitMenu(false)}} position={unitMenuPos} dataTemplate={unitTemplate} /> : null}
+
 			<div className="flex flex-row">
 				<h1>{data.id?.replaceAll("-", " ")}</h1>
 			</div>
@@ -38,6 +49,14 @@ export default function CoursePage() {
 							<li
 								id={`unit-${unit.number}`}
 								className="hover:bg-none hover:border-none font-semibold"
+								onContextMenu={(e) => {
+									e.preventDefault()
+									setShowUnitMenu(true)
+									setUnitMenuPos({
+										x: e.clientX,
+										y: e.clientY
+									})
+								}}
 							>
 								Unit {unit.number} | {unit.name}
 							</li>

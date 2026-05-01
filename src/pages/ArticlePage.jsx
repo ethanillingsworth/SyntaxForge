@@ -122,16 +122,17 @@ export default function ArticlePage() {
 		if (isAdminAtStart) setAdmin(!isAdmin);
 	});
 
+
 	return (
+		<>
 		<div
-			className={`flex flex-row gap-3 w-full ${isAdmin ? "h-full" : ""}`}
+			className={`flex flex-col gap-4 w-full`}
 		>
 			{isAdmin ? (
-				<div className="flex flex-col h-full">
+				<div className="flex flex-col h-full gap-4">
 					<Editor
 						className="rounded overflow-auto h-full normal-case"
-						height="100%"
-						width="700px"
+						height="500px"
 						indentWithTab
 						theme={materialDark}
 						extensions={[
@@ -174,5 +175,6 @@ export default function ArticlePage() {
 				</div>
 			</div>
 		</div>
+		</>
 	);
 }
