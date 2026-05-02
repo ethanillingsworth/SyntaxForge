@@ -1,9 +1,10 @@
 import { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Course, Unit } from "../firebase/Firebase";
+import { Category, Course, Unit } from "../firebase/Firebase";
 import Lesson from "../components/Lesson";
 import { stringToId, useAdmin } from "../Global";
 import PopupMenu from "../components/PopupMenu";
+import { Card } from "../components/Card";
 
 export default function CoursePage() {
 	const { courseId } = useParams();
@@ -13,13 +14,18 @@ export default function CoursePage() {
 	const [showUnitMenu, setShowUnitMenu] = useState(false);
 	const [unitMenuPos, setUnitMenuPos] = useState();
 	const [currentUnit, setCurrentUnit] = useState();
+	const [currentUnitNum, setCurrentUnitNum] = useState();
+
+	const [showLessonMenu, setShowLessonMenu] = useState(false);
+	const [lessonMenuPos, setLessonMenuPos] = useState();
+	const [currentLesson, setCurrentLesson] = useState();
+
 	const [isAdmin, setIsAdmin] = useState(false);
 
 	useAdmin(
 		useCallback((admin) => {
 			setIsAdmin(admin);
-		}),
-		[],
+		}, []),
 	);
 
 	useEffect(() => {
@@ -45,6 +51,69 @@ export default function CoursePage() {
 		},
 	};
 
+	const lessonTemplate = {
+		up: {
+			type: "button",
+			label: "Up",
+			click: () => {
+				/** @type {Array} */
+				const lessons = units[currentUnitNum].lessons;
+
+				const l1 = lessons.splice(currentLesson, 1)[0];
+				lessons.splice(currentLesson - 1, 0, l1);
+
+				setShowLessonMenu(false);
+
+				const u = new Unit(currentUnit);
+
+				setUnits((v) => {
+					return v.map((unit, index) => {
+						if (index !== currentUnitNum) return unit;
+
+						return {
+							...unit,
+							lessons: lessons,
+						};
+					});
+				});
+
+				u.set({
+					lessons: lessons,
+				});
+			},
+		},
+		down: {
+			label: "Down",
+			type: "button",
+			click: () => {
+				/** @type {Array} */
+				const lessons = units[currentUnitNum].lessons;
+
+				const l1 = lessons.splice(currentLesson, 1)[0];
+				lessons.splice(currentLesson + 1, 0, l1);
+
+				setShowLessonMenu(false);
+
+				const u = new Unit(currentUnit);
+
+				setUnits((v) => {
+					return v.map((unit, index) => {
+						if (index !== currentUnitNum) return unit;
+
+						return {
+							...unit,
+							lessons: lessons,
+						};
+					});
+				});
+
+				u.set({
+					lessons: lessons,
+				});
+			},
+		},
+	};
+
 	return (
 		<>
 			{showUnitMenu & isAdmin ? (
@@ -55,6 +124,25 @@ export default function CoursePage() {
 					submitAction={(values) => {
 						const u = new Unit(currentUnit);
 
+						setUnits((v) => {
+							return v.map((unit, index) => {
+								if (index !== currentUnitNum) return unit;
+
+								// 2. Return a NEW object for the unit we are changing
+								return {
+									...unit,
+									// 3. Ensure lessons exists and is a NEW array with the new item
+									lessons: [
+										...(unit.lessons || []),
+										{
+											title: values.name,
+											type: values.type,
+										},
+									],
+								};
+							});
+						});
+
 						u.createLesson(values.name, values.type);
 
 						setShowUnitMenu(false);
@@ -64,9 +152,34 @@ export default function CoursePage() {
 				/>
 			) : null}
 
+			{showLessonMenu & isAdmin ? (
+				<PopupMenu
+					closeAction={() => {
+						setShowLessonMenu(false);
+					}}
+					submitAction={() => {
+						setShowLessonMenu(false);
+					}}
+					position={lessonMenuPos}
+					dataTemplate={lessonTemplate}
+				/>
+			) : null}
+
 			<div className="flex flex-row">
 				<h1>{data.id?.replaceAll("-", " ")}</h1>
+				<div className="flex flex-row gap-2 ml-auto h-fit">
+					{data.categorys?.map((category) => {
+						return (
+							<Card
+								id={category}
+								link={`/courses/${category}`}
+								type={Category}
+							></Card>
+						);
+					})}
+				</div>
 			</div>
+
 			<h2>Course Description</h2>
 			<p>{data.desc}</p>
 
@@ -81,10 +194,11 @@ export default function CoursePage() {
 								onContextMenu={(e) => {
 									e.preventDefault();
 									setCurrentUnit(unit.id);
+									setCurrentUnitNum(unit.number - 1);
 									setShowUnitMenu(true);
 									setUnitMenuPos({
-										x: e.clientX,
-										y: e.clientY,
+										x: e.pageX,
+										y: e.pageY,
 									});
 								}}
 							>
@@ -100,6 +214,22 @@ export default function CoursePage() {
 											id={stringToId(lesson.title)}
 											key={index}
 											index={index}
+											onContextMenu={(e) => {
+												e.preventDefault();
+												setCurrentUnit(unit.id);
+
+												setCurrentUnitNum(
+													unit.number - 1,
+												);
+
+												setCurrentLesson(index);
+
+												setShowLessonMenu(true);
+												setLessonMenuPos({
+													x: e.clientX,
+													y: e.clientY,
+												});
+											}}
 										>
 											{lesson.title}
 										</Lesson>
