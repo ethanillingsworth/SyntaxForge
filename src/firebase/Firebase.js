@@ -183,10 +183,20 @@ export class Unit extends DataObject {
 	}
 
 	async createLesson(title, type) {
+		const now = new Date();
+		const formatter = new Intl.DateTimeFormat("en-US", {
+			month: "2-digit",
+			day: "2-digit",
+			year: "numeric",
+		});
+
+		// This returns MM/DD/YYYY, so we swap slashes for dashes
+		const formattedDate = formatter.format(now).replace(/\//g, "-");
 		await this.set({
 			lessons: arrayUnion({
 				title,
 				type,
+				date: formattedDate,
 			}),
 		});
 	}

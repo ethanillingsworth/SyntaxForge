@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Course } from "../firebase/Firebase";
+import { Course, Unit } from "../firebase/Firebase";
 import Lesson from "../components/Lesson";
-import { stringToId } from "../Global";
+import { stringToId, useAdmin } from "../Global";
 import PopupMenu from "../components/PopupMenu";
 
 export default function CoursePage() {
@@ -10,8 +10,17 @@ export default function CoursePage() {
 	const [data, setData] = useState({});
 	const [units, setUnits] = useState([]);
 
-	const [showUnitMenu, setShowUnitMenu] = useState(false)
-	const [unitMenuPos, setUnitMenuPos] = useState()
+	const [showUnitMenu, setShowUnitMenu] = useState(false);
+	const [unitMenuPos, setUnitMenuPos] = useState();
+	const [currentUnit, setCurrentUnit] = useState();
+	const [isAdmin, setIsAdmin] = useState(false);
+
+	useAdmin(
+		useCallback((admin) => {
+			setIsAdmin(admin);
+		}),
+		[],
+	);
 
 	useEffect(() => {
 		window.course = courseId;
@@ -26,14 +35,34 @@ export default function CoursePage() {
 	}, [courseId]);
 
 	const unitTemplate = {
-		"name": {
-			"type": "text"
-		}
-	}
+		name: {
+			label: "Lesson Name:",
+		},
+		type: {
+			label: "Lesson Type:",
+			type: "select",
+			options: ["article", "mcq", "frq"],
+		},
+	};
 
 	return (
 		<>
-			{showUnitMenu ? <PopupMenu closeAction={() => {setShowUnitMenu(false)}} position={unitMenuPos} dataTemplate={unitTemplate} /> : null}
+			{showUnitMenu & isAdmin ? (
+				<PopupMenu
+					closeAction={() => {
+						setShowUnitMenu(false);
+					}}
+					submitAction={(values) => {
+						const u = new Unit(currentUnit);
+
+						u.createLesson(values.name, values.type);
+
+						setShowUnitMenu(false);
+					}}
+					position={unitMenuPos}
+					dataTemplate={unitTemplate}
+				/>
+			) : null}
 
 			<div className="flex flex-row">
 				<h1>{data.id?.replaceAll("-", " ")}</h1>
@@ -50,12 +79,13 @@ export default function CoursePage() {
 								id={`unit-${unit.number}`}
 								className="hover:bg-none hover:border-none font-semibold"
 								onContextMenu={(e) => {
-									e.preventDefault()
-									setShowUnitMenu(true)
+									e.preventDefault();
+									setCurrentUnit(unit.id);
+									setShowUnitMenu(true);
 									setUnitMenuPos({
 										x: e.clientX,
-										y: e.clientY
-									})
+										y: e.clientY,
+									});
 								}}
 							>
 								Unit {unit.number} | {unit.name}

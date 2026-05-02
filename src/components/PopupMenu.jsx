@@ -106,7 +106,7 @@ export default function PopupMenu({
 				}
 
 				return (
-					<div className="flex flex-row gap-1.5">
+					<div className="flex flex-row place-items-center gap-1.5">
 						<span>{data.label}</span>
 						<input
 							key={title}
