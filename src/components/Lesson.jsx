@@ -1,7 +1,7 @@
-import articleIcon from "../imgs/icons/article.svg";
-import mcqIcon from "../imgs/icons/mcq.svg";
+import articleIcon from "../icons/article.svg";
+import mcqIcon from "../icons/mcq.svg";
 
-import frqIcon from "../imgs/icons/frq.svg";
+import frqIcon from "../icons/frq.svg";
 
 export default function Lesson({
 	course,

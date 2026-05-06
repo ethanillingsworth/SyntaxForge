@@ -183,8 +183,8 @@ export default function Editor({
 					dataTemplate={template}
 				/>
 			) : null}
-			<div className="flex flex-col m-0 h-full">
-				<div className="flex flex-row p-2 place-items-center gap-3 bg-zinc-950/50">
+			<div className="editor">
+				<div className="head">
 					{showDecorativeButtons ? (
 						<div className="flex flex-row gap-2">
 							<span className="w-3 h-3 bg-red-400 rounded-full"></span>
@@ -219,10 +219,10 @@ export default function Editor({
 					</button>
 				</div>
 				<div
-					className={`flex flex-row w-full h-full overflow-hidden	`}
+					className="wrapper"
 					style={{ fontSize: fontSize + "px" }}
 				>
-					<div className="flex-1 min-h-0 overflow-auto">
+					<div className="inner">
 						<CodeMirror
 							className="normal-case w-full h-full"
 							extensions={[

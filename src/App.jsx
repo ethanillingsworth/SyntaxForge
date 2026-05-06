@@ -19,17 +19,17 @@ import UserPage from "./pages/UserPage";
 
 function ContentLayout() {
 	return (
-		<div className="content">
+		<main>
 			<Outlet />
-		</div>
+		</main>
 	);
 }
 
 function ContentLayoutNoPadding() {
 	return (
-		<div className="content p-0">
+		<main className="p-0">
 			<Outlet />
-		</div>
+		</main>
 	);
 }
 

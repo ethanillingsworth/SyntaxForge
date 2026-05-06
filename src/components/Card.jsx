@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { colord, extend } from "colord";
 import namesPlugin from "colord/plugins/names";
-import pythonLogo from "../imgs/icons/python.svg";
-import jsLogo from "../imgs/icons/js.svg";
-import introLogo from "../imgs/icons/intro.svg";
+import pythonLogo from "../icons/python.svg";
+import jsLogo from "../icons/js.svg";
+import introLogo from "../icons/intro.svg";
 
 extend([namesPlugin]);
 

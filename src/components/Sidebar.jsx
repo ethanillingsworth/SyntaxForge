@@ -3,7 +3,7 @@
 
 import { useEffect, useState } from "react";
 import { useUser } from "../Global";
-import { Category, Course } from "../firebase/Firebase";
+import { Category } from "../firebase/Firebase";
 
 export default function Sidebar() {
 	const [courses, setCourses] = useState({});
