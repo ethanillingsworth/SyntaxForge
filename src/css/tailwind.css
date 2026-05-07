@@ -18,30 +18,30 @@
 }
 
 @layer utilites {
-    @utility gradient-text {
+    .gradient-text {
         @apply bg-linear-to-r from-forge-accent to-forge-gold bg-clip-text text-transparent drop-shadow-sm;
     }
 
-    @utility gradient-bg {
+    .gradient-bg {
         @apply bg-linear-to-b from-forge-accent to-forge-gold;
     }
 
-    @utility gradient-bg-r {
+    .gradient-bg-r {
         @apply bg-linear-to-r from-forge-accent to-forge-gold;
     }
 
-    @utility gradient-bg-r/25 {
+    .gradient-bg-r\/25 {
         @apply bg-linear-to-r from-forge-accent/25 to-forge-gold/25;
     }
 
-    @utility sidebar-hover {
+    .sidebar-hover {
         --color: #fc483f4d;
 
         @apply bg-linear-to-r from-[#2a7b9b00] from-0%
 		to-(--color) to-100%;
     }
 
-    @utility raised {
+    .raised {
         @apply p-1 px-4 bg-forge-surface rounded border border-zinc-800 transition hover:border-zinc-600;
 
         button {
@@ -49,7 +49,7 @@
         }
     }
 
-    @utility card {
+    .card {
         @apply raised flex flex-row gap-2 place-items-center font-semibold h-full normal-case drop-shadow-sm hover:drop-shadow-black text-white;
 
         img {
@@ -57,7 +57,7 @@
         }
     }
 
-    @utility lesson {
+    .lesson {
         li {
             @apply flex flex-row;
         }
