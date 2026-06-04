@@ -5,9 +5,57 @@ import { useEffect, useState } from "react";
 import { useUser } from "../Global";
 import { Category } from "../firebase/Firebase";
 
+function Top() {
+    return (
+        <a
+            href="/home"
+            className="flex flex-row gap-3 min-h-16 place-items-center text-white hover:gradient-text"
+        >
+            <img className="h-6 rounded" src="/logo.png" alt="SyntaxForge" />
+            <h2 className="text-base">SyntaxForge</h2>
+        </a>
+    );
+}
+
+function Group({ heading, children }) {
+    return (
+        <ul className="group">
+            <h2>
+                <li>{heading}</li>
+            </h2>
+            {children}
+        </ul>
+    );
+}
+
+function Menu({ heading, children, style = null }) {
+    return (
+        <ul className="menu">
+            <li style={style}>{heading}</li>
+            <ul className="submenu">{children}</ul>
+        </ul>
+    );
+}
+
+function Item({ name, link = null, key = null, style = null }) {
+    if (link) {
+        return (
+            <a href={link} key={key}>
+                <li style={style}>{name}</li>
+            </a>
+        );
+    } else {
+        return (
+            <li key={key} style={style}>
+                {name}
+            </li>
+        );
+    }
+}
+
 export default function Sidebar() {
     const [courses, setCourses] = useState({});
-    const [playgrounds, setPlaygrounds] = useState({});
+    // const [playgrounds, setPlaygrounds] = useState({});
     const [username, setUsername] = useState("");
     const [cates, setCates] = useState([]);
 
@@ -21,96 +69,99 @@ export default function Sidebar() {
             setUsername(data.username);
         });
 
-        user.get("private").then((data) => {
-            setPlaygrounds(data.playgrounds || {});
-        });
+        // user.get("private").then((data) => {
+        //     setPlaygrounds(data.playgrounds || {});
+        // });
 
         Category.getAll().then((l) => {
             setCates(l);
+            console.log(l);
         });
     }, [user]);
 
-    function createPlayground() {
-        const name = prompt("Playground Name:");
-        if (name) {
-            const id = name.replaceAll(" ", "-").toLowerCase();
-            user.set("private", {
-                playgrounds: {
-                    [id]: {
-                        name: name,
-                    },
-                },
-            }).then(() => {
-                window.location.href = "/playgrounds/" + id;
-            });
-        }
-    }
+    // function createPlayground() {
+    //     const name = prompt("Playground Name:");
+    //     if (name) {
+    //         const id = name.replaceAll(" ", "-").toLowerCase();
+    //         user.set("private", {
+    //             playgrounds: {
+    //                 [id]: {
+    //                     name: name,
+    //                 },
+    //             },
+    //         }).then(() => {
+    //             window.location.href = "/playgrounds/" + id;
+    //         });
+    //     }
+    // }
 
     return (
         <nav>
-            <a
-                href="/home"
-                className="flex flex-row gap-3 min-h-16 place-items-center text-white hover:gradient-text"
-            >
-                <img
-                    className="h-6 rounded"
-                    src="/logo.png"
-                    alt="SyntaxForge"
-                />
-                <h2 className="text-base">SyntaxForge</h2>
-            </a>
-            <ul className="group">
-                <h2>
-                    <li>Personal</li>
-                </h2>
+            <Top />
+            <Group heading="Personal">
+                <Item name="Your Profile" link={`/user/@${username}`} />
 
-                <a href={`/user/@${username}`}>
-                    <li>Your Profile</li>
-                </a>
-
-                <ul className="menu">
-                    <li>Your Courses</li>
-                    <ul className="submenu">
-                        {Object.keys(courses).map((key) => {
-                            const data = courses[key];
-                            if (data.added) {
-                                return (
-                                    <a key={key} href={`/${key}`}>
-                                        <li>
-                                            {data.nickname
-                                                ? data.nickname
-                                                : key.replaceAll("-", " ")}
-                                        </li>
-                                    </a>
-                                );
-                            }
-                        })}
-                        <a href="/courses">
-                            <li>Find Courses</li>
-                        </a>
-                    </ul>
-                </ul>
-
-                <ul className="menu">
-                    <li>Playgrounds</li>
-                    <ul className="submenu">
-                        {Object.keys(playgrounds || {}).map((key) => {
-                            const data = playgrounds[key];
+                <Menu heading="Your Courses">
+                    {Object.keys(courses).map((key) => {
+                        const data = courses[key];
+                        if (data.added) {
                             return (
-                                <a href={`/playgrounds/${key}`} key={key}>
-                                    <li>{data.name}</li>
-                                </a>
+                                <Item
+                                    name={
+                                        data.nickname
+                                            ? data.nickname
+                                            : key.replaceAll("-", " ")
+                                    }
+                                    key={key}
+                                    link={`/${key}`}
+                                />
                             );
-                        })}
-                        <li onClick={createPlayground}>New Playground</li>
-                    </ul>
-                </ul>
-            </ul>
+                        }
+                    })}
+                    {/* <Item name="Find Courses" link="/courses" /> */}
+                </Menu>
+                {/* <Menu heading="Playgrounds">
+                    {Object.keys(playgrounds || {}).map((key) => {
+                        const data = playgrounds[key];
+                        return (
+                            <a href={`/playgrounds/${key}`} key={key}>
+                                <li>{data.name}</li>
+                            </a>
+                        );
+                    })}
+                    <li onClick={createPlayground}>New Playground</li>
+                </Menu> */}
+            </Group>
 
-            <ul className="group">
-                <h2>
-                    <li>Quick Links</li>
-                </h2>
+            <Group heading="Courses">
+                {cates.map((category) => {
+                    if (!category.hidden) {
+                        return (
+                            <Menu
+                                heading={category.name}
+                                style={{
+                                    "--color": `${category.color || "#fc483f"}4d`,
+                                }}
+                            >
+                                {category.courses.map((v) => {
+                                    if (!v.hidden)
+                                        return (
+                                            <Item
+                                                name={v.name}
+                                                link={`/${v.id}`}
+                                                style={{
+                                                    "--color": `${v.color || "#fc483f"}4d`,
+                                                }}
+                                            />
+                                        );
+                                })}
+                            </Menu>
+                        );
+                    }
+                })}
+            </Group>
+
+            {/* <Group heading="Quick Links">
                 <ul className="menu">
                     <a href="/courses">
                         <li>Available Courses</li>
@@ -120,7 +171,7 @@ export default function Sidebar() {
                             if (!category.hidden) {
                                 return (
                                     <a
-                                        href={`/courses/${category.id}`}
+                                        href={`/courses#${category.id}`}
                                         key={category.id}
                                     >
                                         <li
@@ -136,7 +187,7 @@ export default function Sidebar() {
                         })}
                     </ul>
                 </ul>
-            </ul>
+            </Group> */}
         </nav>
     );
 }

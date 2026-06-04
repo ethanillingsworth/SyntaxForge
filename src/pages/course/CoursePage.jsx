@@ -1,32 +1,33 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Category, Course, Unit } from "../firebase/Firebase";
-import Lesson from "../components/Lesson";
-import { stringToId, useAdmin } from "../Global";
-import PopupMenu from "../components/PopupMenu";
-import { Card } from "../components/Card";
+import { Category, Course, Unit } from "../../firebase/Firebase";
+import Lesson from "../../components/Lesson";
+import { stringToId, useAdmin } from "../../Global";
+import PopupMenu from "../../components/PopupMenu";
+import { Card } from "../../components/Card";
+import ProgressBar from "../../components/ProgressBar";
 
 export default function CoursePage() {
     const { courseId } = useParams();
     const [data, setData] = useState({});
     const [units, setUnits] = useState([]);
 
+    const [pos, setPos] = useState();
+
     const [showUnitMenu, setShowUnitMenu] = useState(false);
-    const [unitMenuPos, setUnitMenuPos] = useState();
     const [currentUnit, setCurrentUnit] = useState();
     const [currentUnitNum, setCurrentUnitNum] = useState();
 
     const [showLessonMenu, setShowLessonMenu] = useState(false);
-    const [lessonMenuPos, setLessonMenuPos] = useState();
     const [currentLesson, setCurrentLesson] = useState();
 
     const isAdmin = useAdmin();
 
     useEffect(() => {
-        window.course = courseId;
         const course = new Course(courseId);
         course.get().then((d) => {
             setData(d);
+            console.log(d);
         });
 
         course.getAllUnits().then((l) => {
@@ -110,69 +111,61 @@ export default function CoursePage() {
 
     return (
         <>
-            {showUnitMenu & isAdmin ? (
-                <PopupMenu
-                    closeAction={() => {
-                        setShowUnitMenu(false);
-                    }}
-                    submitAction={(values) => {
-                        const u = new Unit(currentUnit);
+            <PopupMenu
+                closeAction={() => {
+                    setShowUnitMenu(false);
+                }}
+                showCondition={showUnitMenu & isAdmin}
+                submitAction={(values) => {
+                    const u = new Unit(currentUnit);
 
-                        setUnits((v) => {
-                            return v.map((unit, index) => {
-                                if (index !== currentUnitNum) return unit;
+                    setUnits((v) => {
+                        return v.map((unit, index) => {
+                            if (index !== currentUnitNum) return unit;
 
-                                // 2. Return a NEW object for the unit we are changing
-                                return {
-                                    ...unit,
-                                    // 3. Ensure lessons exists and is a NEW array with the new item
-                                    lessons: [
-                                        ...(unit.lessons || []),
-                                        {
-                                            title: values.name,
-                                            type: values.type,
-                                        },
-                                    ],
-                                };
-                            });
+                            // 2. Return a NEW object for the unit we are changing
+                            return {
+                                ...unit,
+                                // 3. Ensure lessons exists and is a NEW array with the new item
+                                lessons: [
+                                    ...(unit.lessons || []),
+                                    {
+                                        title: values.name,
+                                        type: values.type,
+                                    },
+                                ],
+                            };
                         });
+                    });
 
-                        u.createLesson(values.name, values.type);
+                    u.createLesson(values.name, values.type);
 
-                        setShowUnitMenu(false);
-                    }}
-                    position={unitMenuPos}
-                    dataTemplate={unitTemplate}
-                />
-            ) : null}
+                    setShowUnitMenu(false);
+                }}
+                position={pos}
+                dataTemplate={unitTemplate}
+            />
 
-            {showLessonMenu & isAdmin ? (
-                <PopupMenu
-                    closeAction={() => {
-                        setShowLessonMenu(false);
-                    }}
-                    submitAction={() => {
-                        setShowLessonMenu(false);
-                    }}
-                    position={lessonMenuPos}
-                    dataTemplate={lessonTemplate}
-                />
-            ) : null}
+            <PopupMenu
+                closeAction={() => {
+                    setShowLessonMenu(false);
+                }}
+                showCondition={showLessonMenu & isAdmin}
+                hideSubmit={true}
+                position={pos}
+                dataTemplate={lessonTemplate}
+            />
 
-            <div className="flex flex-row">
-                <h1>{data.id?.replaceAll("-", " ")}</h1>
-                <div className="flex flex-row gap-2 ml-auto h-fit">
+            <div className="hero">
+                <h1>{data.name}</h1>
+                <h2>{data.blurb}</h2>
+                <div className="tags">
                     {data.categorys?.map((category) => {
-                        return (
-                            <Card
-                                id={category}
-                                link={`/courses/${category}`}
-                                type={Category}
-                            ></Card>
-                        );
+                        return <Card large id={category}></Card>;
                     })}
                 </div>
             </div>
+            <ProgressBar value={50} accentColor={data.color} />
 
             <h2>Course Description</h2>
             <p>{data.desc}</p>
@@ -190,7 +183,7 @@ export default function CoursePage() {
                                     setCurrentUnit(unit.id);
                                     setCurrentUnitNum(unit.number - 1);
                                     setShowUnitMenu(true);
-                                    setUnitMenuPos({
+                                    setPos({
                                         x: e.pageX,
                                         y: e.pageY,
                                     });
@@ -202,7 +195,7 @@ export default function CoursePage() {
                                 {unit.lessons?.map((lesson, index) => {
                                     return (
                                         <Lesson
-                                            course={courseId}
+                                            course={data}
                                             unit={unit.number}
                                             type={lesson.type}
                                             id={stringToId(lesson.title)}
@@ -219,7 +212,7 @@ export default function CoursePage() {
                                                 setCurrentLesson(index);
 
                                                 setShowLessonMenu(true);
-                                                setLessonMenuPos({
+                                                setPos({
                                                     x: e.clientX,
                                                     y: e.clientY,
                                                 });
@@ -235,7 +228,7 @@ export default function CoursePage() {
                 })}
             </div>
 
-            <div className="relative w-full flex flex-col place-content-center place-items-center mt-5">
+            {/* <div className="relative w-full flex flex-col place-content-center place-items-center mt-5">
                 <progress
                     className="w-full h-8"
                     value="60"
@@ -245,7 +238,7 @@ export default function CoursePage() {
                 <span className="absolute h-full top-0 inset-0 flex items-center justify-center font-bold text-white text-shadow-black text-shadow-xs pointer-events-none">
                     {`${data.percent}%`}
                 </span>
-            </div>
+            </div> */}
         </>
     );
 }

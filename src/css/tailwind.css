@@ -76,11 +76,20 @@
             }
         }
     }
+
     .card {
         @apply raised flex flex-row gap-2 place-items-center font-semibold h-full normal-case drop-shadow-sm hover:drop-shadow-black text-white;
 
         img {
             @apply h-6 drop-shadow-black drop-shadow-sm;
+        }
+    }
+
+    .card.large {
+        @apply text-xl;
+
+        img {
+            @apply h-8;
         }
     }
 
@@ -106,7 +115,7 @@
         }
     }
 
-    .mcq {
+    .answers {
         li {
             @apply hover:bg-forge-gold/25 my-1 hover:text-forge-gold p-1 rounded hover:cursor-pointer transition w-fit px-2 select-none;
         }
@@ -124,6 +133,34 @@
 
         & > * {
             @apply my-2;
+        }
+    }
+
+    .hero {
+        @apply flex flex-col my-64 gap-4 place-content-center place-items-center;
+
+        h1 {
+            @apply text-5xl;
+        }
+
+        h2 {
+            @apply text-3xl font-normal border-0 m-0 p-0;
+        }
+
+        .tags {
+            @apply inline-flex gap-4 h-fit mt-4;
+        }
+    }
+
+    .progressbar {
+        @apply relative w-full flex flex-col place-content-center place-items-center h-5 bg-forge-surface rounded overflow-hidden;
+
+        .progress {
+            @apply h-full place-self-start;
+        }
+
+        span {
+            @apply absolute h-full top-0 inset-0 flex items-center justify-center font-bold text-white text-shadow-black text-shadow-xs pointer-events-none;
         }
     }
 }
@@ -197,7 +234,6 @@
             @apply my-2;
         }
 
-        h1,
         h2 {
             @apply mb-4;
         }
@@ -252,8 +288,12 @@
             @apply ml-4;
         }
 
+        a li {
+            @apply hover:sidebar-hover;
+        }
+
         li {
-            @apply hover:sidebar-hover py-1;
+            @apply py-1;
         }
 
         table {
@@ -354,7 +394,7 @@
         }
 
         .editor-frame {
-            @apply w-full max-w-280 h-100 border border-zinc-700 rounded-lg overflow-hidden shadow-2xl;
+            @apply w-full max-w-280 h-128 border border-zinc-700 rounded-lg overflow-hidden shadow-2xl;
             box-shadow:
                 0 0 60px rgba(252, 72, 63, 0.06),
                 0 25px 50px rgba(0, 0, 0, 0.4);

@@ -1,13 +1,13 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Article, Course } from "../firebase/Firebase";
+import { Article, Course } from "../../firebase/Firebase";
 
 import Editor from "@uiw/react-codemirror";
 import { markdown, markdownLanguage } from "@codemirror/lang-markdown";
 import { materialDark } from "@uiw/codemirror-theme-material";
 import { languages } from "@codemirror/language-data";
 import { marked } from "marked";
-import { capitalize, useAdmin, useShortcut, useUser } from "../Global";
+import { capitalize, useAdmin, useShortcut, useUser } from "../../Global";
 
 import hljs from "highlight.js";
 import javascript from "highlight.js/lib/languages/javascript";
@@ -26,13 +26,11 @@ export default function ArticlePage() {
     const [date, setDate] = useState("Loading...");
 
     const user = useUser();
-    const isAdmin = useAdmin()
+    const isAdmin = useAdmin();
 
     const courseName = capitalize(courseId.replaceAll("-", " "));
     const unit = unitName.split("-")[1];
     const articleIndex = articleName.split("-")[0];
-
-
 
     useEffect(() => {
         const article = new Article(courseId, unit, articleIndex);
@@ -62,32 +60,13 @@ export default function ArticlePage() {
         const xp = Math.floor(rawContent.length / 200) * 5;
 
         if (xp > 0) {
-            user?.get().then((d) => {
-                const firstView =
-                    !d.courses?.[courseId]?.[
-                        parseInt(unitName.split("-")[1])
-                    ]?.[articleIndex];
-
-                if (firstView) {
-                    const updatedData = {
-                        courses: {
-                            [courseId]: {
-                                [parseInt(unitName.split("-")[1])]: {
-                                    [articleIndex]: {
-                                        percent: 100,
-                                        xpEarned:
-                                            Math.floor(
-                                                rawContent.length / 200,
-                                            ) * 5,
-                                    },
-                                },
-                            },
-                        },
-                    };
-
-                    user?.set("public", updatedData);
-                }
-            });
+            user.giveXP(
+                xp,
+                100,
+                courseId,
+                unitName.split("-")[1],
+                articleIndex,
+            );
         }
     }, [articleIndex, courseId, rawContent, unitName, user]);
 
@@ -96,7 +75,6 @@ export default function ArticlePage() {
     }, [rawContent, articleContent, isAdmin]);
 
     const onChange = (val) => {
-        console.log(val);
         setArticleContent(marked.parse(val));
         setRawContent(val);
     };
