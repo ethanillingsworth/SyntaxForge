@@ -75,6 +75,9 @@ console.log(\`Forged Slug: "\${slug}"\`);
                     <div className="editor-frame">
                         <Editor
                             title="main.js"
+                            addSettings={(menu) => {
+                                return menu.addText("sample", "Hello");
+                            }}
                             showDecorativeButtons
                             noLoginRequired
                             readOnly

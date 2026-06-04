@@ -18,6 +18,7 @@ import { color } from "@uiw/codemirror-extensions-color";
 import axios from "axios";
 import { Card } from "./Card";
 import { Category } from "../firebase/Firebase";
+import { createMenu, usePopup } from "../use/usePopup";
 
 export default function Editor({
     title,
@@ -27,15 +28,12 @@ export default function Editor({
     showDecorativeButtons = false,
     noLoginRequired = false,
     topBarItems = [],
-    extraSettings = {},
+    addSettings = null,
     onChange = () => {},
     onSettingsSubmit = () => {},
     value = "",
 }) {
     const user = useUser();
-
-    const [showPopup, setPopup] = useState(false);
-    const [popupPos, setPopupPos] = useState(null);
 
     const [fontSize, setFontSize] = useState(14);
 
@@ -46,17 +44,25 @@ export default function Editor({
     ]);
 
     const [theme, setTheme] = useState("Dark");
+    const [themes] = useState({
+        Dark: "dark",
+        "Github Dark": githubDark,
+        "Console Dark": consoleDark,
+        "VSCode Dark": vscodeDark,
+        "XCode Dark": xcodeDark,
+    });
 
-    useEffect(() => {
-        user?.get("private").then((data) => {
-            setFontSize(parseInt(data.editorSettings?.textSize) || 14);
-            setTheme(data.editorSettings?.theme || "Dark");
-        });
-    }, [user]);
+    const settingsMenu = useMemo(() => {
+        const menu = createMenu()
+            .addText("heading1", "Global Settings")
+            .addNumber("textSize", "Font Size: ", "px", fontSize)
+            .addSelect("theme", "Theme: ", Object.keys(themes), theme);
 
-    useEffect(() => {
-        setContent(value);
-    }, [value]);
+        if (addSettings) {
+            return addSettings(menu);
+        }
+        return menu;
+    }, [addSettings, fontSize, theme, themes]);
 
     function updateSettings(values) {
         setFontSize(values.textSize);
@@ -73,22 +79,33 @@ export default function Editor({
         });
 
         onSettingsSubmit(values);
-
-        closePopup();
     }
 
-    function openPopup(e) {
-        setPopupPos({
-            x: e.clientX,
-            y: e.clientY,
+    const settingsPopup = usePopup(settingsMenu.build(), updateSettings);
+
+    useEffect(() => {
+        user?.get("private").then((data) => {
+            setFontSize(parseInt(data.editorSettings?.textSize) || 14);
+            setTheme(data.editorSettings?.theme || "Dark");
         });
+    }, [user]);
 
-        setPopup(true);
-    }
+    useEffect(() => {
+        setContent(value);
+    }, [value]);
 
-    function closePopup() {
-        setPopup(false);
-    }
+    // function openPopup(e) {
+    //     setPopupPos({
+    //         x: e.clientX,
+    //         y: e.clientY,
+    //     });
+
+    //     setPopup(true);
+    // }
+
+    // function closePopup() {
+    //     setPopup(false);
+    // }
 
     function runCode() {
         console.log(content);
@@ -135,40 +152,6 @@ export default function Editor({
         });
     });
 
-    const [themes] = useState({
-        Dark: "dark",
-        "Github Dark": githubDark,
-        "Console Dark": consoleDark,
-        "VSCode Dark": vscodeDark,
-        "XCode Dark": xcodeDark,
-    });
-
-    const template = useMemo(
-        () => ({
-            heading1: {
-                label: "Global Settings",
-                type: "text",
-            },
-
-            textSize: {
-                type: "number",
-                value: fontSize,
-                label: "Font Size: ",
-                units: "px",
-            },
-
-            theme: {
-                type: "select",
-                options: Object.keys(themes),
-                label: "Theme: ",
-                value: theme,
-            },
-
-            ...extraSettings,
-        }),
-        [fontSize, themes, theme, extraSettings],
-    );
-
     const languageLookup = {
         javascript: javascript(),
         python: python(),
@@ -176,13 +159,15 @@ export default function Editor({
 
     return (
         <>
-            <PopupMenu
+            {/* <PopupMenu
                 closeAction={closePopup}
                 submitAction={updateSettings}
                 position={popupPos}
                 showCondition={showPopup}
                 dataTemplate={template}
-            />
+            /> */}
+
+            {settingsPopup.element}
 
             <div className="editor">
                 <div className="head">
@@ -195,7 +180,7 @@ export default function Editor({
                     ) : null}
                     <span className="normal-case">{title}</span>
                     {!hideSettings ? (
-                        <button onClick={openPopup}>Settings</button>
+                        <button onClick={settingsPopup.open}>Settings</button>
                     ) : null}
                     {topBarItems.map((item) => {
                         if (item.type === "button") {

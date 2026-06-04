@@ -1,8 +1,19 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Course, DataObject, Unit } from "../../firebase/Firebase";
 import { useAdmin, useUser } from "../../Global";
 import PopupMenu from "../../components/PopupMenu";
+import { createMenu, usePopup } from "../../use/usePopup";
+
+const answerMenu = createMenu()
+    .addInput("text")
+    .addButton("setCorrect", "Set Correct")
+    .build();
+
+const questionMenu = createMenu()
+    .addInput("text")
+    .addButton("remove", "Remove")
+    .build();
 
 export default function MCQPage() {
     const { unitName, mcqName, courseId } = useParams();
@@ -18,18 +29,89 @@ export default function MCQPage() {
     const mcqId = parseInt(mcqName.split("-")[0]);
 
     const user = useUser();
-
     const admin = useAdmin();
-
-    const [showAnswerPrompt, setShowAnswerPrompt] = useState(false);
-    const [showQuestionPrompt, setShowQuestionPrompt] = useState(false);
-
-    const [pos, setPos] = useState();
 
     const [currentIndexes, setCurrentIndexes] = useState({
         question: 0,
         answer: 0,
     });
+
+    function submitAnswerMenu(values) {
+        const qIdx = currentIndexes["question"];
+        const aIdx = currentIndexes["answer"];
+
+        const updatedChoices = [...data.questions[qIdx].choices];
+        updatedChoices[aIdx] = values.text;
+
+        const updatedQuestions = [...data.questions];
+        updatedQuestions[qIdx] = {
+            ...updatedQuestions[qIdx],
+            choices: updatedChoices,
+        };
+
+        if (values.setCorrect) {
+            const updatedAnswers = [...data.answers];
+            updatedAnswers[qIdx] = aIdx;
+
+            setData((v) => ({
+                ...v,
+                answers: updatedAnswers,
+            }));
+            mainData.current.lessons[mcqId].answers = updatedAnswers;
+        }
+
+        setData((v) => ({
+            ...v,
+            questions: updatedQuestions,
+        }));
+        mainData.current.lessons[mcqId].questions = updatedQuestions;
+
+        unit.current.set({
+            ...mainData.current,
+        });
+    }
+
+    const answerPrompt = usePopup(answerMenu, submitAnswerMenu);
+
+    function submitQuestionMenu(values) {
+        const qIdx = currentIndexes["question"];
+
+        const updatedQuestions = [...data.questions];
+        updatedQuestions[qIdx] = {
+            ...updatedQuestions[qIdx],
+            text: values.text || "",
+        };
+
+        setData((v) => ({
+            ...v,
+            questions: updatedQuestions,
+        }));
+
+        mainData.current.lessons[mcqId].questions = updatedQuestions;
+
+        if (values.remove) {
+            const updatedQs = [...data.questions];
+
+            updatedQs.splice(qIdx, 1);
+
+            const updatedAnswers = [...data.answers];
+
+            updatedAnswers.splice(qIdx, 1);
+            setData((v) => ({
+                ...v,
+                answers: updatedAnswers,
+                questions: updatedQs,
+            }));
+
+            mainData.current.lessons[mcqId].questions = updatedQs;
+            mainData.current.lessons[mcqId].answers = updatedAnswers;
+        }
+        unit.current.set({
+            ...mainData.current,
+        });
+    }
+
+    const questionPrompt = usePopup(questionMenu, submitQuestionMenu);
 
     useEffect(() => {
         const course = new Course(courseId);
@@ -96,132 +178,6 @@ export default function MCQPage() {
         });
     }
 
-    const answerTemplate = useMemo(() => {
-        return {
-            text: {
-                value:
-                    data?.questions?.[currentIndexes["question"]]?.choices[
-                        currentIndexes["answer"]
-                    ] || "none",
-            },
-            setCorrect: {
-                type: "button",
-                label: "Set Correct",
-                click: () => {
-                    const qIdx = currentIndexes["question"];
-                    const aIdx = currentIndexes["answer"];
-
-                    // 2. Calculate the updated data upfront so BOTH React and Firebase can use it
-
-                    const updatedAnswers = [...data.answers];
-                    updatedAnswers[qIdx] = aIdx;
-
-                    // 3. Update local React state instantly for a snappy UI
-                    setData((v) => ({
-                        ...v,
-                        answers: updatedAnswers,
-                    }));
-                    mainData.current.lessons[mcqId].answers = updatedAnswers;
-                    // Close your modal/prompt
-                    setShowAnswerPrompt(false);
-
-                    unit.current.set({
-                        ...mainData.current,
-                    });
-                },
-            },
-        };
-    }, [currentIndexes, data.answers, data?.questions, mcqId]);
-
-    const questionTemplate = useMemo(() => {
-        return {
-            text: {
-                value: data?.questions?.[currentIndexes["question"]]?.text,
-            },
-            remove: {
-                type: "button",
-                click: () => {
-                    console.log(currentIndexes);
-                    const qIdx = currentIndexes["question"];
-
-                    const updatedQuestions = [...data.questions];
-
-                    updatedQuestions.splice(qIdx, 1);
-
-                    const updatedAnswers = [...data.answers];
-
-                    updatedAnswers.splice(qIdx, 1);
-                    setData((v) => ({
-                        ...v,
-                        answers: updatedAnswers,
-                        questions: updatedQuestions,
-                    }));
-
-                    mainData.current.lessons[mcqId].questions =
-                        updatedQuestions;
-                    mainData.current.lessons[mcqId].answers = updatedAnswers;
-
-                    unit.current.set({
-                        ...mainData.current,
-                    });
-
-                    setShowQuestionPrompt(false);
-                },
-            },
-        };
-    }, [currentIndexes, data.answers, data.questions, mcqId]);
-
-    function submitAnswerMenu(values) {
-        const qIdx = currentIndexes["question"];
-        const aIdx = currentIndexes["answer"];
-
-        // 2. Calculate the updated data upfront so BOTH React and Firebase can use it
-        const updatedChoices = [...data.questions[qIdx].choices];
-        updatedChoices[aIdx] = values.text;
-
-        const updatedQuestions = [...data.questions];
-        updatedQuestions[qIdx] = {
-            ...updatedQuestions[qIdx],
-            choices: updatedChoices,
-        };
-
-        // 3. Update local React state instantly for a snappy UI
-        setData((v) => ({
-            ...v,
-            questions: updatedQuestions,
-        }));
-        mainData.current.lessons[mcqId].questions = updatedQuestions;
-        // Close your modal/prompt
-        setShowAnswerPrompt(false);
-
-        unit.current.set({
-            ...mainData.current,
-        });
-    }
-
-    function submitQuestionMenu(values) {
-        const qIdx = currentIndexes["question"];
-
-        const updatedQuestions = [...data.questions];
-        updatedQuestions[qIdx] = {
-            ...updatedQuestions[qIdx],
-            text: values.text,
-        };
-
-        // 3. Update local React state instantly for a snappy UI
-        setData((v) => ({
-            ...v,
-            questions: updatedQuestions,
-        }));
-        mainData.current.lessons[mcqId].questions = updatedQuestions;
-        // Close your modal/prompt
-        setShowQuestionPrompt(false);
-
-        unit.current.set({
-            ...mainData.current,
-        });
-    }
-
     function addQuestion() {
         const updatedQuestions = [
             ...data.questions,
@@ -248,25 +204,9 @@ export default function MCQPage() {
 
     return (
         <>
-            <PopupMenu
-                dataTemplate={answerTemplate}
-                showCondition={admin && showAnswerPrompt}
-                submitAction={submitAnswerMenu}
-                closeAction={() => {
-                    setShowAnswerPrompt(false);
-                }}
-                position={pos}
-            />
+            {answerPrompt.element}
+            {questionPrompt.element}
 
-            <PopupMenu
-                dataTemplate={questionTemplate}
-                position={pos}
-                submitAction={submitQuestionMenu}
-                showCondition={admin && showQuestionPrompt}
-                closeAction={() => {
-                    setShowQuestionPrompt(false);
-                }}
-            />
             <h1>
                 {data.title} - {data.questions?.length} Questions{" "}
                 {userCourseData
@@ -278,16 +218,15 @@ export default function MCQPage() {
                     <div className="question" id={`question-${index}`}>
                         <h2
                             onContextMenu={(e) => {
-                                e.preventDefault();
-                                setCurrentIndexes({
-                                    question: index,
-                                    answer: 0,
-                                });
-                                setPos({
-                                    x: e.pageX,
-                                    y: e.pageY,
-                                });
-                                setShowQuestionPrompt(true);
+                                if (admin) {
+                                    e.preventDefault();
+                                    setCurrentIndexes({
+                                        question: index,
+                                        answer: 0,
+                                    });
+
+                                    questionPrompt.open(e);
+                                }
                             }}
                         >
                             {q.text}
@@ -300,16 +239,15 @@ export default function MCQPage() {
                                             select(e, cIndex, index);
                                         }}
                                         onContextMenu={(e) => {
-                                            e.preventDefault();
-                                            setCurrentIndexes({
-                                                question: index,
-                                                answer: cIndex,
-                                            });
-                                            setPos({
-                                                x: e.pageX,
-                                                y: e.pageY,
-                                            });
-                                            setShowAnswerPrompt(true);
+                                            if (admin) {
+                                                e.preventDefault();
+                                                setCurrentIndexes({
+                                                    question: index,
+                                                    answer: cIndex,
+                                                });
+
+                                                answerPrompt.open(e);
+                                            }
                                         }}
                                         id={`answer-${index}-${cIndex}`}
                                     >
