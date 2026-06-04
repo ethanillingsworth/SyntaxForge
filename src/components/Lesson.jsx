@@ -8,7 +8,6 @@ export default function Lesson({
     unit,
     type,
     id,
-    key,
     index,
     children,
     onContextMenu = () => {},
@@ -30,7 +29,6 @@ export default function Lesson({
             href={`/${course.id}/unit-${unit}/${type}/${index}-${id}`}
             id={id}
             className="lesson"
-            key={key || id}
             onContextMenu={onContextMenu}
         >
             <li

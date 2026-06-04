@@ -37,19 +37,15 @@ function Menu({ heading, children, style = null }) {
     );
 }
 
-function Item({ name, link = null, key = null, style = null }) {
+function Item({ name, link = null, style = null }) {
     if (link) {
         return (
-            <a href={link} key={key}>
+            <a href={link}>
                 <li style={style}>{name}</li>
             </a>
         );
     } else {
-        return (
-            <li key={key} style={style}>
-                {name}
-            </li>
-        );
+        return <li style={style}>{name}</li>;
     }
 }
 
@@ -142,6 +138,7 @@ export default function Sidebar() {
                                 style={{
                                     "--color": `${category.color || "#fc483f"}4d`,
                                 }}
+                                key={category.id}
                             >
                                 {category.courses.map((v) => {
                                     if (!v.hidden)
@@ -149,6 +146,7 @@ export default function Sidebar() {
                                             <Item
                                                 name={v.name}
                                                 link={`/${v.id}`}
+                                                key={v.id}
                                                 style={{
                                                     "--color": `${v.color || "#fc483f"}4d`,
                                                 }}

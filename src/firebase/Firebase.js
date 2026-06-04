@@ -192,12 +192,23 @@ export class Unit extends DataObject {
 
         // This returns MM/DD/YYYY, so we swap slashes for dashes
         const formattedDate = formatter.format(now).replace(/\//g, "-");
+
+        let data = {
+            title,
+            type,
+            date: formattedDate,
+        };
+
+        if (type == "mcq") {
+            data = {
+                ...data,
+                questions: [],
+                answers: [],
+            };
+        }
+
         await this.set({
-            lessons: arrayUnion({
-                title,
-                type,
-                date: formattedDate,
-            }),
+            lessons: arrayUnion(data),
         });
     }
 

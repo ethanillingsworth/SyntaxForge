@@ -40,6 +40,7 @@ export default function PopupMenu({
 
     const handleSubmit = () => {
         submitAction(values);
+        closeAction(false);
     };
 
     if (showCondition) {
@@ -69,7 +70,7 @@ export default function PopupMenu({
                                 >
                                     {data.options.map((option) => {
                                         return (
-                                            <option value={option}>
+                                            <option key={option} value={option}>
                                                 {option}
                                             </option>
                                         );
@@ -81,7 +82,13 @@ export default function PopupMenu({
 
                     if (data.type == "button") {
                         return (
-                            <button key={title} onClick={data.click}>
+                            <button
+                                key={title}
+                                onClick={() => {
+                                    submitAction({ ...values, [title]: true });
+                                    closeAction();
+                                }}
+                            >
                                 {data.label || title}
                             </button>
                         );
@@ -134,7 +141,12 @@ export default function PopupMenu({
                 })}
 
                 <div className="flex flex-row gap-1.5">
-                    <button onClick={closeAction} className="w-full">
+                    <button
+                        onClick={() => {
+                            closeAction(false);
+                        }}
+                        className="w-full"
+                    >
                         Cancel
                     </button>
                     {!hideSubmit ? (

@@ -6,28 +6,107 @@ import { stringToId, useAdmin } from "../../Global";
 import PopupMenu from "../../components/PopupMenu";
 import { Card } from "../../components/Card";
 import ProgressBar from "../../components/ProgressBar";
+import { createMenu, usePopup } from "../../use/usePopup";
+
+const unitMenuTemplate = createMenu()
+    .addInput("name", "Lesson Name:")
+    .addSelect("type", "Lesson Type:", ["article", "mcq", "frq"])
+    .build();
+
+const lessonMenuTemplate = createMenu()
+    .addButton("up", "Up")
+    .addButton("down", "Down")
+    .build();
 
 export default function CoursePage() {
     const { courseId } = useParams();
     const [data, setData] = useState({});
     const [units, setUnits] = useState([]);
 
-    const [pos, setPos] = useState();
+    const admin = useAdmin();
 
-    const [showUnitMenu, setShowUnitMenu] = useState(false);
+    const unitMenu = usePopup(unitMenuTemplate, (values) => {
+        const u = new Unit(currentUnit);
+
+        setUnits((v) => {
+            return v.map((unit, index) => {
+                if (index !== currentUnitNum) return unit;
+
+                // 2. Return a NEW object for the unit we are changing
+                return {
+                    ...unit,
+                    // 3. Ensure lessons exists and is a NEW array with the new item
+                    lessons: [
+                        ...(unit.lessons || []),
+                        {
+                            title: values.name,
+                            type: values.type,
+                        },
+                    ],
+                };
+            });
+        });
+
+        u.createLesson(values.name, values.type);
+    });
+
     const [currentUnit, setCurrentUnit] = useState();
     const [currentUnitNum, setCurrentUnitNum] = useState();
-
-    const [showLessonMenu, setShowLessonMenu] = useState(false);
     const [currentLesson, setCurrentLesson] = useState();
 
-    const isAdmin = useAdmin();
+    function updateUnit(lessons) {
+        setUnits((v) => {
+            return v.map((unit, index) => {
+                if (index !== currentUnitNum) return unit;
+
+                return {
+                    ...unit,
+                    lessons: lessons,
+                };
+            });
+        });
+
+        u.set({
+            lessons: lessons,
+        });
+    }
+    function moveLessonUp() {
+        /** @type {Array} */
+        const lessons = units[currentUnitNum].lessons;
+
+        const l1 = lessons.splice(currentLesson, 1)[0];
+        lessons.splice(currentLesson - 1, 0, l1);
+
+        updateUnit(lessons);
+    }
+
+    function moveLessonDown() {
+        /** @type {Array} */
+        const lessons = units[currentUnitNum].lessons;
+
+        const l1 = lessons.splice(currentLesson, 1)[0];
+        lessons.splice(currentLesson + 1, 0, l1);
+
+        updateUnit(lessons);
+    }
+
+    const lessonMenu = usePopup(lessonMenuTemplate, (values) => {
+        console.log(values);
+        if (values.up) {
+            moveLessonUp();
+        }
+
+        if (values.down) {
+            moveLessonDown();
+        }
+    });
+
+    const u = new Unit(currentUnit);
 
     useEffect(() => {
         const course = new Course(courseId);
         course.get().then((d) => {
             setData(d);
-            console.log(d);
         });
 
         course.getAllUnits().then((l) => {
@@ -35,133 +114,17 @@ export default function CoursePage() {
         });
     }, [courseId]);
 
-    const unitTemplate = {
-        name: {
-            label: "Lesson Name:",
-        },
-        type: {
-            label: "Lesson Type:",
-            type: "select",
-            options: ["article", "mcq", "frq"],
-        },
-    };
-
-    const lessonTemplate = {
-        up: {
-            type: "button",
-            label: "Up",
-            click: () => {
-                /** @type {Array} */
-                const lessons = units[currentUnitNum].lessons;
-
-                const l1 = lessons.splice(currentLesson, 1)[0];
-                lessons.splice(currentLesson - 1, 0, l1);
-
-                setShowLessonMenu(false);
-
-                const u = new Unit(currentUnit);
-
-                setUnits((v) => {
-                    return v.map((unit, index) => {
-                        if (index !== currentUnitNum) return unit;
-
-                        return {
-                            ...unit,
-                            lessons: lessons,
-                        };
-                    });
-                });
-
-                u.set({
-                    lessons: lessons,
-                });
-            },
-        },
-        down: {
-            label: "Down",
-            type: "button",
-            click: () => {
-                /** @type {Array} */
-                const lessons = units[currentUnitNum].lessons;
-
-                const l1 = lessons.splice(currentLesson, 1)[0];
-                lessons.splice(currentLesson + 1, 0, l1);
-
-                setShowLessonMenu(false);
-
-                const u = new Unit(currentUnit);
-
-                setUnits((v) => {
-                    return v.map((unit, index) => {
-                        if (index !== currentUnitNum) return unit;
-
-                        return {
-                            ...unit,
-                            lessons: lessons,
-                        };
-                    });
-                });
-
-                u.set({
-                    lessons: lessons,
-                });
-            },
-        },
-    };
-
     return (
         <>
-            <PopupMenu
-                closeAction={() => {
-                    setShowUnitMenu(false);
-                }}
-                showCondition={showUnitMenu & isAdmin}
-                submitAction={(values) => {
-                    const u = new Unit(currentUnit);
-
-                    setUnits((v) => {
-                        return v.map((unit, index) => {
-                            if (index !== currentUnitNum) return unit;
-
-                            // 2. Return a NEW object for the unit we are changing
-                            return {
-                                ...unit,
-                                // 3. Ensure lessons exists and is a NEW array with the new item
-                                lessons: [
-                                    ...(unit.lessons || []),
-                                    {
-                                        title: values.name,
-                                        type: values.type,
-                                    },
-                                ],
-                            };
-                        });
-                    });
-
-                    u.createLesson(values.name, values.type);
-
-                    setShowUnitMenu(false);
-                }}
-                position={pos}
-                dataTemplate={unitTemplate}
-            />
-
-            <PopupMenu
-                closeAction={() => {
-                    setShowLessonMenu(false);
-                }}
-                showCondition={showLessonMenu & isAdmin}
-                hideSubmit={true}
-                position={pos}
-                dataTemplate={lessonTemplate}
-            />
+            {unitMenu.element}
+            {lessonMenu.element}
 
             <div className="hero">
                 <h1>{data.name}</h1>
                 <h2>{data.blurb}</h2>
                 <div className="tags">
                     {data.categorys?.map((category) => {
-                        return <Card large id={category}></Card>;
+                        return <Card large key={category} id={category}></Card>;
                     })}
                 </div>
             </div>
@@ -179,14 +142,12 @@ export default function CoursePage() {
                                 id={`unit-${unit.number}`}
                                 className="hover:bg-none hover:border-none font-semibold"
                                 onContextMenu={(e) => {
-                                    e.preventDefault();
-                                    setCurrentUnit(unit.id);
-                                    setCurrentUnitNum(unit.number - 1);
-                                    setShowUnitMenu(true);
-                                    setPos({
-                                        x: e.pageX,
-                                        y: e.pageY,
-                                    });
+                                    if (admin) {
+                                        e.preventDefault();
+                                        setCurrentUnit(unit.id);
+                                        setCurrentUnitNum(unit.number - 1);
+                                        unitMenu.open(e);
+                                    }
                                 }}
                             >
                                 Unit {unit.number} | {unit.name}
@@ -202,20 +163,15 @@ export default function CoursePage() {
                                             key={index}
                                             index={index}
                                             onContextMenu={(e) => {
-                                                e.preventDefault();
-                                                setCurrentUnit(unit.id);
-
-                                                setCurrentUnitNum(
-                                                    unit.number - 1,
-                                                );
-
-                                                setCurrentLesson(index);
-
-                                                setShowLessonMenu(true);
-                                                setPos({
-                                                    x: e.clientX,
-                                                    y: e.clientY,
-                                                });
+                                                if (admin) {
+                                                    e.preventDefault();
+                                                    setCurrentUnit(unit.id);
+                                                    setCurrentUnitNum(
+                                                        unit.number - 1,
+                                                    );
+                                                    setCurrentLesson(index);
+                                                    lessonMenu.open(e);
+                                                }
                                             }}
                                         >
                                             {lesson.title}
@@ -227,18 +183,6 @@ export default function CoursePage() {
                     );
                 })}
             </div>
-
-            {/* <div className="relative w-full flex flex-col place-content-center place-items-center mt-5">
-                <progress
-                    className="w-full h-8"
-                    value="60"
-                    max="100"
-                ></progress>
-
-                <span className="absolute h-full top-0 inset-0 flex items-center justify-center font-bold text-white text-shadow-black text-shadow-xs pointer-events-none">
-                    {`${data.percent}%`}
-                </span>
-            </div> */}
         </>
     );
 }
