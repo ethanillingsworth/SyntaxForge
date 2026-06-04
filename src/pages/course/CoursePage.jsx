@@ -124,7 +124,7 @@ export default function CoursePage() {
                 <h2>{data.blurb}</h2>
                 <div className="tags">
                     {data.categorys?.map((category) => {
-                        return <Card large id={category}></Card>;
+                        return <Card large key={category} id={category}></Card>;
                     })}
                 </div>
             </div>
