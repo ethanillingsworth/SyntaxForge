@@ -10,7 +10,7 @@ import {
     arrayRemove,
 } from "firebase/firestore";
 import { db, storage } from "./init";
-import { getBlob, ref, uploadBytes } from "firebase/storage";
+import { deleteObject, getBlob, ref, uploadBytes } from "firebase/storage";
 import { marked } from "marked";
 
 const RANKS = [
@@ -411,6 +411,31 @@ export class Article {
         const md = await marked.parse(text);
 
         return { raw: text, parsed: md };
+    }
+
+    async moveContent(newIndex) {
+        const raw = (await this.getMarkdown()).raw;
+
+        const blob = new Blob([raw], {
+            type: "text/markdown",
+        });
+
+        await uploadBytes(
+            ref(
+                storage,
+                `courses/${this.course}/unit-${this.unitNumber}/articles/${newIndex}.md`,
+            ),
+            blob,
+        );
+    }
+
+    async deleteContent() {
+        await deleteObject(
+            ref(
+                storage,
+                `courses/${this.course}/unit-${this.unitNumber}/articles/${this.index}.md`,
+            ),
+        );
     }
 
     async setDefault() {
