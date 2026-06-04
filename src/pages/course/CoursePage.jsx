@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Category, Course, Unit } from "../../firebase/Firebase";
+import { Article, Category, Course, Unit } from "../../firebase/Firebase";
 import Lesson from "../../components/Lesson";
 import { stringToId, useAdmin } from "../../Global";
 import PopupMenu from "../../components/PopupMenu";
@@ -16,6 +16,7 @@ const unitMenuTemplate = createMenu()
 const lessonMenuTemplate = createMenu()
     .addButton("up", "Up")
     .addButton("down", "Down")
+    .addButton("remove", "Remove")
     .build();
 
 export default function CoursePage() {
@@ -76,7 +77,21 @@ export default function CoursePage() {
 
         const l1 = lessons.splice(currentLesson, 1)[0];
         lessons.splice(currentLesson - 1, 0, l1);
+        if (l1.type == "article") {
+            const article1 = new Article(
+                courseId,
+                currentUnitNum + 1,
+                currentLesson - 1,
+            );
+            const article2 = new Article(
+                courseId,
+                currentUnitNum + 1,
+                currentLesson,
+            );
 
+            article1.moveContent(currentLesson);
+            article2.moveContent(currentLesson - 1);
+        }
         updateUnit(lessons);
     }
 
@@ -86,6 +101,38 @@ export default function CoursePage() {
 
         const l1 = lessons.splice(currentLesson, 1)[0];
         lessons.splice(currentLesson + 1, 0, l1);
+        if (l1.type == "article") {
+            const article1 = new Article(
+                courseId,
+                currentUnitNum + 1,
+                currentLesson,
+            );
+            const article2 = new Article(
+                courseId,
+                currentUnitNum + 1,
+                currentLesson + 1,
+            );
+
+            article1.moveContent(currentLesson + 1);
+            article2.moveContent(currentLesson);
+        }
+
+        updateUnit(lessons);
+    }
+
+    function removeLesson() {
+        const lessons = units[currentUnitNum].lessons;
+
+        const l1 = lessons.splice(currentLesson, 1)[0];
+        if (l1.type == "article") {
+            const article1 = new Article(
+                courseId,
+                currentUnitNum + 1,
+                currentLesson,
+            );
+
+            article1.deleteContent();
+        }
 
         updateUnit(lessons);
     }
@@ -98,6 +145,10 @@ export default function CoursePage() {
 
         if (values.down) {
             moveLessonDown();
+        }
+
+        if (values.remove) {
+            removeLesson();
         }
     });
 
