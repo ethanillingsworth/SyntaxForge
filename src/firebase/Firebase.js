@@ -244,6 +244,16 @@ export class User {
         return null;
     }
 
+    async getXp() {
+        const courses = (await this.get()).courses;
+        const total = Object.values(courses)
+            .flatMap((course) => Object.values(course))
+            .flatMap((unit) => Object.values(unit))
+            .reduce((sum, lesson) => sum + (lesson.xpEarned || 0), 0);
+
+        return total;
+    }
+
     getCurrentRank(userXp) {
         return (
             [...RANKS].reverse().find((rank) => userXp >= rank.minXp) ||
