@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Article, Category, Course, Unit } from "../../firebase/Firebase";
 import Lesson from "../../components/Lesson";
-import { stringToId, useAdmin } from "../../Global";
+import { stringToId, useAdmin, useUser } from "../../Global";
 import PopupMenu from "../../components/PopupMenu";
 import { Card } from "../../components/Card";
 import ProgressBar from "../../components/ProgressBar";
@@ -23,8 +23,10 @@ export default function CoursePage() {
     const { courseId } = useParams();
     const [data, setData] = useState({});
     const [units, setUnits] = useState([]);
+    const [progress, setProgress] = useState(0);
 
     const admin = useAdmin();
+    const user = useUser();
 
     const unitMenu = usePopup(unitMenuTemplate, (values) => {
         const u = new Unit(currentUnit);
@@ -163,7 +165,11 @@ export default function CoursePage() {
         course.getAllUnits().then((l) => {
             setUnits(l);
         });
-    }, [courseId]);
+
+        user?.getProgress(courseId).then((n) => {
+            setProgress(n);
+        });
+    }, [courseId, user]);
 
     return (
         <>
@@ -179,7 +185,7 @@ export default function CoursePage() {
                     })}
                 </div>
             </div>
-            <ProgressBar value={50} accentColor={data.color} />
+            <ProgressBar value={progress} accentColor={data.color} />
 
             <h2>Course Description</h2>
             <p>{data.desc}</p>

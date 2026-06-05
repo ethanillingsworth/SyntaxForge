@@ -244,6 +244,29 @@ export class User {
         return null;
     }
 
+    async getProgress(course) {
+        const userCourseData = await this.getCourse(course);
+        const c = new Course(course);
+        const units = await c.getAllUnits();
+        let count = 0;
+        let total = 0;
+        for (const index in units) {
+            const unit = units[index];
+
+            if (unit.lessons) {
+                total += Object.keys(unit.lessons).length;
+            }
+        }
+
+        for (const unit of Object.values(userCourseData)) {
+            for (const lesson of Object.values(unit)) {
+                count += lesson.percent / 100;
+            }
+        }
+
+        return (count / total) * 100;
+    }
+
     async getXp() {
         const courses = (await this.get()).courses;
         const total = Object.values(courses)
@@ -330,10 +353,16 @@ export class User {
         await this.set("public", updatedData);
     }
 
-    async getCourseData(courseId, unitNumber, index) {
+    async getLesson(courseId, unitNumber, index) {
         const data = await this.get("public");
 
         return data.courses[courseId][unitNumber][index];
+    }
+
+    async getCourse(courseId) {
+        const data = await this.get("public");
+
+        return data.courses[courseId];
     }
 
     async admin() {
