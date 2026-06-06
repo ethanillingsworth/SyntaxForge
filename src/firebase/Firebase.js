@@ -264,7 +264,7 @@ export class User {
             }
         }
 
-        return (count / total) * 100;
+        return Math.round((count / total) * 100);
     }
 
     async getXp() {
