@@ -57,7 +57,7 @@ export default function ArticlePage() {
 
     // XP on load
     useEffect(() => {
-        const xp = Math.floor(rawContent.length / 200) * 5;
+        const xp = Math.floor(rawContent.length / 300) * 5;
 
         if (xp > 0) {
             user.giveXP(

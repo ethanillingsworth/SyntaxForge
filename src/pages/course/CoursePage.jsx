@@ -31,9 +31,27 @@ export default function CoursePage() {
     const unitMenu = usePopup(unitMenuTemplate, (values) => {
         const u = new Unit(currentUnit);
 
+        const now = new Date();
+        const formatter = new Intl.DateTimeFormat("en-US", {
+            month: "2-digit",
+            day: "2-digit",
+            year: "numeric",
+        });
+
+        // This returns MM/DD/YYYY, so we swap slashes for dashes
+        const formattedDate = formatter.format(now).replace(/\//g, "-");
+
         setUnits((v) => {
             return v.map((unit, index) => {
                 if (index !== currentUnitNum) return unit;
+                let mcqValues = {};
+
+                if (values.type == "mcq") {
+                    mcqValues = {
+                        questions: [],
+                        answers: [],
+                    };
+                }
 
                 // 2. Return a NEW object for the unit we are changing
                 return {
@@ -44,6 +62,8 @@ export default function CoursePage() {
                         {
                             title: values.name,
                             type: values.type,
+                            date: formattedDate,
+                            ...mcqValues,
                         },
                     ],
                 };
@@ -78,21 +98,22 @@ export default function CoursePage() {
         const lessons = units[currentUnitNum].lessons;
 
         const l1 = lessons.splice(currentLesson, 1)[0];
+        const l2 = lessons[currentLesson - 1];
         lessons.splice(currentLesson - 1, 0, l1);
-        if (l1.type == "article") {
+        if (l1.type == "article" || l2.type == "article") {
             const article1 = new Article(
-                courseId,
-                currentUnitNum + 1,
-                currentLesson - 1,
-            );
-            const article2 = new Article(
                 courseId,
                 currentUnitNum + 1,
                 currentLesson,
             );
+            const article2 = new Article(
+                courseId,
+                currentUnitNum + 1,
+                currentLesson - 1,
+            );
 
-            article1.moveContent(currentLesson);
-            article2.moveContent(currentLesson - 1);
+            article1.moveContent(currentLesson - 1);
+            article2.moveContent(currentLesson);
         }
         updateUnit(lessons);
     }
@@ -102,8 +123,10 @@ export default function CoursePage() {
         const lessons = units[currentUnitNum].lessons;
 
         const l1 = lessons.splice(currentLesson, 1)[0];
+        const l2 = lessons[currentLesson + 1];
+
         lessons.splice(currentLesson + 1, 0, l1);
-        if (l1.type == "article") {
+        if (l1.type == "article" || l2.type == "article") {
             const article1 = new Article(
                 courseId,
                 currentUnitNum + 1,

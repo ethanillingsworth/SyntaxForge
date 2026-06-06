@@ -4,6 +4,7 @@ import { Course, DataObject, Unit } from "../../firebase/Firebase";
 import { useAdmin, useUser } from "../../Global";
 import PopupMenu from "../../components/PopupMenu";
 import { createMenu, usePopup } from "../../use/usePopup";
+import hljs from "highlight.js";
 
 const answerMenu = createMenu()
     .addInput("text")
@@ -13,6 +14,10 @@ const answerMenu = createMenu()
 const questionMenu = createMenu()
     .addInput("text")
     .addButton("remove", "Remove")
+    .build();
+
+const codeMenu = createMenu()
+    .addSelect("lang", "Language: ", ["python", "javascript"])
     .build();
 
 export default function MCQPage() {
@@ -40,15 +45,6 @@ export default function MCQPage() {
         const qIdx = currentIndexes["question"];
         const aIdx = currentIndexes["answer"];
 
-        const updatedChoices = [...data.questions[qIdx].choices];
-        updatedChoices[aIdx] = values.text;
-
-        const updatedQuestions = [...data.questions];
-        updatedQuestions[qIdx] = {
-            ...updatedQuestions[qIdx],
-            choices: updatedChoices,
-        };
-
         if (values.setCorrect) {
             const updatedAnswers = [...data.answers];
             updatedAnswers[qIdx] = aIdx;
@@ -58,13 +54,22 @@ export default function MCQPage() {
                 answers: updatedAnswers,
             }));
             mainData.current.lessons[mcqId].answers = updatedAnswers;
-        }
+        } else {
+            const updatedChoices = [...data.questions[qIdx].choices];
+            updatedChoices[aIdx] = values.text;
 
-        setData((v) => ({
-            ...v,
-            questions: updatedQuestions,
-        }));
-        mainData.current.lessons[mcqId].questions = updatedQuestions;
+            const updatedQuestions = [...data.questions];
+            updatedQuestions[qIdx] = {
+                ...updatedQuestions[qIdx],
+                choices: updatedChoices,
+            };
+
+            setData((v) => ({
+                ...v,
+                questions: updatedQuestions,
+            }));
+            mainData.current.lessons[mcqId].questions = updatedQuestions;
+        }
 
         unit.current.set({
             ...mainData.current,
@@ -113,6 +118,28 @@ export default function MCQPage() {
 
     const questionPrompt = usePopup(questionMenu, submitQuestionMenu);
 
+    function submitCodeMenu(values) {
+        const qIdx = currentIndexes["question"];
+
+        const updatedQuestions = [...data.questions];
+        updatedQuestions[qIdx] = {
+            ...updatedQuestions[qIdx],
+            lang: values.lang,
+        };
+
+        setData((v) => ({
+            ...v,
+            questions: updatedQuestions,
+        }));
+
+        mainData.current.lessons[mcqId].questions[qIdx].lang = values.lang;
+        unit.current.set({
+            ...mainData.current,
+        });
+    }
+
+    const codePrompt = usePopup(codeMenu, submitCodeMenu);
+
     useEffect(() => {
         const course = new Course(courseId);
 
@@ -122,10 +149,14 @@ export default function MCQPage() {
             setData(d.lessons[mcqId]);
         });
 
-        user?.getCourseData(courseId, unitId, mcqId).then((uD) => {
+        user?.getLesson(courseId, unitId, mcqId).then((uD) => {
             setUserCouseData(uD);
         });
     }, [courseId, mcqId, unitId, user]);
+
+    useEffect(() => {
+        hljs.highlightAll();
+    }, [data]);
 
     function select(e, index, questionIndex) {
         if (!finished) {
@@ -159,23 +190,36 @@ export default function MCQPage() {
 
             const questionText = `#question-${i} h2`;
 
-            if (correctAnswer !== userAnswer) {
-                document.querySelector(wrongAnswerId).className = "incorrect";
-                document.querySelector(questionText).textContent += " - 0 / 1";
-            } else {
-                document.querySelector(questionText).textContent += " - 1 / 1";
-                correctCount += 1;
+            try {
+                if (correctAnswer !== userAnswer) {
+                    document.querySelector(wrongAnswerId).className =
+                        "incorrect";
+                    document.querySelector(questionText).textContent +=
+                        " - 0 / 1";
+                } else {
+                    document.querySelector(questionText).textContent +=
+                        " - 1 / 1";
+                    correctCount += 1;
+                }
+                document.querySelector(correctAnswerId).className = "correct";
+            } catch {
+                /* empty */
             }
-
-            document.querySelector(correctAnswerId).className = "correct";
         }
 
-        const xp = correctCount * 10;
-        const maxXp = data.answers.length * 10;
+        const xp = correctCount * 25;
+        const maxXp = data.answers.length * 25;
 
-        user.giveXP(xp, Math.round(xp / maxXp) * 100, courseId, unitId, mcqId, {
-            correctCount: correctCount,
-        });
+        user.giveXP(
+            xp,
+            Math.round((xp / maxXp) * 100),
+            courseId,
+            unitId,
+            mcqId,
+            {
+                correctCount: correctCount,
+            },
+        );
     }
 
     function addQuestion() {
@@ -202,10 +246,20 @@ export default function MCQPage() {
         });
     }
 
+    function saveCode(code) {
+        const qIdx = currentIndexes["question"];
+
+        mainData.current.lessons[mcqId].questions[qIdx].code = code;
+        unit.current.set({
+            ...mainData.current,
+        });
+    }
+
     return (
         <>
             {answerPrompt.element}
             {questionPrompt.element}
+            {codePrompt.element}
 
             <h1>
                 {data.title} - {data.questions?.length} Questions{" "}
@@ -229,9 +283,37 @@ export default function MCQPage() {
                                 }
                             }}
                         >
-                            {q.text}
+                            {index + 1}. {q.text}
                         </h2>
-                        <ul className="answers">
+                        {q.code || admin ? (
+                            <pre>
+                                <code
+                                    contentEditable={admin}
+                                    className={`hljs language-${q.lang || "plaintext"}`}
+                                    suppressContentEditableWarning={true} // Prevents React from throwing a warning in the console
+                                    onBlur={(e) => {
+                                        setCurrentIndexes({
+                                            question: index,
+                                            answer: 0,
+                                        });
+                                        delete e.target.dataset.highlighted;
+                                        hljs.highlightElement(e.target);
+                                        saveCode(e.target.textContent);
+                                    }}
+                                    onContextMenu={(e) => {
+                                        e.preventDefault();
+                                        setCurrentIndexes({
+                                            question: index,
+                                            answer: 0,
+                                        });
+                                        codePrompt.open(e);
+                                    }}
+                                >
+                                    {q.code}
+                                </code>
+                            </pre>
+                        ) : null}
+                        <ul className="answers list-[upper-alpha] list-inside">
                             {q.choices.map((choice, cIndex) => {
                                 return (
                                     <li
