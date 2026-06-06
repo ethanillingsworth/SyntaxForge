@@ -117,7 +117,7 @@
 
     .answers {
         li {
-            @apply hover:bg-forge-gold/25 my-1 hover:text-forge-gold p-1 rounded hover:cursor-pointer transition w-fit px-2 select-none;
+            @apply hover:bg-forge-gold/25 my-1 hover:text-forge-gold p-1 rounded hover:cursor-pointer transition w-fit px-2 select-none normal-case;
         }
 
         li.selected {
