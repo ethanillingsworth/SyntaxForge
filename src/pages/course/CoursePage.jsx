@@ -76,6 +76,7 @@ export default function CoursePage() {
     const [currentUnit, setCurrentUnit] = useState();
     const [currentUnitNum, setCurrentUnitNum] = useState();
     const [currentLesson, setCurrentLesson] = useState();
+    const [userData, setUserData] = useState({});
 
     function updateUnit(lessons) {
         setUnits((v) => {
@@ -192,6 +193,10 @@ export default function CoursePage() {
         user?.getProgress(courseId).then((n) => {
             setProgress(n);
         });
+
+        user?.get().then((d) => {
+            setUserData(d);
+        });
     }, [courseId, user]);
 
     return (
@@ -215,30 +220,36 @@ export default function CoursePage() {
 
             <h2>Unit Overview</h2>
             <div className="flex flex-col">
-                {units.map((unit) => {
+                {units.map((unit, unitIndex) => {
                     return (
                         <ul>
                             <li
-                                id={`unit-${unit.number}`}
+                                id={`unit-${unitIndex + 1}`}
                                 className="hover:bg-none hover:border-none font-semibold"
                                 onContextMenu={(e) => {
                                     if (admin) {
                                         e.preventDefault();
                                         setCurrentUnit(unit.id);
-                                        setCurrentUnitNum(unit.number - 1);
+                                        setCurrentUnitNum(unitIndex);
                                         unitMenu.open(e);
                                     }
                                 }}
                             >
-                                Unit {unit.number} | {unit.name}
+                                Unit {unitIndex + 1} | {unit.name}
                             </li>
                             <ul>
                                 {unit.lessons?.map((lesson, index) => {
+                                    const userLessonData =
+                                        userData?.courses?.[courseId]?.[
+                                            unitIndex + 1
+                                        ][index];
+
                                     return (
                                         <Lesson
                                             course={data}
                                             unit={unit.number}
                                             type={lesson.type}
+                                            percent={userLessonData?.percent}
                                             id={stringToId(lesson.title)}
                                             key={index}
                                             index={index}

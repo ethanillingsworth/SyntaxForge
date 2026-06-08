@@ -22,6 +22,7 @@ import MCQPage from "./pages/course/MCQPage";
 // Landing
 import LandingPage from "./pages/landing/LandingPage";
 import LoginPage from "./pages/landing/LoginPage";
+import FRQPage from "./pages/course/FRQPage";
 
 function ContentLayout() {
     return (
@@ -34,6 +35,13 @@ function ContentLayout() {
 function ContentLayoutNoPadding() {
     return (
         <main className="p-0">
+            <Outlet />
+        </main>
+    );
+}
+function ContentLayoutNoPaddingRow() {
+    return (
+        <main className="p-0 inline-flex w-full">
             <Outlet />
         </main>
     );
@@ -60,6 +68,13 @@ function Layout() {
                     />
                     <Route path="/" element={<LandingPage />} />
                     <Route path="/login" element={<LoginPage />} />
+                </Route>
+
+                <Route element={<ContentLayoutNoPaddingRow />}>
+                    <Route
+                        path="/:courseId/:unitName/frq/:frqName"
+                        element={<FRQPage />}
+                    />
                 </Route>
 
                 <Route element={<ContentLayout />}>

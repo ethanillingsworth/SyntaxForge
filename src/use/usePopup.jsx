@@ -32,6 +32,17 @@ export class PopupMenuBuilder {
         return this; // Allows chaining!
     }
 
+    addList(id, label, items, update = () => {}) {
+        this.template[id] = {
+            type: "list",
+            label: label,
+            items: items,
+            update: update,
+        };
+
+        return this;
+    }
+
     addSelect(id, label, options, value) {
         this.template[id] = {
             type: "select",
@@ -46,6 +57,15 @@ export class PopupMenuBuilder {
         this.template[id] = {
             type: "button",
             label: label,
+        };
+        return this;
+    }
+
+    addCheckbox(id, label, value) {
+        this.template[id] = {
+            type: "checkbox",
+            label: label,
+            value: value,
         };
         return this;
     }

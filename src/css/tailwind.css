@@ -50,7 +50,7 @@
 
 @layer components {
     .editor {
-        @apply flex flex-col m-0 h-full;
+        @apply flex flex-col m-0 h-full w-full;
 
         .head {
             @apply flex flex-row p-2 place-items-center gap-3 bg-zinc-950/50;
@@ -61,18 +61,17 @@
         }
 
         .terminal {
-            @apply h-full w-96 bg-black p-4 normal-case flex flex-col overflow-auto;
+            @apply w-[40ch] bg-black p-4 normal-case flex flex-col h-full overflow-auto shrink-0;
 
             & > * {
                 @apply font-mono;
             }
         }
-
         .wrapper {
-            @apply flex flex-row w-full h-full overflow-hidden;
+            @apply flex flex-row w-full max-w-full h-full overflow-hidden;
 
             .inner {
-                @apply flex-1 min-h-0 overflow-auto;
+                @apply flex-1 min-h-0 min-w-0 overflow-hidden w-0 flex flex-col;
             }
         }
     }
@@ -103,7 +102,7 @@
     }
 
     .popupMenu {
-        @apply absolute p-2 flex flex-col gap-1.5 raised z-50;
+        @apply absolute p-2 flex flex-col gap-1.5 raised z-50 overflow-auto max-h-full;
 
         input,
         textarea {
@@ -168,6 +167,7 @@
 @layer base {
     body {
         @apply h-dvh bg-zinc-950 text-forge-text;
+        font-variant-ligatures: none;
 
         h1 {
             @apply font-bold;
@@ -277,11 +277,11 @@
         }
 
         code {
-            @apply bg-forge-accent/25 text-forge-accent p-1 rounded font-mono! normal-case;
+            @apply bg-forge-accent/25 text-forge-accent p-0.5 px-1 leading-8 rounded font-mono! normal-case;
         }
 
         pre code {
-            @apply font-mono normal-case;
+            @apply font-mono normal-case bg-zinc-800 text-white;
         }
 
         ul ul {

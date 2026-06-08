@@ -80,6 +80,62 @@ export default function PopupMenu({
                         );
                     }
 
+                    if (data.type == "list") {
+                        return (
+                            <div className="flex flex-col gap-1.5">
+                                <span>{data.label}</span>
+                                {data.items.map((item, index) => {
+                                    return (
+                                        <div className="inline-flex gap-1.5">
+                                            <pre>
+                                                <code>{item}</code>
+                                            </pre>
+                                            <button
+                                                className="ml-auto"
+                                                onClick={() => {
+                                                    data.update(
+                                                        "remove",
+                                                        index,
+                                                    );
+                                                    closeAction();
+                                                }}
+                                            >
+                                                Remove
+                                            </button>
+                                        </div>
+                                    );
+                                })}
+                                <button
+                                    onClick={() => {
+                                        data.update("add");
+                                        closeAction();
+                                    }}
+                                >
+                                    Add Item
+                                </button>
+                            </div>
+                        );
+                    }
+
+                    if (data.type == "checkbox") {
+                        return (
+                            <div className="flex flex-row gap-1.5">
+                                <span>{data.label}</span>
+                                <input
+                                    type="checkbox"
+                                    className="ml-auto w-4"
+                                    defaultChecked={data.value}
+                                    onClick={() => {
+                                        submitAction({
+                                            ...values,
+                                            [title]: !data.value,
+                                        });
+                                    }}
+                                />
+                            </div>
+                        );
+                    }
+
                     if (data.type == "button") {
                         return (
                             <button

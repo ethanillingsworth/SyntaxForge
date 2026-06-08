@@ -22,49 +22,49 @@ const RANKS = [
     },
     {
         name: "Scribe",
-        minXp: 1500,
+        minXp: 500,
         color: "#38bdf8",
         description: "Translating thought into script.",
     },
     {
         name: "Artisan",
-        minXp: 3000,
+        minXp: 1500,
         color: "#818cf8",
         description: "Crafting code with style.",
     },
     {
         name: "Adept",
-        minXp: 6000,
+        minXp: 3000,
         color: "#c084fc",
         description: "Intuitive mastery of core syntax.",
     },
     {
         name: "Scholar",
-        minXp: 10000,
+        minXp: 6000,
         color: "#fb923c",
         description: "Master of theory and documentation.",
     },
     {
         name: "Veteran",
-        minXp: 20000,
+        minXp: 10000,
         color: "#f87171",
         description: "Survivor of complex debug cycles.",
     },
     {
         name: "Titan",
-        minXp: 40000,
+        minXp: 20000,
         color: "#f472b6",
         description: "A powerhouse of high-performance code.",
     },
     {
         name: "Oracle",
-        minXp: 75000,
+        minXp: 50000,
         color: "#2dd4bf",
         description: "Predicts errors before execution.",
     },
     {
         name: "Architect",
-        minXp: 150000,
+        minXp: 100000,
         color: "#fbbf24",
         description: "Designer of digital ecosystems.",
     },
@@ -264,7 +264,7 @@ export class User {
             }
         }
 
-        return (count / total) * 100;
+        return Math.round((count / total) * 100);
     }
 
     async getXp() {
@@ -357,6 +357,44 @@ export class User {
         const data = await this.get("public");
 
         return data.courses[courseId][unitNumber][index];
+    }
+
+    async getLessonPrivate(courseId, unitNumber, index) {
+        const data = await this.get("private");
+
+        return data.courses[courseId][unitNumber][index];
+    }
+
+    async setLessonPrivate(courseId, unitNumber, index, data) {
+        const updatedData = {
+            courses: {
+                [courseId]: {
+                    [parseInt(unitNumber)]: {
+                        [index]: {
+                            ...data,
+                        },
+                    },
+                },
+            },
+        };
+
+        await this.set("private", updatedData);
+    }
+
+    async setLesson(courseId, unitNumber, index, data) {
+        const updatedData = {
+            courses: {
+                [courseId]: {
+                    [parseInt(unitNumber)]: {
+                        [index]: {
+                            ...data,
+                        },
+                    },
+                },
+            },
+        };
+
+        await this.set("public", updatedData);
     }
 
     async getCourse(courseId) {
