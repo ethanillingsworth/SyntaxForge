@@ -28,9 +28,12 @@ export default function Editor({
     showDecorativeButtons = false,
     noLoginRequired = false,
     topBarItems = [],
+    showChecks = false,
+    checks = [],
     addSettings = null,
     onChange = () => {},
     onSettingsSubmit = () => {},
+    onRun = () => {},
     value = "",
 }) {
     const user = useUser();
@@ -94,32 +97,48 @@ export default function Editor({
         setContent(value);
     }, [value]);
 
-    // function openPopup(e) {
-    //     setPopupPos({
-    //         x: e.clientX,
-    //         y: e.clientY,
-    //     });
-
-    //     setPopup(true);
-    // }
-
-    // function closePopup() {
-    //     setPopup(false);
-    // }
-
     function runCode() {
-        console.log(content);
         setTerminalLines(["Running Code..."]);
         if (user || noLoginRequired) {
             axios
-                .post("https://runcode-qjvn4b2nya-uc.a.run.app", {
+                .post("https://runner.syntaxforge.dev", {
                     code: content,
                     lang: language,
+                    checks: checks,
                 })
                 .then((res) => {
-                    setTerminalLines((v) => {
-                        return [...v, ...res.data.logs];
-                    });
+                    if (checks) {
+                        const newLines = [];
+                        let passed = 0;
+                        for (const check of res.data.systemChecks) {
+                            if (check.status == "passed") {
+                                passed += 1;
+                            }
+                            if (showChecks) {
+                                newLines.push(
+                                    `${check.id}. ${check.condition}... ${check.status.toUpperCase()}${check.message ? `\n${check.message}` : ""}`,
+                                );
+                            } else {
+                                newLines.push(
+                                    `Check ${check.id}... ${check.status.toUpperCase()}${check.message ? `\n${check.message}` : ""}`,
+                                );
+                            }
+                        }
+
+                        if (res.data.allPassed) {
+                            newLines.push("All tests PASSED!");
+                        }
+
+                        setTerminalLines((v) => {
+                            return [...v, ...newLines];
+                        });
+
+                        onRun(passed);
+                    } else {
+                        setTerminalLines((v) => {
+                            return [...v, ...res.data.logs];
+                        });
+                    }
                 })
                 .catch((e) => {
                     console.error(e);
@@ -159,14 +178,6 @@ export default function Editor({
 
     return (
         <>
-            {/* <PopupMenu
-                closeAction={closePopup}
-                submitAction={updateSettings}
-                position={popupPos}
-                showCondition={showPopup}
-                dataTemplate={template}
-            /> */}
-
             {settingsPopup.element}
 
             <div className="editor">
@@ -183,15 +194,7 @@ export default function Editor({
                         <button onClick={settingsPopup.open}>Settings</button>
                     ) : null}
                     {topBarItems.map((item) => {
-                        if (item.type === "button") {
-                            return (
-                                <button onClick={item.onclick}>
-                                    {item.text}
-                                </button>
-                            );
-                        } else {
-                            return <h2>{item.text}</h2>;
-                        }
+                        return item;
                     })}
 
                     <Card
@@ -221,13 +224,21 @@ export default function Editor({
                             }}
                             value={value}
                             height="100%"
+                            width="100%"
                             theme={themes[theme]}
                         />
                     </div>
 
                     <div className="terminal">
                         {terminalLines.map((line, index) => {
-                            return <span key={index}>{line}</span>;
+                            return (
+                                <span
+                                    key={index}
+                                    className="whitespace-pre-wrap"
+                                >
+                                    {line}
+                                </span>
+                            );
                         })}
                     </div>
                 </div>

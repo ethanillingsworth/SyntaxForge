@@ -133,3 +133,31 @@ export const stringToId = (str) => {
         .replace(/[\s_-]+/g, "-") // Replaces spaces, underscores, or multiple hyphens with a single hyphen
         .replace(/^-+|-+$/g, ""); // Trims hyphens from the start and end
 };
+
+export function toSnakeCase(str) {
+    return (
+        str
+            // 1. Insert an underscore before any capital letters (handles camelCase/PascalCase)
+            .replace(/([a-z0-9])([A-Z])/g, "$1_$2")
+            // 2. Replace spaces, dashes, or consecutive special characters with a single underscore
+            .replace(/[\s-]+/g, "_")
+            // 3. Strip out any remaining special punctuation characters
+            .replace(/[^a-zA-Z0-9_]/g, "")
+            // 4. Convert the entire string to lowercase
+            .toLowerCase()
+    );
+}
+
+export function toCamelCase(str) {
+    return (
+        str
+            // 1. Replace dashes, underscores, or spaces followed by a character with a capitalized character
+            .replace(/[-_\s]+(.)?/g, (match, ch) =>
+                ch ? ch.toUpperCase() : "",
+            )
+            // 2. Strip out any remaining special punctuation characters
+            .replace(/[^a-zA-Z0-9]/g, "")
+            // 3. Ensure the very first character of the string is lowercase
+            .replace(/^(.)/, (match, ch) => ch.toLowerCase())
+    );
+}

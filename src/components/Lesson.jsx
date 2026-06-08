@@ -10,6 +10,7 @@ export default function Lesson({
     id,
     index,
     children,
+    percent = 0,
     onContextMenu = () => {},
 }) {
     function getIcon() {
@@ -49,7 +50,10 @@ export default function Lesson({
             >
                 {getIcon()}
                 {`Lesson ${unit}.${index + 1} | ${children}`}
-                <span className="ml-auto">{fullName()}</span>
+                <span className="ml-auto">
+                    {" "}
+                    {percent}% | {fullName()}
+                </span>
             </li>
         </a>
     );
